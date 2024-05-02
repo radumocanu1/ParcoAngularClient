@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="profile">
+    <div class="profile-image">
+      <img src="assets/template_profile_picture.png" alt="Imagine profil">
+    </div>
+    <div class="profile-info">
+      <h2>{{ user.username }}</h2>
+      <div *ngIf="user.trusted" class="verified-badge">Verificat</div>
+      <div *ngIf="!user.trusted" class="unverified-badge">Neconfirmat</div>
+      <div class="rating">Rating: {{ user.rating }}</div>
+      <div *ngIf="user.feedbackList.length > 0; else noFeedbacks" class="feedbacks">
+        <h3>Feedback-uri:</h3>
+        <div *ngFor="let feedback of user.feedbackList" class="feedback-card">
+          <mat-card class="custom-card">
+            <mat-card-content>
+      <span *ngIf="!feedback.anonymous">
+        <img *ngIf="feedback.profilePicPath" [src]="feedback.profilePicPath" [routerLink]="['/profil/', feedback.feedbackAuthor]" class="profile-pic">
+      </span>
+              <span *ngIf="feedback.anonymous">(Feedback anonim)</span>
+              {{ feedback.message }}
+              <span>Nota acordată: {{feedback.ratingGiven}}</span>
+              <div style="margin-top: 10px;">
+                <button mat-icon-button color="primary" aria-label="Like" class="small-button">
+                  <mat-icon>thumb_up</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+
+          </mat-card>
+        </div>
+      </div>
+      <ng-template #noFeedbacks>
+        <p>Nu există feedback-uri disponibile.</p>
+      </ng-template>
+
+      <button (click)="sendMessage()">Trimite Mesaj</button>
+    </div>
+  </div>
+</div>

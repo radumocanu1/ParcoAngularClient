@@ -1,0 +1,77 @@
+.profile-picture {
+  margin-top: 1px;
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile-dropdown {
+  width: 80px;
+  height: auto;
+  border-radius: 20%;
+  position: relative;
+  transition: box-shadow 0.3s; /* Modificăm tranziția pentru umbra */
+  display: flex; /* Utilizăm flexbox */
+  justify-content: center; /* Aliniere orizontală la centru */
+  align-items: center; /* Aliniere verticală la centru */
+}
+
+.profile-dropdown:hover {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* Adăugăm umbra la hover */
+}
+
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  text-align: center;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 8px 0;
+  z-index: 1;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  left: -70px; /* Modificarea poziționării meniului la stânga */
+  top: calc(100% + 5px); /* Afișare sub iconul de meniu */
+}
+
+
+.dropdown-content button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 15px;
+  cursor: pointer;
+  width: 200px;
+  transition: background-color 0.3s;
+  white-space: nowrap; /* Afișare text pe o singură linie */
+}
+
+.dropdown-content button:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+/* Afiseaza meniul cand se trece cu mouse-ul peste el */
+
+/* Adauga un efect de fade in la afisarea meniului */
+.dropdown-content {
+  transition: opacity 0.3s ease;
+}
+
+.profile-dropdown:hover .dropdown-content {
+  opacity: 1;
+}
+
+/* Stilizare pentru fiecare chenar la hover */
+.dropdown-content button.mat-icon:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+

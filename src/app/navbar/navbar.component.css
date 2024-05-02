@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+}
+
+.navbar-logo {
+  margin-left: 20px;
+}
+
+.navbar-logo img {
+  height: 50px;
+  width: auto;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin-right: 20px;
+}
+
+.navbar-links li {
+  margin: 0 10px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.navbar-actions {
+  margin-right: 80px;
+}
+
+/* Add a shadow effect when hovering over the logo and the links */
+.navbar-logo:hover,
+.navbar-links a:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 2s; /* shadow grows for 2 seconds */
+}

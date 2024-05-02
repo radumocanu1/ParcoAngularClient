@@ -1,0 +1,32 @@
+.user-profile {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: greenyellow;
+}
+
+.user-info {
+  margin-top: 10px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+}
+
+img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+/* Stilizare pentru butonul de editare */
+.edit-button {
+  margin-top: 20px;
+}

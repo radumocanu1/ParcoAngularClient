@@ -1,0 +1,22 @@
+.listing-details {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.listing-details h2 {
+  color: #333;
+}
+
+.listing-details p {
+  margin-bottom: 10px;
+}
+
+.listing-details img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}

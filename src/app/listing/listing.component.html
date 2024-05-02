@@ -1,0 +1,19 @@
+<div class="listing-details">
+  <h2>{{ listing.title }}</h2>
+  <p><strong>Location:</strong> Latitude: {{ listing.latitude }}, Longitude: {{ listing.longitude }}</p>
+  <p><strong>Start Date:</strong> {{ listing.startDate }}</p>
+  <p><strong>End Date:</strong> {{ listing.endDate }}</p>
+  <p><strong>Parking Spot Slot Number:</strong> {{ listing.parkingSpotSlotNumber }}</p>
+  <p><strong>Price:</strong> {{ listing.price }}</p>
+  <p><strong>Publishing Date:</strong> {{ listing.publishingDate }}</p>
+  <h3>Pictures:</h3>
+  <div *ngFor="let picture of listing.pictures">
+    <img [src]="picture.picturePath" alt="Listing Picture">
+  </div>
+</div>
+
+<div class="my-google-map">
+  <google-map [options]="mapOptions">
+    <map-marker [position]="marker.position"></map-marker>
+  </google-map>
+</div>
