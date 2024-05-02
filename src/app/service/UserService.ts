@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from "@angular/common/http";
 import {catchError, Observable} from "rxjs";
 import {UserDTO} from "../model/userDTO";
 import {User} from "../model/User";
@@ -38,6 +38,12 @@ export class UserService {
         throw(error);
       })
     );
+  }
+  public changeProfilePic (file:File):Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    return this.http.post<HttpEvent<any>>(`${this.userUrl}/profilePic`, formData)
   }
 
   private createUser(): Observable<MyProfile> {

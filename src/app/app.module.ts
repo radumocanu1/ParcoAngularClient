@@ -20,6 +20,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InterceptorModule} from "./interceptors/InterceptorModule";
+import { ImageUploadComponent } from './image-upload/image-upload.component';
+import {NgOptimizedImage} from "@angular/common";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -47,21 +49,23 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ListingListComponent,
     UserProfileComponent,
     UserListComponent,
+    ImageUploadComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    KeycloakAngularModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatMenuModule,
-    HttpClientModule,
-    GoogleMapsModule,
-    BrowserAnimationsModule,
-    InterceptorModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        KeycloakAngularModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatMenuModule,
+        HttpClientModule,
+        GoogleMapsModule,
+        BrowserAnimationsModule,
+        InterceptorModule,
+        NgOptimizedImage
+    ],
   providers: [UserService, {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
