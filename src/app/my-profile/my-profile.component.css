@@ -1,32 +1,77 @@
+.my-profile-component {
+/*background-color: darkgray;*/
+/*  margin-top: auto;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  position: fixed;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  z-index: -1;*/
+}
+
 .user-profile {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: greenyellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-header {
+  margin-top: 10%;
+  position: relative;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.edit-profile-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.2rem;
 }
 
 .user-info {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .field {
   margin-bottom: 10px;
 }
 
-mat-form-field {
-  width: 100%;
-}
-
 label {
   font-weight: bold;
 }
 
-img {
-  max-width: 100px;
-  max-height: 100px;
+.delete-profile-button {
+  margin-top: 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* Stilizare pentru butonul de editare */
-.edit-button {
-  margin-top: 20px;
+.delete-profile-button:hover {
+  background-color: darkred;
 }
+.user-info-card {
+  margin-left: 10%;
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+

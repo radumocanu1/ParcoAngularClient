@@ -16,7 +16,10 @@ export class ProfileDropdownComponent implements OnInit {
 
   public async ngOnInit() {
     this.isLoggedIn = await this.keycloak.isLoggedIn();
-    console.log(this.isLoggedIn);
+    if (!this.isLoggedIn) {
+      localStorage.removeItem("currentUserProfilePicture");
+
+    }
 
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloak.loadUserProfile();
@@ -30,7 +33,14 @@ export class ProfileDropdownComponent implements OnInit {
     this.keycloak.login({redirectUri:"http://localhost:4200/profilul_meu"});
   }
 
-  public logout() {
-    this.keycloak.logout();
+  public logout(): void {
+    this.keycloak.logout("http://localhost:4200").then(() => {
+      console.log("Logout successful");
+    }).catch((error: any) => {
+      console.error("Logout failed:", error);
+    });
   }
+
+
+  protected readonly localStorage = localStorage;
 }

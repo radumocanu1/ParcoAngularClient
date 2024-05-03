@@ -4,9 +4,11 @@ export class MyProfile {
   email!: string;
   isTrusted!: boolean
   rating!: number
-  profilePicturePath!: string
+  hasProfilePicture!: boolean
+  profilePictureBytes!: string;
   phoneNumber!: string
   firstName!: string
   lastName!: string
   age!: string
+
 }

@@ -1,43 +1,55 @@
-<div class="user-profile">
-  <h2>User Profile</h2>
-  <div class="user-info">
-    <div class="field">
-      <label>Username:</label>
-      <span>{{ myProfile.username }}</span>
+<div class="my-profile-component">
+  <div class="profile-header">
+      <img class="profile-picture" *ngIf="myProfile?.hasProfilePicture" [src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture">
+      <img class="profile-picture" *ngIf="!myProfile?.hasProfilePicture" src="./assets/template_profile_picture.png" alt="Profile Picture">
+    <button mat-mini-fab matTooltip="Modifica fotografia de profil " color="primary" (click)="showImageUpload = !showImageUpload">
+      <mat-icon> border_color</mat-icon>
+    </button>
+    <app-image-upload *ngIf="showImageUpload"></app-image-upload>
+      <button class="edit-profile-button" >
+        <i class="fas fa-edit"></i>
+      </button>
     </div>
-    <div class="field">
-      <label>Email:</label>
-      <span>{{ myProfile.email }}</span>
-    </div>
-    <div class="field">
-      <label>Rating:</label>
-      <span>{{ myProfile.rating }}</span>
-    </div>
-    <div class="field">
-      <label>Profile Picture:</label>
-      <img *ngIf="myProfile.profilePicturePath" [src]="myProfile.profilePicturePath" alt="Profile Picture">
-      <span *ngIf="!myProfile.profilePicturePath">No picture available</span>
-    </div>
-    <div class="field">
-      <label>Phone Number:</label>
-      <span>{{ myProfile.phoneNumber }}</span>
-    </div>
-    <div class="field">
-      <label>First Name:</label>
-      <span>{{ myProfile.firstName }}</span>
-    </div>
-    <div class="field">
-      <label>Last Name:</label>
-      <span>{{ myProfile.lastName }}</span>
-    </div>
-    <div class="field">
-      <label>Age:</label>
-      <span>{{ myProfile.age }}</span>
-    </div>
-    <div class="field">
-      <label>Trusted:</label>
-      <span>{{ myProfile.isTrusted ? 'Yes' : 'No' }}</span>
-    </div>
-  </div>
+
+    <mat-card class="user-info-card">
+      <mat-card-header>
+        <mat-card-title>
+        <label>Username:</label>
+        <span>{{ myProfile?.username }}</span>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <label>Email:</label>
+          <span>{{ myProfile?.email }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <label>Rating:</label>
+        <span>{{ myProfile?.rating }}</span>
+        <br>
+        <label>Phone Number:</label>
+        <span>{{ myProfile?.phoneNumber }}</span>
+        <br>
+        <label>First Name:</label>
+        <span>{{ myProfile?.firstName }}</span>
+        <br>
+
+        <label>Last Name:</label>
+        <span>{{ myProfile?.lastName }}</span>
+        <br>
+
+        <label>Age:</label>
+        <span>{{ myProfile?.age }}</span>
+        <br>
+
+        <label>Trusted:</label>
+        <span>{{ myProfile?.isTrusted ? 'Yes' : 'No' }}</span>
+        <br>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary">Editeaza profilul</button>
+        <button mat-flat-button color="warn">Sterge cont</button>
+      </mat-card-actions>
+    </mat-card>
+
 </div>
-<app-image-upload></app-image-upload>

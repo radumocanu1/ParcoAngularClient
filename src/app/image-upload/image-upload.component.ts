@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {UserService} from "../service/UserService";
+import {NotificationService} from "../service/NotificationService";
 
 @Component({
   selector: 'app-image-upload',
@@ -15,9 +16,8 @@ export class ImageUploadComponent implements OnInit {
 
   imageInfos?: Observable<any>;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private notificationService: NotificationService) {}
   ngOnInit(): void {
-    // this.imageInfos = this.uploadService.getFiles();
   }
   selectFile(event: any): void {
     this.message = '';
@@ -45,11 +45,11 @@ export class ImageUploadComponent implements OnInit {
     if (this.currentFile) {
       this.userService.changeProfilePic(this.currentFile).subscribe({
         next: (event: any) => {
-          console.log(event)
-          if (event instanceof HttpResponse) {
-            this.message = event.body.message;
-            // this.imageInfos = this.uploadService.getFiles();
-          }
+          this.notificationService.emitImageUploaded();
+          alert("Imaginea a fost incarcata cu succes!")
+          window.location.reload();
+
+
         },
         error: (err: any) => {
           console.log(err);

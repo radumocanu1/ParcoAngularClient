@@ -1,19 +1,21 @@
 <div class="profile-dropdown" (click)="toggleDropdown()">
-  <img src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
+  <img *ngIf="!localStorage.getItem('currentUserProfilePicture')"src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
+  <img *ngIf="localStorage.getItem('currentUserProfilePicture')"[src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
+
   <mat-icon class="menu-icon">more_vert</mat-icon>
   <div class="dropdown-content" *ngIf="isDropdownOpen">
     <div *ngIf="isLoggedIn">
       <button mat-button routerLink="/profilul_meu"><mat-icon>person</mat-icon>Profilul meu</button>
       <button mat-button > <mat-icon>add_box</mat-icon>Adauga un anunt</button>
-      <button mat-button> <mat-icon>home</mat-icon>Feedbackuri primite</button>
+      <button mat-button> <mat-icon>feedback</mat-icon>Recenzii primite</button>
       <button mat-button><mat-icon>message</mat-icon>Mesaje</button>
       <button mat-button><mat-icon>person_add</mat-icon>Invita un prieten</button>
     </div>
     <div *ngIf="!isLoggedIn">
       <button mat-button (click)="login()">Conecteaza-te</button>
-      <button mat-button><mat-icon>lock</mat-icon> Adauga un anunt</button>
+      <button mat-button><mat-icon>lock</mat-icon>Adauga un anunt</button>
     </div>
-    <button mat-button> <mat-icon>report_problem</mat-icon>Raporteaza un abuz</button>
+    <button mat-button> <mat-icon>report_problem</mat-icon><span>Raporteaza</span></button>
     <button mat-button (click)="logout()" *ngIf="isLoggedIn">Deconecteaza-te</button>
   </div>
 

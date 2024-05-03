@@ -1,20 +1,17 @@
 <div class="row">
-  <div class="col-8">
-    <label class="btn btn-default p-0">
+  <div >
+    <label >
       <input type="file" accept="image/*" (change)="selectFile($event)" />
     </label>
   </div>
 
-  <div class="col-4">
-    <button
-      class="btn btn-success btn-sm float-right"
-      [disabled]="!currentFile"
-      (click)="upload()"
-    >
-      Save
+  <div class="col-4 d-flex align-items-end">
+    <button  [disabled]="!currentFile" (click)="upload()">
+      Upload
     </button>
   </div>
 </div>
+
 
 <div>
   <img [src]="preview" class="preview" />
@@ -26,14 +23,14 @@
   </div>
 }
 
-<div class="card">
-  <div class="card-header">List of Images</div>
-  <ul class="list-group list-group-flush">
-    @for (image of imageInfos | async; track image.name) {
-      <li class="list-group-item">
-        <p><a href="{{ image.url }}">{{ image.name }}</a></p>
-        <img ngSrc="{{ image.url }}" alt="{{ image.name }}" width="80px" height="80px" />
-      </li>
-    }
-  </ul>
-</div>
+<!--<div class="card">-->
+<!--  <div class="card-header">List of Images</div>-->
+<!--  <ul class="list-group list-group-flush">-->
+<!--    @for (image of imageInfos | async; track image.name) {-->
+<!--      <li class="list-group-item">-->
+<!--        <p><a href="{{ image.url }}">{{ image.name }}</a></p>-->
+<!--        <img ngSrc="{{ image.url }}" alt="{{ image.name }}" width="80px" height="80px" />-->
+<!--      </li>-->
+<!--    }-->
+<!--  </ul>-->
+<!--</div>-->

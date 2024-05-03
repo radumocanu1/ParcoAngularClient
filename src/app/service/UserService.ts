@@ -39,11 +39,17 @@ export class UserService {
       })
     );
   }
-  public changeProfilePic (file:File):Observable<HttpEvent<any>> {
+  changeProfilePic(file: File): Observable<string> {
     const formData: FormData = new FormData();
-
     formData.append('file', file);
-    return this.http.post<HttpEvent<any>>(`${this.userUrl}/profilePic`, formData)
+
+    return this.http.post(`${this.userUrl}/profilePic`, formData, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+  }
+  public getProfilePictureUrl(profilePictureBytes: string): string {
+    return `data:image/jpeg;base64, ${profilePictureBytes}`;
   }
 
   private createUser(): Observable<MyProfile> {

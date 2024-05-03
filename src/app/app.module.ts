@@ -22,6 +22,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InterceptorModule} from "./interceptors/InterceptorModule";
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import {NgOptimizedImage} from "@angular/common";
+import {MatTooltip} from "@angular/material/tooltip";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -52,20 +53,21 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ImageUploadComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        KeycloakAngularModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatMenuModule,
-        HttpClientModule,
-        GoogleMapsModule,
-        BrowserAnimationsModule,
-        InterceptorModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    KeycloakAngularModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule,
+    HttpClientModule,
+    GoogleMapsModule,
+    BrowserAnimationsModule,
+    InterceptorModule,
+    NgOptimizedImage,
+    MatTooltip
+  ],
   providers: [UserService, {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
