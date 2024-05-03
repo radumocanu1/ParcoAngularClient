@@ -23,6 +23,17 @@ import {InterceptorModule} from "./interceptors/InterceptorModule";
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MatTooltip} from "@angular/material/tooltip";
+import {FormsModule} from "@angular/forms";
+import {MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -66,7 +77,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     InterceptorModule,
     NgOptimizedImage,
-    MatTooltip
+    MatTooltip,
+    FormsModule,
+    MatFormField,
+    MatInput,
+    MatGridTile,
+    MatGridList
   ],
   providers: [UserService, {
     provide: APP_INITIALIZER,

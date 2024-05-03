@@ -5,6 +5,7 @@ import {UserDTO} from "../model/userDTO";
 import {User} from "../model/User";
 import {UserProfileView} from "../model/UserProfileView";
 import {MyProfile} from "../model/MyProfile";
+import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 
 @Injectable()
 export class UserService {
@@ -25,6 +26,12 @@ export class UserService {
   }
   public getUser(userUUID: string | null)  : Observable<UserProfileView> {
     return this.http.get<UserProfileView>(`${this.userUrl}/${userUUID}`);
+  }
+  public deleteUser()  : Observable<void> {
+    return this.http.delete<void>(this.userUrl);
+  }
+  public updateUser(myProfileUpdateRequest: MyProfileUpdateRequest | undefined)  : Observable<MyProfile> {
+    return this.http.put<MyProfile>(this.userUrl, myProfileUpdateRequest);
   }
   public getProfilePicturePath(userUUID: string | null)  : Observable<string> {
     return this.http.get(`${this.userUrl}/profilePic/${userUUID}`, { responseType: 'text' });
