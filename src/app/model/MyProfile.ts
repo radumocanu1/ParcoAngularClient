@@ -9,6 +9,7 @@ export class MyProfile {
   phoneNumber!: string
   firstName!: string
   lastName!: string
-  age!: string
+  age!: number
+  sex!: string
 
 }

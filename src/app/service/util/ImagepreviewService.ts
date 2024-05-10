@@ -10,6 +10,7 @@ export class ImagePreviewService {
 
   constructor(private dialog: MatDialog) { }
   openPreviewModal(image: File) {
+    console.log("image", image);
     this.dialog.open(ImagePreviewComponent, {
       data: { image },
       width: '500px'

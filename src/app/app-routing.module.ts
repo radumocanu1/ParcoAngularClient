@@ -9,10 +9,10 @@ import {ListingListComponent} from "./listing-list/listing-list.component";
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
   // { path: 'inregistrare', component: SignupComponent },
-  { path: 'profil/:userId', component: UserProfileComponent },
-  { path: 'anunt/:listingId', component: ListingComponent },
-  { path: 'anunturi', component: ListingListComponent },
-  { path: 'profilul_meu', component: MyProfileComponent },
+  { path: 'profile/:userId', component: UserProfileComponent },
+  { path: 'listing/:listingId', component: ListingComponent },
+  { path: 'listings', component: ListingListComponent },
+  { path: 'myProfile', component: MyProfileComponent },
 
 ];
 

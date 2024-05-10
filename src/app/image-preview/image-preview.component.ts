@@ -19,9 +19,7 @@ export class ImagePreviewComponent {
 
   constructor(
     private router: Router,
-    public snackBar: MatSnackBar,
     private snackbarService: SnackbarService,
-    private _snackBar: MatSnackBar,
               private userService: UserService,
     public dialogRef: MatDialogRef<ImagePreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { image: File }
@@ -50,7 +48,7 @@ export class ImagePreviewComponent {
           this.openSnackBar()
           // navigating to root to refresh current page
           this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/profilul_meu']);
+            this.router.navigate(['/myProfile']);
           });
         },
         error: (err: any) => {
@@ -64,9 +62,14 @@ export class ImagePreviewComponent {
         },
         complete: () => {
           this.currentFile = undefined;
-          this.dialogRef.close();
+          this.closeDialogBox()
         }
       });
     }
   }
+  public closeDialogBox(){
+    this.dialogRef.close();
+
+  }
+
 }

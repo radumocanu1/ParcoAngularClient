@@ -14,7 +14,7 @@
           <mat-card class="custom-card">
             <mat-card-content>
       <span *ngIf="!feedback.anonymous">
-        <img *ngIf="feedback.profilePicPath" [src]="feedback.profilePicPath" [routerLink]="['/profil/', feedback.feedbackAuthor]" class="profile-pic">
+        <img *ngIf="feedback.profilePicPath" [src]="feedback.profilePicPath" [routerLink]="['/profile/', feedback.feedbackAuthor]" class="profile-pic">
       </span>
               <span *ngIf="feedback.anonymous">(Feedback anonim)</span>
               {{ feedback.message }}

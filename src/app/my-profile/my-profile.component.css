@@ -1,17 +1,31 @@
 
 .card{
-  background-color: #4caf50;
+  background-color: #39a0ca;
   margin-left: 80px;
   max-width: 18rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 4);
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   margin-top: 80px;
 
 }
-.profile-section {
+.editProfileInputBoxes{
+  margin-left: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.same-row{
   display: flex;
   align-items: center;
 }
+.cards-container{
+    display: flex;
+    align-items: center;
+    margin-left: 20%;
+}
+.user-info-card{
+  margin-left: 100px;
 
+}
 
 :host{
   background-color: #cccccc;
@@ -32,68 +46,7 @@
   height: auto;
 
 }
-
-
-
-/*.update{*/
-/*  background-color: aqua;*/
-/*}*/
-/*.user-profile {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*}*/
-
-/*.profile-header {*/
-/*  margin-top: 10%;*/
-/*  position: relative;*/
-/*}*/
-
-/*.edit-profile-button {*/
-/*  position: absolute;*/
-/*  top: 5px;*/
-/*  right: 5px;*/
-/*  background: transparent;*/
-/*  border: none;*/
-/*  color: #333;*/
-/*  font-size: 1.2rem;*/
-/*}*/
-
-/*.user-info {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  margin-top: 20px;*/
-/*}*/
-
-/*.field {*/
-/*  margin-bottom: 10px;*/
-/*}*/
-
-/*label {*/
-/*  font-weight: bold;*/
-/*}*/
-
-/*.delete-profile-button {*/
-/*  margin-top: 20px;*/
-/*  background-color: red;*/
-/*  color: white;*/
-/*  border: none;*/
-/*  padding: 10px 20px;*/
-/*  border-radius: 5px;*/
-/*  cursor: pointer;*/
-/*}*/
-
-/*.delete-profile-button:hover {*/
-/*  background-color: darkred;*/
-/*}*/
-/*.user-info-card {*/
-/*  margin-left: 10%;*/
-/*  max-width: 400px;*/
-/*}*/
-
-/*.example-header-image {*/
-/*  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');*/
-/*  background-size: cover;*/
-/*}*/
+mat-form-field{
+  margin-left: 20px;
+}
 

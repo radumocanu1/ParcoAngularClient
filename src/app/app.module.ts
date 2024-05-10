@@ -20,20 +20,12 @@ import { UserListComponent } from './user-list/user-list.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InterceptorModule} from "./interceptors/InterceptorModule";
-import { ImageUploadComponent } from './image-upload/image-upload.component';
 import {NgOptimizedImage} from "@angular/common";
 import {MatTooltip} from "@angular/material/tooltip";
 import {FormsModule} from "@angular/forms";
-import {MatFormField} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {
-  MatDatepicker,
-  MatDatepickerInput,
-  MatDatepickerModule,
-  MatDatepickerToggle
-} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
 import { ImagePreviewComponent } from './image-preview/image-preview.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {
@@ -43,6 +35,8 @@ import {
   MatSnackBarLabel,
   MatSnackBarRef
 } from "@angular/material/snack-bar";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -70,7 +64,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ListingListComponent,
     UserProfileComponent,
     UserListComponent,
-    ImageUploadComponent,
     ImagePreviewComponent,
 
   ],
@@ -97,6 +90,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatSnackBarAction,
     MatSnackBarActions,
     MatSnackBarLabel,
+    MatProgressSpinner,
+    MatSelect,
+    MatOption,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [UserService, {
     provide: APP_INITIALIZER,

@@ -30,7 +30,7 @@ export class ProfileDropdownComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
   public login() {
-    this.keycloak.login({redirectUri:"http://localhost:4200/profilul_meu"});
+    this.keycloak.login({redirectUri:"http://localhost:4200/myProfile"});
   }
 
   public logout(): void {

@@ -15,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           console.log("Redirecting to login page");
-          this.router.navigate(['/conecteaza-te']);
+          this.router.navigate(['/register']);
         } else if (error.status === 403) {
           console.log("Redirecting to access denied page");
           this.router.navigate(['/access-denied']); // Redirecționează către pagina "Nu aveți acces" în caz de 403

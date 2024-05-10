@@ -1,10 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {booleanAttribute, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MyProfile} from "../model/MyProfile";
 import {UserService} from "../service/UserService";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
-import { FormBuilder } from '@angular/forms';
-import {Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from "@angular/router";
 import {ImagePreviewService} from "../service/util/ImagepreviewService";
+import { Location } from '@angular/common';
+import {SnackbarService} from "../service/util/SnackbarService";
+
 
 
 @Component({
@@ -16,86 +19,77 @@ export class MyProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   myProfile: MyProfile| undefined;
-  myProfileUpdateRequest: MyProfileUpdateRequest | undefined;
-  showImageUpload: boolean = false;
-  editMode: boolean = false;
-  private formDirty: boolean = false;
-  showConfirmDialog: boolean = false;
-  confirmUsername: string = '';
+  myProfileUpdateRequest= new MyProfileUpdateRequest();
+  isEditMode: boolean = false;
   currentFile?: File;
-  message = '';
-  preview = '';
-  imageUrl: string | ArrayBuffer | null = null;
-  showPreview = false;
 
 
-  constructor(private imagePreviewService: ImagePreviewService, private userService: UserService, private formBuilder: FormBuilder, private router:Router) {
+
+
+  constructor(
+              private route: ActivatedRoute,
+              private location: Location,
+              private imagePreviewService: ImagePreviewService,
+              private userService: UserService,
+              private formBuilder: FormBuilder,
+              private router:Router,
+              private snackbarService: SnackbarService,) {
+
   }
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams['edit'] === 'true'){
+      this.isEditMode = true;
+    }
     this.getUserProfile();
 
 
+  }
+  modifyUserDetails(){
+    console.log(this.myProfileUpdateRequest)
+    this.userService.updateUser(this.myProfileUpdateRequest).subscribe(
+        (profile: MyProfile) => {
+          this.myProfile = profile;
+          this.snackbarService.openSnackBar('✨ Informatiile personale au fost actualizate cu succes! ✨');
+          this.goBack()
+        }
+      )
+
+  }
+
+  enterEditMode(): void {
+    this.router.navigate(['/myProfile'], { queryParams: {edit: 'true'}});
+    this.isEditMode = true
+  }
+  goBack(): void {
+    this.isEditMode = false
+    this.location.back();
   }
 
   getUserProfile(): void {
     this.userService.getUserProfile().subscribe(
       (profile: MyProfile) => {
         this.myProfile = profile;
-        console.log(this.myProfile);
-        this.myProfileUpdateRequest = new MyProfileUpdateRequest(profile.username,profile.email,profile.phoneNumber,profile.firstName,profile.lastName,profile.age);
+        if (profile.age == 0 ){
+
+        }
+        this.myProfileUpdateRequest = profile;
+        console.log(this.myProfileUpdateRequest);
         if (this.myProfile.hasProfilePicture){
           localStorage.setItem("currentUserProfilePicture", this.profilePicture())
         }
       }
     );
   }
-  showConfirmPrompt() {
-    this.showConfirmDialog = true;
-  }
-  deleteProfile() {
-    if (this.confirmUsername === this.myProfile?.username) {
 
-      this.userService.deleteUser().subscribe(() => {
-        alert('Contul a fost șters cu succes!');
-        window.location.reload();
-      });
-    } else {
-      console.error('Username-ul introdus nu corespunde cu username-ul profilului!');
-    }
-    this.showConfirmDialog = false;
-  }
-  cancelDelete() {
-    this.showConfirmDialog = false;
-    this.confirmUsername = '';
-  }
-  onInputChange() {
-    this.formDirty = true;
-    return true
-  }
 
-  isFormDirty() {
-    return this.formDirty;
-  }
   public profilePicture(): string {
     if (this.myProfile) {
     return this.userService.getProfilePictureUrl(this.myProfile.profilePictureBytes)
       }
     return ''
   }
-  public toggleEditMode(): void{
-    this.editMode = !this.editMode;
-  }
-  public updateProfile(): void {
-    console.log(this.myProfileUpdateRequest);
-    this.userService.updateUser(this.myProfileUpdateRequest).subscribe(
-      (profile: MyProfile) => {
-        this.myProfile = profile;
-        this.editMode = false;
-        alert("Datele au fost actualizate cu succes!")
-      }
-    )
-  }
+
   public cancelEdit(): void{
     window.location.reload()
   }
@@ -105,16 +99,12 @@ export class MyProfileComponent implements OnInit {
     address: ''
   });
   selectFile(event: any): void {
-    this.message = '';
-    this.preview = '';
     const selectedFiles = event.target.files;
 
     if (selectedFiles) {
       const file: File | null = selectedFiles.item(0);
 
       if (file) {
-        console.log(file);
-        this.preview = '';
         this.currentFile = file;
         this.imagePreviewService.openPreviewModal(file);
 
