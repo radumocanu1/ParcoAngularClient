@@ -5,10 +5,11 @@ import {UserListComponent} from "./user-list/user-list.component";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
 import {ListingComponent} from "./listing/listing.component";
 import {ListingListComponent} from "./listing-list/listing-list.component";
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
-  // { path: 'inregistrare', component: SignupComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'profile/:userId', component: UserProfileComponent },
   { path: 'listing/:listingId', component: ListingComponent },
   { path: 'listings', component: ListingListComponent },
