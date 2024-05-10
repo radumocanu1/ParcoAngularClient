@@ -4,6 +4,7 @@ import {UserService} from "../service/UserService";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import { FormBuilder } from '@angular/forms';
 import {Router} from "@angular/router";
+import {ImagePreviewService} from "../service/ImagepreviewService";
 
 
 @Component({
@@ -12,6 +13,8 @@ import {Router} from "@angular/router";
   styleUrl: './my-profile.component.css'
 })
 export class MyProfileComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   myProfile: MyProfile| undefined;
   myProfileUpdateRequest: MyProfileUpdateRequest | undefined;
   showImageUpload: boolean = false;
@@ -19,9 +22,14 @@ export class MyProfileComponent implements OnInit {
   private formDirty: boolean = false;
   showConfirmDialog: boolean = false;
   confirmUsername: string = '';
+  currentFile?: File;
+  message = '';
+  preview = '';
+  imageUrl: string | ArrayBuffer | null = null;
+  showPreview = false;
 
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private router:Router) {
+  constructor(private imagePreviewService: ImagePreviewService, private userService: UserService, private formBuilder: FormBuilder, private router:Router) {
   }
 
   ngOnInit(): void {
@@ -34,6 +42,7 @@ export class MyProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       (profile: MyProfile) => {
         this.myProfile = profile;
+        console.log(this.myProfile);
         this.myProfileUpdateRequest = new MyProfileUpdateRequest(profile.username,profile.email,profile.phoneNumber,profile.firstName,profile.lastName,profile.age);
         if (this.myProfile.hasProfilePicture){
           localStorage.setItem("currentUserProfilePicture", this.profilePicture())
@@ -95,4 +104,30 @@ export class MyProfileComponent implements OnInit {
     name: '',
     address: ''
   });
+  selectFile(event: any): void {
+    this.message = '';
+    this.preview = '';
+    const selectedFiles = event.target.files;
+
+    if (selectedFiles) {
+      const file: File | null = selectedFiles.item(0);
+
+      if (file) {
+        console.log(file);
+        this.preview = '';
+        this.currentFile = file;
+        this.imagePreviewService.openPreviewModal(file);
+
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.imagePreviewService.openPreviewModal(e.target.result);
+        };
+
+      }
+    }
+  }
+  toggleFileInput() {
+    this.fileInput.nativeElement.click();
+  }
 }

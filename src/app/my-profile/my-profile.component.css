@@ -1,25 +1,20 @@
-.my-profile-component {
-/*background-color: darkgray;*/
-/*  margin-top: auto;*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  position: fixed;*/
-/*  top: 0;*/
-/*  left: 0;*/
-/*  z-index: -1;*/
+
+.card{
+  background-color: #4caf50;
+  margin-left: 80px;
+  max-width: 18rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 4);
+  margin-top: 80px;
+
 }
-.update{
-  background-color: aqua;
-}
-.user-profile {
+.profile-section {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
-.profile-header {
-  margin-top: 10%;
-  position: relative;
+
+:host{
+  background-color: #cccccc;
 }
 
 .profile-picture {
@@ -27,53 +22,71 @@
   height: 150px;
   border-radius: 50%;
   margin-top: 20px;
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
-.edit-profile-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: transparent;
-  border: none;
-  color: #333;
-  font-size: 1.2rem;
-}
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
 
-.field {
-  margin-bottom: 10px;
-}
+/*.update{*/
+/*  background-color: aqua;*/
+/*}*/
+/*.user-profile {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*}*/
 
-label {
-  font-weight: bold;
-}
+/*.profile-header {*/
+/*  margin-top: 10%;*/
+/*  position: relative;*/
+/*}*/
 
-.delete-profile-button {
-  margin-top: 20px;
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
+/*.edit-profile-button {*/
+/*  position: absolute;*/
+/*  top: 5px;*/
+/*  right: 5px;*/
+/*  background: transparent;*/
+/*  border: none;*/
+/*  color: #333;*/
+/*  font-size: 1.2rem;*/
+/*}*/
 
-.delete-profile-button:hover {
-  background-color: darkred;
-}
-.user-info-card {
-  margin-left: 10%;
-  max-width: 400px;
-}
+/*.user-info {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  margin-top: 20px;*/
+/*}*/
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
+/*.field {*/
+/*  margin-bottom: 10px;*/
+/*}*/
+
+/*label {*/
+/*  font-weight: bold;*/
+/*}*/
+
+/*.delete-profile-button {*/
+/*  margin-top: 20px;*/
+/*  background-color: red;*/
+/*  color: white;*/
+/*  border: none;*/
+/*  padding: 10px 20px;*/
+/*  border-radius: 5px;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.delete-profile-button:hover {*/
+/*  background-color: darkred;*/
+/*}*/
+/*.user-info-card {*/
+/*  margin-left: 10%;*/
+/*  max-width: 400px;*/
+/*}*/
+
+/*.example-header-image {*/
+/*  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');*/
+/*  background-size: cover;*/
+/*}*/
 

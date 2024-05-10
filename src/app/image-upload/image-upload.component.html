@@ -1,3 +1,6 @@
+<div class="image-upload-wrapper bg-primary ">
+
+
 <div class="row">
   <div >
     <label >
@@ -7,7 +10,7 @@
 
   <div class="col-4 d-flex align-items-end">
     <button  [disabled]="!currentFile" (click)="upload()">
-      Upload
+      Salveaza
     </button>
   </div>
 </div>
@@ -22,15 +25,5 @@
     {{ message }}
   </div>
 }
+</div>
 
-<!--<div class="card">-->
-<!--  <div class="card-header">List of Images</div>-->
-<!--  <ul class="list-group list-group-flush">-->
-<!--    @for (image of imageInfos | async; track image.name) {-->
-<!--      <li class="list-group-item">-->
-<!--        <p><a href="{{ image.url }}">{{ image.name }}</a></p>-->
-<!--        <img ngSrc="{{ image.url }}" alt="{{ image.name }}" width="80px" height="80px" />-->
-<!--      </li>-->
-<!--    }-->
-<!--  </ul>-->
-<!--</div>-->

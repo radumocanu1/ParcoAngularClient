@@ -1,8 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
 import {UserService} from "../service/UserService";
-import {NotificationService} from "../service/NotificationService";
 
 @Component({
   selector: 'app-image-upload',
@@ -14,9 +11,7 @@ export class ImageUploadComponent implements OnInit {
   message = '';
   preview = '';
 
-  imageInfos?: Observable<any>;
-
-  constructor(private userService: UserService, private notificationService: NotificationService) {}
+  constructor(private userService: UserService) {}
   ngOnInit(): void {
   }
   selectFile(event: any): void {
@@ -45,7 +40,6 @@ export class ImageUploadComponent implements OnInit {
     if (this.currentFile) {
       this.userService.changeProfilePic(this.currentFile).subscribe({
         next: (event: any) => {
-          this.notificationService.emitImageUploaded();
           alert("Imaginea a fost incarcata cu succes!")
           window.location.reload();
 

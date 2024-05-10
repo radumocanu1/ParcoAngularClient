@@ -1,0 +1,14 @@
+<div class="image-container">
+  <div class="round-image-container">
+    <img [src]="imageUrl" alt="Preview" class="round-image">
+  </div>
+  <div class="button-container">
+    <button mat-fab extended color="primary" (click)="upload()">
+      Modifica fotografia de profil
+      <mat-icon>party_mode</mat-icon>
+    </button>
+    <p class="card-text" *ngIf="message">
+      {{message}} <mat-icon>sentiment_very_dissatisfied</mat-icon>
+    </p>
+  </div>
+</div>

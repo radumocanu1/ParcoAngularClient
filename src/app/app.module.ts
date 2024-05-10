@@ -34,6 +34,15 @@ import {
   MatDatepickerToggle
 } from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { ImagePreviewComponent } from './image-preview/image-preview.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef
+} from "@angular/material/snack-bar";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -62,6 +71,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UserProfileComponent,
     UserListComponent,
     ImageUploadComponent,
+    ImagePreviewComponent,
 
   ],
   imports: [
@@ -82,7 +92,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatFormField,
     MatInput,
     MatGridTile,
-    MatGridList
+    MatGridList,
+    MatDialogModule,
+    MatSnackBarAction,
+    MatSnackBarActions,
+    MatSnackBarLabel,
   ],
   providers: [UserService, {
     provide: APP_INITIALIZER,
