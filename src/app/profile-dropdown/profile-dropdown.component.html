@@ -1,6 +1,8 @@
 <div class="profile-dropdown" (click)="toggleDropdown()">
-  <img *ngIf="!localStorage.getItem('currentUserProfilePicture')"src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
-  <img *ngIf="localStorage.getItem('currentUserProfilePicture')"[src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
+  <div class="round-image-container">
+    <img *ngIf="!localStorage.getItem('currentUserProfilePicture')"src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
+    <img *ngIf="localStorage.getItem('currentUserProfilePicture')"[src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
+  </div>
 
   <mat-icon class="menu-icon">more_vert</mat-icon>
   <div class="dropdown-content" *ngIf="isDropdownOpen">

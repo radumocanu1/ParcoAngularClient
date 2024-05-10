@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {ImagePreviewComponent} from "../image-preview/image-preview.component";
+import {ImagePreviewComponent} from "../../image-preview/image-preview.component";
 
 
 @Injectable({

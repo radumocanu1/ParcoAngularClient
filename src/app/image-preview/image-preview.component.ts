@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../service/UserService";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {SnackbarService} from "../service/SnackbarService";
+import {SnackbarService} from "../service/util/SnackbarService";
 import {Router} from "@angular/router";
 
 @Component({
@@ -44,7 +44,6 @@ export class ImagePreviewComponent {
   }
 
   upload(): void {
-    console.log(this)
     if (this.imageFile) {
       this.userService.changeProfilePic(this.imageFile).subscribe({
         next: (event: any) => {

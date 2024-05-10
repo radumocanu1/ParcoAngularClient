@@ -16,14 +16,21 @@
 :host{
   background-color: #cccccc;
 }
-
-.profile-picture {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+.round-image-container {
   margin-top: 20px;
   margin-right: 10px;
   margin-left: 20px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+.profile-picture {
+  width: 100%;
+  height: auto;
+
 }
 
 

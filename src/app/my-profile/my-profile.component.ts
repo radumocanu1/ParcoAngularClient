@@ -4,7 +4,7 @@ import {UserService} from "../service/UserService";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import { FormBuilder } from '@angular/forms';
 import {Router} from "@angular/router";
-import {ImagePreviewService} from "../service/ImagepreviewService";
+import {ImagePreviewService} from "../service/util/ImagepreviewService";
 
 
 @Component({
