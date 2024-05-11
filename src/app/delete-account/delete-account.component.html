@@ -1,0 +1,13 @@
+<div class="alert alert-3-danger">
+  <div class="same-row">
+  <h3 class="alert-title">Esti sigur? Aceasta operatie este ireversibila!</h3>
+    <button mat-icon-button matTooltip="Inchide" color="primary" (click)="closeDialogBox()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <p class="alert-content">Daca vrei sa stergi contul, scrie "confirm" in casuta de mai jos</p>
+</div>
+<div class="input-button-wrapper">
+<input type="text" [(ngModel)]="confirmText">
+<button mat-flat-button (click)="deleteAccount()"  color="warn" [disabled]="confirmText !== 'confirm'">Sterge contul</button>
+</div>

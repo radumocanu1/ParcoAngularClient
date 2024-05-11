@@ -63,7 +63,10 @@ export class MyProfileComponent implements OnInit {
   }
   goBack(): void {
     this.isEditMode = false
-    this.location.back();
+    // navigating to root to refresh current page
+    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/myProfile']);
+    })
   }
 
   getUserProfile(): void {

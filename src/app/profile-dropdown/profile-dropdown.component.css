@@ -11,7 +11,9 @@
   height: auto;
 
 }
-
+.delete_account{
+  margin-top: 30px;
+}
 
 .profile-dropdown {
   width: 80px;

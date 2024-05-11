@@ -9,6 +9,7 @@ import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 
 @Injectable()
 export class UserService {
+  //TODO add retry mechanism
 
   private userUrl: string;
 

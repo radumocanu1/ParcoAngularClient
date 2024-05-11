@@ -2,7 +2,7 @@
 .card{
   background-color: #39a0ca;
   margin-left: 80px;
-  max-width: 18rem;
+  max-width: 25rem;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   margin-top: 80px;
 
@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
 }
+
 .cards-container{
     display: flex;
     align-items: center;

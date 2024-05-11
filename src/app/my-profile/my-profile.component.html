@@ -33,8 +33,7 @@
         <div class="card text-white">
           <h5 class="card-header">Detaliile mele</h5>
           <div class="card-body">
-            <p class="card-text">Nume :  {{ myProfile.lastName }}</p>
-            <p class="card-text">Prenume :  {{ myProfile.firstName }}</p>
+            <p class="card-text">Nume :  {{ myProfile.username }}</p>
             <p class="card-text">Email :  {{ myProfile.email }}</p>
 
             <p class="card-text">
@@ -82,57 +81,52 @@
       </div>
       </ng-container>
       <ng-template #editMode>
-        <div class="user-info-card">
+        <div class="user-info-card" style="width: 800px;">
           <div class="card text-white">
             <h5 class="card-header">Detaliile mele</h5>
             <div class="card-body">
-              <div class="same-row">
-              <p class="card-text">Nume: </p>
+              <div>
+                <p class="card-text">Nume: </p>
                 <mat-form-field>
                   <mat-label>Nume</mat-label>
-                  <input  required matInput placeholder="Nume" name="Nume" [(ngModel)]="myProfileUpdateRequest.lastName" >
+                  <input required matInput  placeholder="Nume" name="Varsta" [(ngModel)]="myProfileUpdateRequest.username" min="18" max="90" >
                 </mat-form-field></div>
-              <div class="same-row">
-                <p class="card-text">Prenume: </p>
-                <mat-form-field>
-                  <mat-label>Prenume</mat-label>
-                  <input required matInput placeholder="Prenume" name="Prenume" [(ngModel)]="myProfileUpdateRequest.firstName" >
-                </mat-form-field></div>
-              <div class="same-row">
+
+              <div>
                 <p class="card-text">Email: </p>
                 <mat-form-field>
                   <mat-label>{{myProfile.email}}</mat-label>
                   <input disabled matInput  >
                 </mat-form-field></div>
-              <div class="same-row">
+              <div>
                 <p class="card-text">Varsta: </p>
                 <mat-form-field>
                   <mat-label>Varsta</mat-label>
                   <input required matInput type="number" placeholder="Varsta" name="Varsta" [(ngModel)]="myProfileUpdateRequest.age" min="18" max="90" >
                 </mat-form-field></div>
-              <div class="same-row">
+              <div >
                 <p class="card-text">Telefon: </p>
                 <mat-form-field>
                   <mat-label>Telefon</mat-label>
                   <mat-icon matSuffix color="primary">phone</mat-icon>
                   <input type="number" matInput placeholder="Telefon" name="Varsta" [(ngModel)]="myProfileUpdateRequest.phoneNumber">
                 </mat-form-field></div>
-              <div class="same-row">
+              <div>
 
               <p class="card-text">
-                Sex:
+                Sex:<br>
                 <mat-form-field>
                   <mat-label>Sex</mat-label>
                   <mat-select required [(ngModel)]="myProfileUpdateRequest.sex">
                     <mat-option value="barbat">Masculin</mat-option>
                     <mat-option value="femeie">Feminin</mat-option>
                     <mat-option value="queer">Altceva</mat-option>
-                    <mat-option value="necunoscur">Prefer sa nu spun</mat-option>
+                    <mat-option value="necunoscut">Prefer sa nu spun</mat-option>
 
                   </mat-select>
                 </mat-form-field>
               </div>
-                <div class="same-row">
+                <div >
                 <button mat-fab extended color="primary" (click)="goBack()">
                   Anuleaza
                   <mat-icon>arrow_back</mat-icon>

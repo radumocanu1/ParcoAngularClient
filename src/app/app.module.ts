@@ -38,6 +38,7 @@ import {
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
 import { RegisterComponent } from './register/register.component';
+import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -67,6 +68,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UserListComponent,
     ImagePreviewComponent,
     RegisterComponent,
+    DeleteAccountComponent,
 
   ],
   imports: [

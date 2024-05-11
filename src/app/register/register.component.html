@@ -1,1 +1,26 @@
-<p>register works!</p>
+<div class="component-wrapper">
+<section class="hero">
+  <h1>Bine ai venit la Parco!</h1>
+  <p>Închiriază sau oferă spre închiriere locuri de parcare cu ușurință.</p>
+  <button class="btn-signup" *ngIf="!isLoggedIn" (click)="login()" mat-fab extended color="primary">
+    Conecteaza-te
+  </button></section>
+
+<section class="reasons">
+  <h2>De ce să folosești Parco?</h2>
+  <div class="reason">
+    <h3>Economisește timp</h3>
+    <p>Parco îți permite să găsești rapid și ușor locuri de parcare disponibile în zona ta, economisindu-ți timp prețios.</p>
+  </div>
+  <div class="reason">
+    <h3>Câștigă bani</h3>
+    <p>Dacă ai un loc de parcare disponibil, îl poți oferi spre închiriere și să câștigi bani suplimentari în fiecare lună.</p>
+  </div>
+  <div class="reason">
+    <h3>Siguranță</h3>
+    <p>Parco îți oferă o platformă sigură și de încredere pentru închirierea sau închirierea locurilor de parcare.</p>
+  </div>
+</section>
+</div>
+
+

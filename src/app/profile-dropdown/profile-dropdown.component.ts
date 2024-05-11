@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {KeycloakProfile} from "keycloak-js";
 import {KeycloakService} from "keycloak-angular";
+import {DeleteAccountService} from "../service/util/DeleteAccountService";
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -11,11 +12,12 @@ export class ProfileDropdownComponent implements OnInit {
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
   isDropdownOpen = false;
-  constructor(private readonly keycloak: KeycloakService) {
+  constructor(private deleteAccountService: DeleteAccountService,
+              private readonly keycloak: KeycloakService) {
   }
 
   public async ngOnInit() {
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
+    this.isLoggedIn = this.keycloak.isLoggedIn();
     if (!this.isLoggedIn) {
       localStorage.removeItem("currentUserProfilePicture");
 
@@ -34,11 +36,14 @@ export class ProfileDropdownComponent implements OnInit {
   }
 
   public logout(): void {
-    this.keycloak.logout("http://localhost:4200").then(() => {
+    this.keycloak.logout("http://localhost:4200/register").then(() => {
       console.log("Logout successful");
     }).catch((error: any) => {
       console.error("Logout failed:", error);
     });
+  }
+  public deleteAccount(): void {
+    this.deleteAccountService.openPreviewModal()
   }
 
 
