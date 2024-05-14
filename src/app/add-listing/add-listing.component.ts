@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ListingRequest} from "../model/ListingRequest";
 import {NgxFileDropEntry} from "ngx-file-drop";
+import {ListingService} from "../service/ListingService";
+import {Listing} from "../model/Listing";
 
 @Component({
   selector: 'app-add-listing',
@@ -23,7 +25,8 @@ export class AddListingComponent implements OnInit {
     options: { draggable: true }
   };
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+              private listingService: ListingService,) {}
 
   ngOnInit(): void {
     this.listingForm = this.fb.group({
@@ -70,7 +73,12 @@ export class AddListingComponent implements OnInit {
     if (this.listingForm.valid) {
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
       console.log(listingRequest);
-      // Logica de trimitere către backend va fi implementată aici.
+      this.listingService.createListing(listingRequest).subscribe(
+        (data: Listing) => {
+          console.log(data);
+        }
+      )
+
     }
   }
   onFileDrop(files: NgxFileDropEntry[]): void {

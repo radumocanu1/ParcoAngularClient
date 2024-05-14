@@ -1,5 +1,4 @@
 export class ListingRequest {
-  pictures: any;
   title!: string ;
   latitude!: string;
   longitude!: string;

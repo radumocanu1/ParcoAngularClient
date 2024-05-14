@@ -21,10 +21,7 @@ export class UserService {
     return this.http.get<UserDTO[]>(this.userUrl);
   }
 
-  public save(user: User) {
 
-    return this.http.post<User>(this.userUrl, user);
-  }
   public getUser(userUUID: string | null)  : Observable<UserProfileView> {
     return this.http.get<UserProfileView>(`${this.userUrl}/${userUUID}`);
   }
