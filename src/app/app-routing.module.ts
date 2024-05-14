@@ -6,6 +6,9 @@ import {UserProfileComponent} from "./user-profile/user-profile.component";
 import {ListingComponent} from "./listing/listing.component";
 import {ListingListComponent} from "./listing-list/listing-list.component";
 import {RegisterComponent} from "./register/register.component";
+import {ServerErrorComponent} from "./server-error/server-error.component";
+import {AccessDeniedComponent} from "./access-denied/access-denied.component";
+import {AddListingComponent} from "./add-listing/add-listing.component";
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
@@ -14,6 +17,9 @@ const routes: Routes = [
   { path: 'listing/:listingId', component: ListingComponent },
   { path: 'listings', component: ListingListComponent },
   { path: 'myProfile', component: MyProfileComponent },
+  {path: 'server-error', component: ServerErrorComponent },
+  {path: 'access-denied', component: AccessDeniedComponent },
+  {path: 'add-listing', component: AddListingComponent },
 
 ];
 

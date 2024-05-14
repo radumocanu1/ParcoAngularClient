@@ -22,7 +22,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {InterceptorModule} from "./interceptors/InterceptorModule";
 import {NgOptimizedImage} from "@angular/common";
 import {MatTooltip} from "@angular/material/tooltip";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -39,6 +39,10 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
 import { RegisterComponent } from './register/register.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
+import { AddListingComponent } from './add-listing/add-listing.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import {NgxFileDropModule} from "ngx-file-drop";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -69,6 +73,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ImagePreviewComponent,
     RegisterComponent,
     DeleteAccountComponent,
+    AddListingComponent,
+    ServerErrorComponent,
+    AccessDeniedComponent,
 
   ],
   imports: [
@@ -99,7 +106,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatOption,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule,
+    NgxFileDropModule
   ],
   providers: [UserService, {
     provide: APP_INITIALIZER,

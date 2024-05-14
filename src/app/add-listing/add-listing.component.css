@@ -1,0 +1,55 @@
+.listing-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.listing-form div {
+  margin-bottom: 12px;
+}
+
+.listing-form label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.listing-form input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.listing-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.listing-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+google-map {
+  margin-bottom: 12px;
+}
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}

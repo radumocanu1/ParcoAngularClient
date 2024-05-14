@@ -1,0 +1,53 @@
+<div class="listing-form">
+  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <div>
+      <div>Pictures:</div>
+      <ngx-file-drop dropZoneLabel="Drag and drop your files here" (onFileDrop)="onFileDrop($event)">
+        <p>Drag and drop files here or click to upload</p>
+      </ngx-file-drop>
+      <div class="preview-container">
+        <img *ngFor="let picture of previewPictures" [src]="picture" class="preview-image" alt="">
+      </div>
+    </div>
+
+    <div>
+      <label for="fileInput">Select an image:</label>
+      <input type="file" id="fileInput" (change)="onFileInputChange($event)">
+    </div>
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" formControlName="title">
+    </div>
+
+    <div>
+      <label for="startDate">Start Date:</label>
+      <input id="startDate" formControlName="startDate" type="date">
+    </div>
+
+    <div>
+      <label for="endDate">End Date:</label>
+      <input id="endDate" formControlName="endDate" type="date">
+    </div>
+
+    <div>
+      <label for="parkingSpotSlotNumber">Parking Spot Slot Number:</label>
+      <input id="parkingSpotSlotNumber" formControlName="parkingSpotSlotNumber" type="number">
+    </div>
+
+    <div>
+      <label for="price">Price:</label>
+      <input id="price" formControlName="price" type="number">
+    </div>
+    <div>
+      <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
+        <map-marker [position]="marker.position"></map-marker>
+      </google-map>
+    </div>
+
+
+    <button type="button" (click)="confirmLocation()">Locatie corecta</button>
+
+    <button type="submit" [disabled]="listingForm.invalid">Adauga anunt</button>
+
+  </form>
+</div>
