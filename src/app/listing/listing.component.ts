@@ -9,7 +9,7 @@ import {ListingService} from "../service/ListingService";
   styleUrl: './listing.component.css'
 })
 export class ListingComponent implements OnInit {
-  listing!: Listing;
+  listing: Listing | undefined;
   mapOptions!: google.maps.MapOptions;
   marker!: any;
   constructor(private route: ActivatedRoute, private listingService: ListingService) { }
@@ -19,18 +19,21 @@ export class ListingComponent implements OnInit {
       this.listingService.getListing(params.get('listingId')).subscribe(
         (data: Listing) => {
           this.listing = data;
+          console.log(this.listing);
           this.initializeMap();
         }
       );
     });  }
   initializeMap(): void {
     this.mapOptions = {
+      // @ts-ignore
       center: { lat: parseFloat(this.listing.latitude), lng: parseFloat(this.listing.longitude) },
       zoom: 18,
       mapTypeId: 'satellite',
 
     };
     this.marker = {
+      // @ts-ignore
       position: { lat: parseFloat(this.listing.latitude), lng: parseFloat(this.listing.longitude) },
     }
 

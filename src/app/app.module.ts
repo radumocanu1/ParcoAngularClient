@@ -43,6 +43,7 @@ import { AddListingComponent } from './add-listing/add-listing.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import {NgxFileDropModule} from "ngx-file-drop";
+import {BytesToImagePipe} from "./service/util/BytesToImagePipe";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -76,6 +77,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AddListingComponent,
     ServerErrorComponent,
     AccessDeniedComponent,
+    BytesToImagePipe
 
   ],
   imports: [

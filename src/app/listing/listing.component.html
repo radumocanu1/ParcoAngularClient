@@ -1,3 +1,5 @@
+<div *ngIf="listing">
+
 <div class="listing-details">
   <h2>{{ listing.title }}</h2>
   <p><strong>Location:</strong> Latitude: {{ listing.latitude }}, Longitude: {{ listing.longitude }}</p>
@@ -8,12 +10,20 @@
   <p><strong>Publishing Date:</strong> {{ listing.publishingDate }}</p>
   <h3>Pictures:</h3>
   <div *ngFor="let picture of listing.pictures">
-    <img [src]="picture.picturePath" alt="Listing Picture">
+    <img [src]="picture | bytesToImage" alt="Listing Picture">
   </div>
+
 </div>
 
 <div class="my-google-map">
   <google-map [options]="mapOptions">
     <map-marker [position]="marker.position"></map-marker>
   </google-map>
+</div>
+
+</div>
+
+<div *ngIf="!listing">
+  <mat-spinner></mat-spinner>
+
 </div>

@@ -16,6 +16,7 @@ export class AddListingComponent implements OnInit {
   pictures: File[] = [];
 
 
+
   mapOptions: google.maps.MapOptions = {
     center: { lat: 44.4286545011596, lng: 26.101418742985853 }, // Coordonate inițiale
     zoom: 12
@@ -66,16 +67,22 @@ export class AddListingComponent implements OnInit {
       latitude: lat,
       longitude: lng
     });
-    console.log(this.listingForm.getRawValue())
   }
 
   onSubmit(): void {
     if (this.listingForm.valid) {
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
-      console.log(listingRequest);
       this.listingService.createListing(listingRequest).subscribe(
         (data: Listing) => {
-          console.log(data);
+          console.log(this.pictures)
+          const listingUUID = data.listingUUID;
+          for (let i = 0; i < this.pictures.length; i++) {
+            this.listingService.addPhotoToListing(listingUUID,this.pictures[i]).subscribe(
+              (data: string) =>{
+               console.log(data);
+          }
+            )
+          }
         }
       )
 

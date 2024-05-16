@@ -21,4 +21,12 @@ export class ListingService {
   getAllListings(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
+  addPhotoToListing(listingUUID: string, file: File): Observable<string> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    return this.http.patch(`${this.apiUrl}/picture/${listingUUID}`, formData, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+  }
 }

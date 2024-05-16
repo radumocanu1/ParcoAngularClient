@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigate(['/access-denied']);
         } else if (error.status === 500 || (error.error && error.error.code === 'ECONNREFUSED')) {
           console.log("Redirecting to server error page");
-          this.router.navigate(['/server-error']);
+          // this.router.navigate(['/server-error']);
         }
 
         throw(error);

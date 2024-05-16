@@ -88,6 +88,7 @@ export class MyProfileComponent implements OnInit {
 
   public profilePicture(): string {
     if (this.myProfile) {
+      console.log(this.myProfile);
     return this.userService.getProfilePictureUrl(this.myProfile.profilePictureBytes)
       }
     return ''

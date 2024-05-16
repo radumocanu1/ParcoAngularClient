@@ -1,6 +1,6 @@
 export class Listing {
   listingUUID: string;
-  pictures: { pictureUUID: string, picturePath: string }[];
+  pictures:Array<any>;
   title: string;
   latitude: string;
   longitude: string;
@@ -12,7 +12,7 @@ export class Listing {
 
   constructor(
     listingUUID: string,
-    pictures: { pictureUUID: string, picturePath: string }[],
+    pictures: Array<any>,
     title: string,
     latitude: string,
     longitude: string,
