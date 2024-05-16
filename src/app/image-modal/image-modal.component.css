@@ -1,0 +1,17 @@
+/* Stiluri CSS pentru modal */
+.modal-dialog {
+  max-width: 90%;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}

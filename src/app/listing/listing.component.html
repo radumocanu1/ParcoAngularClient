@@ -9,9 +9,9 @@
   <p><strong>Price:</strong> {{ listing.price }}</p>
   <p><strong>Publishing Date:</strong> {{ listing.publishingDate }}</p>
   <h3>Pictures:</h3>
-  <div *ngFor="let picture of listing.pictures">
-    <img [src]="picture | bytesToImage" alt="Listing Picture">
-  </div>
+
+  <app-image-modal *ngIf="listing" [images]="listing.pictures"></app-image-modal>
+
 
 </div>
 

@@ -1,0 +1,16 @@
+<!-- image-modal.component.html -->
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">{{ currentIndex + 1 }}/{{ totalImages }}</h4>
+    </div>
+    <div class="modal-body">
+      <img *ngIf="!isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)">
+      <img *ngIf="isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="prevImage()" [disabled]="currentIndex === 0">Prev</button>
+      <button type="button" class="btn btn-secondary" (click)="nextImage()" [disabled]="currentIndex === totalImages - 1">Next</button>
+    </div>
+  </div>
+</div>

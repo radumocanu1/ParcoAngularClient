@@ -4,7 +4,7 @@ import {UserService} from "../service/UserService";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";
-import {ImagePreviewService} from "../service/util/ImagepreviewService";
+import {ImageViewService} from "../service/util/ImageViewService";
 import { Location } from '@angular/common';
 import {SnackbarService} from "../service/util/SnackbarService";
 
@@ -29,7 +29,7 @@ export class MyProfileComponent implements OnInit {
   constructor(
               private route: ActivatedRoute,
               private location: Location,
-              private imagePreviewService: ImagePreviewService,
+              private ImageViewService: ImageViewService,
               private userService: UserService,
               private formBuilder: FormBuilder,
               private router:Router,
@@ -110,12 +110,12 @@ export class MyProfileComponent implements OnInit {
 
       if (file) {
         this.currentFile = file;
-        this.imagePreviewService.openPreviewModal(file);
+        this.ImageViewService.openPreviewModal(file);
 
         const reader = new FileReader();
 
         reader.onload = (e: any) => {
-          this.imagePreviewService.openPreviewModal(e.target.result);
+          this.ImageViewService.openPreviewModal(e.target.result);
         };
 
       }

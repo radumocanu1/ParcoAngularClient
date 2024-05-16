@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {ImagePreviewComponent} from "../../image-preview/image-preview.component";
+import {FullImageModalComponent} from "../../full-image-modal/full-image-modal.component";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ImagePreviewService {
+export class ImageViewService {
 
   constructor(private dialog: MatDialog) { }
   openPreviewModal(image: File) {
@@ -15,6 +16,17 @@ export class ImagePreviewService {
       data: { image },
       width: '500px'
     });
+
   }
+  openFullImageModal(image: string) {
+    console.log("image", image);
+    this.dialog.open(FullImageModalComponent, {
+      data: { image },
+      height: 'auto',
+      width: 'auto',
+    });
+
+  }
+
 
 }

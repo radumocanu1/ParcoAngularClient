@@ -44,6 +44,11 @@ import { ServerErrorComponent } from './server-error/server-error.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import {NgxFileDropModule} from "ngx-file-drop";
 import {BytesToImagePipe} from "./service/util/BytesToImagePipe";
+import {ModalModule} from "ngx-bootstrap/modal";
+import { ImageModalComponent } from './image-modal/image-modal.component';
+import { FullImageModalComponent } from './full-image-modal/full-image-modal.component';
+
+
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -77,8 +82,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AddListingComponent,
     ServerErrorComponent,
     AccessDeniedComponent,
-    BytesToImagePipe
-
+    BytesToImagePipe,
+    ImageModalComponent,
+    FullImageModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,7 +116,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    ModalModule.forRoot(),
+
+
+
   ],
   providers: [UserService, {
     provide: APP_INITIALIZER,

@@ -1,0 +1,16 @@
+
+/* Stiluri pentru dialogul modal */
+.full-image-dialog {
+  max-width: 90%; /* Lățime maximă a dialogului */
+  max-height: 90%; /* Înălțime maximă a dialogului */
+  margin: auto; /* Centrare orizontală și verticală a dialogului */
+  display: flex;
+  align-items: center;
+}
+
+/* Stiluri pentru imagine */
+.full-image-dialog img {
+  max-width: 100%; /* Lățime maximă a imaginii */
+  max-height: 100%; /* Înălțime maximă a imaginii */
+  margin: auto; /* Centrare orizontală și verticală a imaginii */
+}
