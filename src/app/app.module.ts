@@ -29,17 +29,15 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import { ImagePreviewComponent } from './image-preview/image-preview.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {
-  MatSnackBar,
   MatSnackBarAction,
   MatSnackBarActions,
   MatSnackBarLabel,
-  MatSnackBarRef
 } from "@angular/material/snack-bar";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
 import { RegisterComponent } from './register/register.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
-import { AddListingComponent } from './add-listing/add-listing.component';
+import {AddListingComponent} from './add-listing/add-listing.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import {NgxFileDropModule} from "ngx-file-drop";
@@ -47,6 +45,12 @@ import {BytesToImagePipe} from "./service/util/BytesToImagePipe";
 import {ModalModule} from "ngx-bootstrap/modal";
 import { ImageModalComponent } from './image-modal/image-modal.component';
 import { FullImageModalComponent } from './full-image-modal/full-image-modal.component';
+import { MyListingsComponent } from './my-listings/my-listings.component';
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -85,6 +89,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BytesToImagePipe,
     ImageModalComponent,
     FullImageModalComponent,
+    MyListingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +123,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ReactiveFormsModule,
     NgxFileDropModule,
     ModalModule.forRoot(),
-
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatNativeDateModule
 
 
   ],

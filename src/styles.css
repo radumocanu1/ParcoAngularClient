@@ -12,5 +12,9 @@ body {
 
 
 mat-dialog-container {
-  background-color: transparent !important;
+  background: none;
+}
+.same-row{
+  display: flex;
+  align-items: center;
 }

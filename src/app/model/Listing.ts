@@ -9,6 +9,9 @@ export class Listing {
   parkingSpotSlotNumber: number;
   publishingDate: string;
   price: number;
+  sector: number;
+  location: string
+  mainPicture: any
 
   constructor(
     listingUUID: string,
@@ -20,7 +23,10 @@ export class Listing {
     endDate: string,
     parkingSpotSlotNumber: number,
     publishingDate: string,
-    price: number
+    price: number,
+    sector: number,
+    location: string,
+    mainPicture: any
   ) {
     this.listingUUID = listingUUID;
     this.pictures = pictures;
@@ -32,5 +38,8 @@ export class Listing {
     this.parkingSpotSlotNumber = parkingSpotSlotNumber;
     this.publishingDate = publishingDate;
     this.price = price;
+    this.sector = sector;
+    this.location = location;
+    this.mainPicture = mainPicture;
   }
 }

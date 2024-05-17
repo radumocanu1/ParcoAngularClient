@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ListingRequest} from "../model/ListingRequest";
 import {Listing} from "../model/Listing";
+import {MinimalListing} from "../model/MinimalListing";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,10 @@ export class ListingService {
     return this.http.post<Listing>(this.apiUrl , listingRequest);
   }
   getAllListings(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(`${this.apiUrl}/test`);
+  }
+  getFilteredListings(filter: any): Observable<MinimalListing[]> {
+    return this.http.get<MinimalListing[]>(`${this.apiUrl}/filtered`, { params: filter });
   }
   addPhotoToListing(listingUUID: string, file: File): Observable<string> {
     const formData: FormData = new FormData();
@@ -29,4 +33,14 @@ export class ListingService {
       responseType: 'text'
     });
   }
+  addMainPhotoToListing(listingUUID: string, file: File | null): Observable<string> {
+    const formData: FormData = new FormData();
+    // @ts-ignore
+    formData.append('file', file);
+    return this.http.patch(`${this.apiUrl}/main-picture/${listingUUID}`, formData, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+  }
+
 }

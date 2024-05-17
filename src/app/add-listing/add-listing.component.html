@@ -1,33 +1,31 @@
 <div class="listing-form">
   <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
-    <div>
-      <div>Pictures:</div>
-      <ngx-file-drop dropZoneLabel="Drag and drop your files here" (onFileDrop)="onFileDrop($event)">
-        <p>Drag and drop files here or click to upload</p>
-      </ngx-file-drop>
-      <div class="preview-container">
-        <img *ngFor="let picture of previewPictures" [src]="picture" class="preview-image" alt="">
-      </div>
-    </div>
 
     <div>
-      <label for="fileInput">Select an image:</label>
-      <input type="file" id="fileInput" (change)="onFileInputChange($event)">
-    </div>
-    <div>
-      <label for="title">Title:</label>
+      <label for="title">Titlul anuntului:</label>
       <input id="title" formControlName="title">
     </div>
 
     <div>
-      <label for="startDate">Start Date:</label>
+      <label for="startDate">Data de la care locul de parcare e disponibil:</label>
       <input id="startDate" formControlName="startDate" type="date">
     </div>
 
     <div>
-      <label for="endDate">End Date:</label>
+      <label for="endDate">Data pana la care locul de parcare e disponibil:</label>
       <input id="endDate" formControlName="endDate" type="date">
     </div>
+    <div>
+      <label for="sector">Sector:</label>
+      <input id="sector" formControlName="sector" type="number">
+    </div>
+    <div>
+      <label for="location">Locatia exacta (nume strada + numar):</label>
+      <input id="location" formControlName="location">
+    </div>
+
+
+
 
     <div>
       <label for="parkingSpotSlotNumber">Parking Spot Slot Number:</label>
@@ -38,6 +36,48 @@
       <label for="price">Price:</label>
       <input id="price" formControlName="price" type="number">
     </div>
+    <div >
+      <div class="same-row">Fotografii:
+        <div class="preview-container">
+          <div class="info-icon" (mouseenter)="showInfoPopup()" (mouseleave)="hideInfoPopup()">
+            <mat-icon>help</mat-icon>
+            <div class="info-popup" *ngIf="infoPopupVisible">
+              <h1>Cum selectez imaginea principala?</h1>
+              <p>Imaginea principala (ce va aparea pe pagina principala a anuntului) va fi afisata cu margini roșii. Pentru a schimba imaginea, apăsați pe poza dorită.</p>
+              <div class="info-images">
+              <img src="./assets/template_profile_picture.png" alt="Exemplu de imagine selectată" class="example-image">
+              <div class="main-picture-label">Imaginea principala</div>
+              <img src="./assets/template_profile_picture.png" alt="Exemplu de imagine selectată" class="example-image-selected">
+              <img src="./assets/template_profile_picture.png" alt="Exemplu de imagine selectată" class="example-image">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <ngx-file-drop dropZoneLabel="Adauga fotografii cu drag and drop aici" (onFileDrop)="onFileDrop($event)">
+        <p>Adauga fotografii cu drag and drop aici</p>
+      </ngx-file-drop>
+
+      <div class="preview-container">
+        <div *ngFor="let picture of previewPictures; let i = index" class="preview-wrapper">
+          <img [src]="picture"
+               class="preview-image"
+                 [ngClass]="{'selected': mainPictureIndex === i}"
+               alt=""
+               (click)="makeMainPicture(i)">
+          <div class="remove-btn"  (click)="removePicture(i)"> <mat-icon>close</mat-icon></div>
+
+        </div>
+      </div>
+
+
+    </div>
+    <div>
+      <label for="fileInput">Sau incarca din pozele salvate:</label>
+      <input type="file" id="fileInput" accept="image/*" (change)="onFileInputChange($event)">
+    </div>
+
     <div>
       <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
         <map-marker [position]="marker.position"></map-marker>

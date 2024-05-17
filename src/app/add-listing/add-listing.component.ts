@@ -4,6 +4,9 @@ import {ListingRequest} from "../model/ListingRequest";
 import {NgxFileDropEntry} from "ngx-file-drop";
 import {ListingService} from "../service/ListingService";
 import {Listing} from "../model/Listing";
+import {SnackbarService} from "../service/util/SnackbarService";
+import {Router} from "@angular/router";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-listing',
@@ -14,6 +17,9 @@ export class AddListingComponent implements OnInit {
   listingForm!: FormGroup;
   previewPictures: string[] = [];
   pictures: File[] = [];
+  mainPicture: File | null = null;
+  mainPictureIndex: number = -1;
+  infoPopupVisible: boolean = false;
 
 
 
@@ -27,7 +33,10 @@ export class AddListingComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder,
-              private listingService: ListingService,) {}
+              private listingService: ListingService,
+              private snackbarService: SnackbarService,
+              private router: Router,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.listingForm = this.fb.group({
@@ -38,18 +47,13 @@ export class AddListingComponent implements OnInit {
       parkingSpotSlotNumber: [null, Validators.required],
       price: [null, Validators.required],
       latitude: [ Validators.required],
-      longitude: [ Validators.required]
+      longitude: [ Validators.required],
+      location: [ '', Validators.required],
+      sector: [ Validators.required],
     });
+
   }
 
-  onFileChange(event: any): void {
-    const files = event.target.files;
-    if (files) {
-      this.listingForm.patchValue({
-        pictures: files
-      });
-    }
-  }
   onMapClick(event: google.maps.MapMouseEvent): void {
     const coords = event.latLng;
     if (coords) {
@@ -60,6 +64,13 @@ export class AddListingComponent implements OnInit {
       });
     }
   }
+  openSnackBar() {
+    this.snackbarService.openSnackBar('✨ Anuntul dumneavoastra a fost procesat cu succes! ✨');
+  }
+  makeMainPicture(index: number): void {
+    this.mainPicture = this.pictures[index];
+    this.mainPictureIndex = index;
+  }
 
   confirmLocation(): void {
     const { lat, lng } = this.marker.position;
@@ -67,6 +78,8 @@ export class AddListingComponent implements OnInit {
       latitude: lat,
       longitude: lng
     });
+    console.log(this.mainPicture)
+    console.log(this.listingForm.getRawValue())
   }
 
   onSubmit(): void {
@@ -74,8 +87,12 @@ export class AddListingComponent implements OnInit {
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
       this.listingService.createListing(listingRequest).subscribe(
         (data: Listing) => {
-          console.log(this.pictures)
           const listingUUID = data.listingUUID;
+          this.listingService.addMainPhotoToListing(listingUUID, this.mainPicture).subscribe(
+            (data:string) => {
+              console.log(data)
+            }
+          )
           for (let i = 0; i < this.pictures.length; i++) {
             this.listingService.addPhotoToListing(listingUUID,this.pictures[i]).subscribe(
               (data: string) =>{
@@ -83,6 +100,8 @@ export class AddListingComponent implements OnInit {
           }
             )
           }
+          this.openSnackBar();
+          this.router.navigate(['/my-listings']);
         }
       )
 
@@ -129,5 +148,31 @@ export class AddListingComponent implements OnInit {
     this.listingForm.patchValue({
       pictures: this.pictures
     });
+    if (this.mainPictureIndex == -1){
+      this.mainPicture = files[0];
+      this.mainPictureIndex = 0
+    }
+  }
+  removePicture(index: number): void {
+    this.previewPictures.splice(index, 1);
+    this.pictures.splice(index, 1);
+
+    if (this.mainPictureIndex === index) {
+      this.mainPictureIndex = 0;
+      if (this.previewPictures.length > 0) {
+        this.mainPicture = this.pictures[0];
+      }
+      else {
+        this.mainPicture = null
+      }
+    }
+  }
+
+  showInfoPopup(): void {
+    this.infoPopupVisible = true;
+  }
+
+  hideInfoPopup(): void {
+    this.infoPopupVisible = false;
   }
 }

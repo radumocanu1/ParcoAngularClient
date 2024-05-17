@@ -9,6 +9,7 @@ import {RegisterComponent} from "./register/register.component";
 import {ServerErrorComponent} from "./server-error/server-error.component";
 import {AccessDeniedComponent} from "./access-denied/access-denied.component";
 import {AddListingComponent} from "./add-listing/add-listing.component";
+import {MyListingsComponent} from "./my-listings/my-listings.component";
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'server-error', component: ServerErrorComponent },
   {path: 'access-denied', component: AccessDeniedComponent },
   {path: 'add-listing', component: AddListingComponent },
+  {path: 'my-listings', component: MyListingsComponent },
 
 ];
 

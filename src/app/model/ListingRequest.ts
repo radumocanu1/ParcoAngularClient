@@ -7,5 +7,7 @@ export class ListingRequest {
   parkingSpotSlotNumber!: number;
   publishingDate!: string;
   price!: number;
+  sector!: number;
+  location!: string;
 }
 
