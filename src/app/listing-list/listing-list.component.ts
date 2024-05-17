@@ -44,20 +44,27 @@ export class ListingListComponent implements OnInit {
     });
   }
 
+  // applyFilter(): void {
+  //   const filterValues = this.filterForm.value;
+  //   this.dataSource.filterPredicate = (data: MinimalListing, filter: string) => {
+  //     const searchTerms = JSON.parse(filter);
+  //     const matchesSector = searchTerms.sector ? data.sector === searchTerms.sector : true;
+  //     const matchesStartDate = searchTerms.startDate ? new Date(data.startDate) >= new Date(searchTerms.startDate) : true;
+  //     const matchesEndDate = searchTerms.endDate ? new Date(data.endDate) <= new Date(searchTerms.endDate) : true;
+  //     const matchesPrice = searchTerms.price ? data.price === searchTerms.price : true;
+  //     const matchesTitle = data.title.toLowerCase().includes(searchTerms.search.toLowerCase());
+  //
+  //     return matchesSector && matchesStartDate && matchesEndDate && matchesPrice && matchesTitle;
+  //   };
+  //
+  //   this.dataSource.filter = JSON.stringify(filterValues);
+  // }
   applyFilter(): void {
     const filterValues = this.filterForm.value;
-    this.dataSource.filterPredicate = (data: MinimalListing, filter: string) => {
-      const searchTerms = JSON.parse(filter);
-      const matchesSector = searchTerms.sector ? data.sector === searchTerms.sector : true;
-      const matchesStartDate = searchTerms.startDate ? new Date(data.startDate) >= new Date(searchTerms.startDate) : true;
-      const matchesEndDate = searchTerms.endDate ? new Date(data.endDate) <= new Date(searchTerms.endDate) : true;
-      const matchesPrice = searchTerms.price ? data.price === searchTerms.price : true;
-      const matchesTitle = data.title.toLowerCase().includes(searchTerms.search.toLowerCase());
-
-      return matchesSector && matchesStartDate && matchesEndDate && matchesPrice && matchesTitle;
-    };
-
-    this.dataSource.filter = JSON.stringify(filterValues);
+    // Mock the backend request
+    this.listingService.getFilteredListings(filterValues).subscribe(listings => {
+      this.dataSource.data = listings;
+    });
   }
 
   applySearch(event: Event): void {
