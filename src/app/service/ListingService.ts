@@ -16,6 +16,9 @@ export class ListingService {
   getListing(listingId: string| null): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/' + listingId);
   }
+  getMyListings(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + '/userListings');
+  }
   createListing(listingRequest:ListingRequest): Observable<any> {
     return this.http.post<Listing>(this.apiUrl , listingRequest);
   }

@@ -1,1 +1,15 @@
-<p>my-listings works!</p>
+<div class="card-container">
+  <mat-card *ngFor="let element of paginatedListings" class="listing-card" (click)="onRowClick(element)">
+    <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Listing image">
+    <mat-card-title>{{element.title}}</mat-card-title>
+    <mat-card-footer>
+      <div class="listing-details">
+        <div class="price">{{element.price | currency}}</div>
+        <div class="sector-rating">
+          <span>Sector {{element.sector}}</span>
+          <span>Rating: {{element.rating || 'N/A'}}</span>
+        </div>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>

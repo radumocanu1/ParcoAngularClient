@@ -7,6 +7,7 @@ import {Listing} from "../model/Listing";
 import {SnackbarService} from "../service/util/SnackbarService";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {catchError, concatMap, forkJoin, of} from "rxjs";
 
 @Component({
   selector: 'app-add-listing',
@@ -80,32 +81,38 @@ export class AddListingComponent implements OnInit {
     });
 
   }
-
   onSubmit(): void {
     if (this.listingForm.valid) {
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
-      // remove main picture from Pictures list
-      this.listingService.createListing(listingRequest).subscribe(
-        (data: Listing) => {
-          this.pictures.splice(this.mainPictureIndex,1)
+      this.listingService.createListing(listingRequest).pipe(
+        concatMap((data: Listing) => {
           const listingUUID = data.listingUUID;
-          this.listingService.addMainPhotoToListing(listingUUID, this.mainPicture).subscribe(
-            () => {
-            }
-          )
-          console.log(this.pictures)
-          for (let i = 0; i < this.pictures.length; i++) {
-            this.listingService.addPhotoToListing(listingUUID,this.pictures[i]).subscribe(
-              (data: string) =>{
-               console.log(data);
-          }
-            )
-          }
-          this.openSnackBar();
-          this.router.navigate(['/my-listings']);
-        }
-      )
 
+          // Request to add the main photo
+          const mainPhotoRequest = this.listingService.addMainPhotoToListing(listingUUID, this.mainPicture).pipe(
+            catchError(error => {
+              console.error('Error uploading main photo', error);
+              return of(null); // Continue even if there is an error
+            })
+          );
+
+          // Requests to add the other photos
+          const otherPhotosRequests = this.pictures.map(picture =>
+            this.listingService.addPhotoToListing(listingUUID, picture).pipe(
+              catchError(error => {
+                console.error('Error uploading photo', error);
+                return of(null); // Continue even if there is an error
+              })
+            )
+          );
+
+          // Use forkJoin to wait for all requests to complete
+          return forkJoin([mainPhotoRequest, ...otherPhotosRequests]);
+        })
+      ).subscribe(() => {
+        this.openSnackBar();
+        this.router.navigate(['/my-listings']);
+      });
     }
   }
   onFileDrop(files: NgxFileDropEntry[]): void {
