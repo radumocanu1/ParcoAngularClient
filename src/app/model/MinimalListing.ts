@@ -7,6 +7,7 @@ export class MinimalListing {
   endDate!: Date;
   price!: number;
   publishingDate!: Date;
+  rating!: number
 
 
 

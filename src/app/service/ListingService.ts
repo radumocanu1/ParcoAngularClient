@@ -19,8 +19,8 @@ export class ListingService {
   createListing(listingRequest:ListingRequest): Observable<any> {
     return this.http.post<Listing>(this.apiUrl , listingRequest);
   }
-  getAllListings(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/test`);
+  getAllListings(): Observable<MinimalListing[]> {
+    return this.http.get<MinimalListing[]>(this.apiUrl);
   }
   getFilteredListings(filter: any): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(`${this.apiUrl}/filtered`, { params: filter });

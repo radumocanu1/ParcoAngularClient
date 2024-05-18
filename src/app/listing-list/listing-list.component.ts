@@ -1,22 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Listing} from "../model/Listing";
-import {ListingService} from "../service/ListingService";
-import {MatTableDataSource} from "@angular/material/table";
-import {MinimalListing} from "../model/MinimalListing";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {Router} from "@angular/router";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ListingService } from "../service/ListingService";
+import { MatTableDataSource } from "@angular/material/table";
+import { MinimalListing } from "../model/MinimalListing";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listing-list',
   templateUrl: './listing-list.component.html',
-  styleUrl: './listing-list.component.css'
+  styleUrls: ['./listing-list.component.css']
 })
 export class ListingListComponent implements OnInit {
   displayedColumns: string[] = ['picture', 'title', 'sector', 'startDate', 'endDate', 'price', 'publishingDate'];
   dataSource = new MatTableDataSource<MinimalListing>();
   filterForm: FormGroup;
+  paginatedListings: MinimalListing[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -27,53 +27,74 @@ export class ListingListComponent implements OnInit {
       startDate: [''],
       endDate: [''],
       price: [''],
-      search: ['']
+      search: [''],
+      indefinitePeriod: [false]
     });
   }
 
   ngOnInit(): void {
     this.loadListings();
-  }
-
-  loadListings(): void {
-    this.listingService.getAllListings().subscribe(listings => {
-      this.dataSource.data = listings;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort; // Asigură-te că legi sortarea aici
-      console.log(listings);
+    this.filterForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
+      if (value) {
+        this.filterForm.get('endDate')!.disable();
+      } else {
+        this.filterForm.get('endDate')!.enable();
+      }
     });
   }
 
-  // applyFilter(): void {
-  //   const filterValues = this.filterForm.value;
-  //   this.dataSource.filterPredicate = (data: MinimalListing, filter: string) => {
-  //     const searchTerms = JSON.parse(filter);
-  //     const matchesSector = searchTerms.sector ? data.sector === searchTerms.sector : true;
-  //     const matchesStartDate = searchTerms.startDate ? new Date(data.startDate) >= new Date(searchTerms.startDate) : true;
-  //     const matchesEndDate = searchTerms.endDate ? new Date(data.endDate) <= new Date(searchTerms.endDate) : true;
-  //     const matchesPrice = searchTerms.price ? data.price === searchTerms.price : true;
-  //     const matchesTitle = data.title.toLowerCase().includes(searchTerms.search.toLowerCase());
-  //
-  //     return matchesSector && matchesStartDate && matchesEndDate && matchesPrice && matchesTitle;
-  //   };
-  //
-  //   this.dataSource.filter = JSON.stringify(filterValues);
-  // }
+
+  loadListings(): void {
+    this.listingService.getAllListings().subscribe(minimalListings => {
+      this.dataSource.data = minimalListings;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.paginateListings();
+    });
+  }
+
   applyFilter(): void {
     const filterValues = this.filterForm.value;
-    // Mock the backend request
     this.listingService.getFilteredListings(filterValues).subscribe(listings => {
       this.dataSource.data = listings;
+      this.paginateListings();
     });
   }
 
   applySearch(event: Event): void {
     const searchValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = searchValue.trim().toLowerCase();
+    this.paginateListings();
+  }
+
+  applySort(sortValue: string): void {
+    switch (sortValue) {
+      case 'recent':
+        this.dataSource.data.sort((a, b) => new Date(b.publishingDate).getTime() - new Date(a.publishingDate).getTime());
+        break;
+      case 'cheap':
+        this.dataSource.data.sort((a, b) => a.price - b.price);
+        break;
+      case 'rating':
+        this.dataSource.data.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+      default:
+        break;
+    }
+    this.paginateListings();
+  }
+
+  changePage(event: PageEvent): void {
+    this.paginateListings(event.pageIndex, event.pageSize);
+  }
+
+  paginateListings(pageIndex: number = 0, pageSize: number = 5): void {
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+    this.paginatedListings = this.dataSource.filteredData.slice(startIndex, endIndex);
   }
 
   onRowClick(row: MinimalListing): void {
-    this.router.navigate([`/listing/${row.listingUUID}`]); // Assuming title is a unique identifier
+    this.router.navigate([`/listing/${row.listingUUID}`]);
   }
-
 }

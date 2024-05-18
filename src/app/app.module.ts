@@ -51,6 +51,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatCheckbox} from "@angular/material/checkbox";
+import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
 
 
 
@@ -90,6 +92,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ImageModalComponent,
     FullImageModalComponent,
     MyListingsComponent,
+    RentDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,7 +132,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatDatepickerInput,
     MatDatepickerToggle,
     MatDatepicker,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckbox
 
 
   ],

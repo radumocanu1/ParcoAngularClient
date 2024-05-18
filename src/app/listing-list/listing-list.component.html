@@ -1,77 +1,66 @@
-<div class="filter-container">
-  <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+<mat-card class="main-container">
+  <div class="filter-container">
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+      <mat-form-field>
+        <mat-label>Sector</mat-label>
+        <mat-select formControlName="sector">
+          <mat-option *ngFor="let sector of [1, 2, 3, 4, 5, 6]" [value]="sector">{{ sector }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" [disabled]="filterForm.get('indefinitePeriod')?.value">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-checkbox formControlName="indefinitePeriod">Caut pentru perioada nedeterminată de timp</mat-checkbox>
+      <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price" type="number">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Apply Filter</button>
+    </form>
+  </div>
+
+  <div class="search-bar">
     <mat-form-field>
-      <mat-label>Sector</mat-label>
-      <mat-select formControlName="sector">
-        <mat-option *ngFor="let sector of [1, 2, 3, 4, 5, 6]" [value]="sector">{{ sector }}</mat-option>
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applySearch($event)" placeholder="Search by title">
+    </mat-form-field>
+  </div>
+
+  <div class="sort-bar">
+    <mat-form-field>
+      <mat-label>Sort by</mat-label>
+      <mat-select (selectionChange)="applySort($event.value)">
+        <mat-option value="recent">Cel mai recent</mat-option>
+        <mat-option value="cheap">Cel mai ieftin</mat-option>
+        <mat-option value="rating">Cel mai mare rating</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="startPicker" formControlName="startDate">
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>End Date</mat-label>
-      <input matInput [matDatepicker]="endPicker" formControlName="endDate">
-      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Price</mat-label>
-      <input matInput formControlName="price" type="number">
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Apply Filter</button>
-  </form>
-</div>
+  </div>
 
-<div class="search-bar">
-  <mat-form-field>
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="applySearch($event)" placeholder="Search by title">
-  </mat-form-field>
-</div>
+  <div class="card-container">
+    <mat-card *ngFor="let element of paginatedListings" class="listing-card" (click)="onRowClick(element)">
+      <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Listing image">
+      <mat-card-title>{{element.title}}</mat-card-title>
+      <mat-card-footer>
+        <div class="listing-details">
+          <div class="price">{{element.price | currency}}</div>
+          <div class="sector-rating">
+            <span>Sector {{element.sector}}</span>
+            <span>Rating: {{element.rating || 'N/A'}}</span>
+          </div>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
 
-<table mat-table [dataSource]="dataSource" matSort>
-
-  <ng-container matColumnDef="picture">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Picture </th>
-    <td mat-cell *matCellDef="let element"> <img [src]="element.mainPicture | bytesToImage" class="rounded-picture"> </td>
-  </ng-container>
-
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="sector">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sector </th>
-    <td mat-cell *matCellDef="let element"> {{element.sector}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="startDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.startDate | date}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="endDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.endDate | date}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-    <td mat-cell *matCellDef="let element"> {{element.price | currency}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="publishingDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Publishing Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.publishingDate | date}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></tr>
-</table>
-
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" (page)="changePage($event)"></mat-paginator>
+</mat-card>

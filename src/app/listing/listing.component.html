@@ -1,30 +1,61 @@
-<div *ngIf="listing">
+<div *ngIf="listing" class="listing-page-container">
+  <mat-card class="parent-mat-card">
+  <div class="listing-header">
+    <h2>{{ listing.title }}</h2>
+    <mat-card>
+      <mat-card-title >
+    <div (click)="navigateToUserProfile()" class="user-info">
+      <img [src]="user.profilePicURL" alt="{{ user.name }}" class="user-pic">
+      <p>{{user.name}}</p>
+    </div>
+        </mat-card-title>
+      <mat-card-subtitle>
+          <p class="user-rating">Rating⭐️ {{user.rating}}</p>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <button mat-fab extended color="primary" (click)="sendMessage()" class="send-message-button">
+        Trimite mesaj
+        <mat-icon>message</mat-icon>
+      </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-<div class="listing-details">
-  <h2>{{ listing.title }}</h2>
-  <p><strong>Location:</strong> Latitude: {{ listing.latitude }}, Longitude: {{ listing.longitude }}</p>
-  <p><strong>Start Date:</strong> {{ listing.startDate }}</p>
-  <p><strong>End Date:</strong> {{ listing.endDate }}</p>
-  <p><strong>Parking Spot Slot Number:</strong> {{ listing.parkingSpotSlotNumber }}</p>
-  <p><strong>Price:</strong> {{ listing.price }}</p>
-  <p><strong>Publishing Date:</strong> {{ listing.publishingDate }}</p>
-  <h3>Pictures:</h3>
+  <div class="listing-content">
+    <mat-card>
+    <div class="image-modal-container">
+      <app-image-modal *ngIf="listing" [images]="pictures"></app-image-modal>
+    </div>
+    </mat-card>
+    <div class="listing-details-card">
+      <mat-card>
+        <mat-card-content>
+          <p><strong>Price:</strong> {{ listing.price | currency }}</p>
+          <p><strong>Sector:</strong> {{ listing.sector }}</p>
+          <p><strong>Rating:</strong> {{ user.rating }}</p>
+          <p><strong>Location:</strong> {{ listing.location }}</p>
+          <p><strong>Start Date:</strong> {{ listing.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ listing.endDate | date }}</p>
+          <p><strong>Parking Spot Slot Number:</strong> {{ listing.parkingSpotSlotNumber }}</p>
+          <p><strong>Publishing Date:</strong> {{ listing.publishingDate | date }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+<!--    <div class="map-container">-->
+<!--      <google-map [options]="mapOptions">-->
+<!--        <map-marker [position]="marker.position"></map-marker>-->
+<!--      </google-map>-->
+<!--    </div>-->
+  </div>
+  <button mat-fab extended color="primary" (click)="openRentDialog()" class="rent-button">
+    Inchiriaza acest loc de parcare
+    <mat-icon>done_outline</mat-icon>
 
-
-  <app-image-modal *ngIf="listing" [images]="listing.pictures"></app-image-modal>
-
-
+  </button>
+  </mat-card>
 </div>
 
-<div class="my-google-map">
-  <google-map [options]="mapOptions">
-    <map-marker [position]="marker.position"></map-marker>
-  </google-map>
-</div>
-
-</div>
 
 <div *ngIf="!listing">
   <mat-spinner></mat-spinner>
-
 </div>

@@ -2,7 +2,13 @@
 <div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title">{{ currentIndex + 1 }}/{{ totalImages }}</h4>
+      <h4 class="modal-title">Imaginea : {{ currentIndex + 1 }}/{{ totalImages }}</h4>
+      <div class="info-icon" (mouseenter)="showInfoPopup()" (mouseleave)="hideInfoPopup()">
+        <mat-icon>help</mat-icon>
+        <div class="info-popup" *ngIf="infoPopupVisible">
+          <p>Faceti click pe imagine pentru a o mari</p>
+        </div>
+      </div>
     </div>
     <div class="modal-body">
       <img *ngIf="!isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)">

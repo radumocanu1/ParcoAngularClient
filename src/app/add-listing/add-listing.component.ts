@@ -78,21 +78,22 @@ export class AddListingComponent implements OnInit {
       latitude: lat,
       longitude: lng
     });
-    console.log(this.mainPicture)
-    console.log(this.listingForm.getRawValue())
+
   }
 
   onSubmit(): void {
     if (this.listingForm.valid) {
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
+      // remove main picture from Pictures list
       this.listingService.createListing(listingRequest).subscribe(
         (data: Listing) => {
+          this.pictures.splice(this.mainPictureIndex,1)
           const listingUUID = data.listingUUID;
           this.listingService.addMainPhotoToListing(listingUUID, this.mainPicture).subscribe(
-            (data:string) => {
-              console.log(data)
+            () => {
             }
           )
+          console.log(this.pictures)
           for (let i = 0; i < this.pictures.length; i++) {
             this.listingService.addPhotoToListing(listingUUID,this.pictures[i]).subscribe(
               (data: string) =>{
@@ -154,6 +155,7 @@ export class AddListingComponent implements OnInit {
     }
   }
   removePicture(index: number): void {
+    // todo handle index change case
     this.previewPictures.splice(index, 1);
     this.pictures.splice(index, 1);
 

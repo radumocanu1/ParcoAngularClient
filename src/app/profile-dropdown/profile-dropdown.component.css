@@ -20,14 +20,16 @@
   height: auto;
   border-radius: 20%;
   position: relative;
-  transition: box-shadow 0.3s; /* Modificăm tranziția pentru umbra */
-  display: flex; /* Utilizăm flexbox */
-  justify-content: center; /* Aliniere orizontală la centru */
-  align-items: center; /* Aliniere verticală la centru */
+  transition: box-shadow 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.user-card{
+  background-color: #39a0ca;
+}
 .profile-dropdown:hover {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* Adăugăm umbra la hover */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 

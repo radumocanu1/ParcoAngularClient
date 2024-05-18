@@ -14,6 +14,8 @@ export class ImageModalComponent implements OnChanges {
   currentImage: string = '';
   imgSrc: string | undefined;
   isFullScreen: boolean = false;
+  infoPopupVisible: boolean = false;
+
 
   constructor(public bsModalRef: BsModalRef,
               private ImageViewService: ImageViewService) {}
@@ -43,5 +45,12 @@ export class ImageModalComponent implements OnChanges {
 
   toggleFullScreen(picture:string): void {
     this.ImageViewService.openFullImageModal(picture)
+  }
+  showInfoPopup(): void {
+    this.infoPopupVisible = true;
+  }
+
+  hideInfoPopup(): void {
+    this.infoPopupVisible = false;
   }
 }
