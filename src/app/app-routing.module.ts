@@ -10,18 +10,21 @@ import {ServerErrorComponent} from "./server-error/server-error.component";
 import {AccessDeniedComponent} from "./access-denied/access-denied.component";
 import {AddListingComponent} from "./add-listing/add-listing.component";
 import {MyListingsComponent} from "./my-listings/my-listings.component";
+import {AuthGuard} from "./security/AuthGuard";
+import {HomeComponent} from "./home/home.component";
 
 const routes: Routes = [
-  { path: 'users', component: UserListComponent },
+  { path: '', component: HomeComponent},
+  { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile/:userId', component: UserProfileComponent },
-  { path: 'listing/:listingId', component: ListingComponent },
+  { path: 'profile/:userId', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'listing/:listingId', component: ListingComponent, canActivate: [AuthGuard] },
   { path: 'listings', component: ListingListComponent },
-  { path: 'myProfile', component: MyProfileComponent },
+  { path: 'myProfile', component: MyProfileComponent, canActivate: [AuthGuard] },
   {path: 'server-error', component: ServerErrorComponent },
   {path: 'access-denied', component: AccessDeniedComponent },
-  {path: 'add-listing', component: AddListingComponent },
-  {path: 'my-listings', component: MyListingsComponent },
+  {path: 'add-listing', component: AddListingComponent, canActivate: [AuthGuard] },
+  {path: 'my-listings', component: MyListingsComponent, canActivate: [AuthGuard]},
 
 ];
 

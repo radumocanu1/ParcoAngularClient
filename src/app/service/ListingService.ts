@@ -28,6 +28,11 @@ export class ListingService {
   getFilteredListings(filter: any): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(`${this.apiUrl}/filtered`, { params: filter });
   }
+  deleteListing(listingId: string | null): Observable<string> {
+    console.log(listingId);
+    console.log(`${this.apiUrl}/${listingId}`);
+    return this.http.delete<string>(`${this.apiUrl}/${listingId}`);
+  }
   addPhotoToListing(listingUUID: string, file: File): Observable<string> {
     const formData: FormData = new FormData();
     formData.append('file', file);

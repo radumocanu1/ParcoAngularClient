@@ -150,8 +150,8 @@ header .main-message {
   color: #004d40;
 }
 
-/* Advantages section styling */
-.advantages {
+/* features section styling */
+.features {
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -159,18 +159,18 @@ header .main-message {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.advantages h2 {
+.features h2 {
   font-size: 2.5em;
   margin: 20px 0;
   color: #388e3c;
 }
 
-.advantages ul {
+.features ul {
   list-style-type: none;
   padding: 0;
 }
 
-.advantage-item {
+.feature-item {
   font-size: 1.2em;
   margin: 15px 0;
   display: flex;
@@ -180,12 +180,12 @@ header .main-message {
   transition: transform 0.3s, background-color 0.3s;
 }
 
-.advantage-item:hover {
+.feature-item:hover {
   transform: scale(1.1);
   background-color: #f1f8e9;
 }
 
-.advantage-item::before {
+.feature-item::before {
   content: '✔️';
   color: #388e3c;
   margin-right: 10px;
@@ -219,8 +219,8 @@ header .main-message {
   }
 }
 
-/* Revolution section styling */
-.revolution {
+/* call-to-action section styling */
+.call-to-action {
   padding: 20px;
   background-color: #fff3e0;
   border-radius: 8px;
@@ -228,18 +228,19 @@ header .main-message {
   animation: fadeIn 2s ease-in-out;
 }
 
-.revolution h2 {
+.call-to-action h2 {
   font-size: 2.5em;
   color: #ef6c00;
   margin-bottom: 10px;
 }
 
-.revolution p {
+.call-to-action p {
   font-size: 1.2em;
   color: #e65100;
 }
 
-.revolution p:hover {
+.call-to-action p:hover {
   color: #d84315;
   transition: color 0.3s;
 }
+

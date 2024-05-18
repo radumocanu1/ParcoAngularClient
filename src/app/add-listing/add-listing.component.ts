@@ -6,7 +6,7 @@ import {ListingService} from "../service/ListingService";
 import {Listing} from "../model/Listing";
 import {SnackbarService} from "../service/util/SnackbarService";
 import {Router} from "@angular/router";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {catchError, concatMap, forkJoin, of} from "rxjs";
 
 @Component({
@@ -15,10 +15,10 @@ import {catchError, concatMap, forkJoin, of} from "rxjs";
   styleUrl: './add-listing.component.css'
 })
 export class AddListingComponent implements OnInit {
+  loading: boolean = false;
   listingForm!: FormGroup;
   previewPictures: string[] = [];
   pictures: File[] = [];
-  mainPicture: File | null = null;
   mainPictureIndex: number = -1;
   infoPopupVisible: boolean = false;
 
@@ -36,8 +36,7 @@ export class AddListingComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private listingService: ListingService,
               private snackbarService: SnackbarService,
-              private router: Router,
-              private dialog: MatDialog) {}
+              private router: Router) {}
 
   ngOnInit(): void {
     this.listingForm = this.fb.group({
@@ -69,11 +68,12 @@ export class AddListingComponent implements OnInit {
     this.snackbarService.openSnackBar('✨ Anuntul dumneavoastra a fost procesat cu succes! ✨');
   }
   makeMainPicture(index: number): void {
-    this.mainPicture = this.pictures[index];
     this.mainPictureIndex = index;
   }
 
   confirmLocation(): void {
+    this.loading = !this.loading;
+
     const { lat, lng } = this.marker.position;
     this.listingForm.patchValue({
       latitude: lat,
@@ -82,14 +82,17 @@ export class AddListingComponent implements OnInit {
 
   }
   onSubmit(): void {
+    this.loading = true
     if (this.listingForm.valid) {
+      const mainPicture = this.pictures[this.mainPictureIndex]
+      this.pictures.splice(this.mainPictureIndex, 1)
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
       this.listingService.createListing(listingRequest).pipe(
         concatMap((data: Listing) => {
           const listingUUID = data.listingUUID;
 
           // Request to add the main photo
-          const mainPhotoRequest = this.listingService.addMainPhotoToListing(listingUUID, this.mainPicture).pipe(
+          const mainPhotoRequest = this.listingService.addMainPhotoToListing(listingUUID, mainPicture).pipe(
             catchError(error => {
               console.error('Error uploading main photo', error);
               return of(null); // Continue even if there is an error
@@ -157,7 +160,6 @@ export class AddListingComponent implements OnInit {
       pictures: this.pictures
     });
     if (this.mainPictureIndex == -1){
-      this.mainPicture = files[0];
       this.mainPictureIndex = 0
     }
   }
@@ -165,15 +167,14 @@ export class AddListingComponent implements OnInit {
     // todo handle index change case
     this.previewPictures.splice(index, 1);
     this.pictures.splice(index, 1);
+    // if with a lower index that mainPicture was deleted, make sure mainPicture stays the same
+    if (index < this.mainPictureIndex){
+      this.mainPictureIndex --
+    }
 
-    if (this.mainPictureIndex === index) {
+  // if main picture was deleted, make another main picture
+    else  if (this.mainPictureIndex === index) {
       this.mainPictureIndex = 0;
-      if (this.previewPictures.length > 0) {
-        this.mainPicture = this.pictures[0];
-      }
-      else {
-        this.mainPicture = null
-      }
     }
   }
 

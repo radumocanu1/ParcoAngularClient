@@ -1,26 +1,33 @@
-<div class="component-wrapper">
-<section class="hero">
-  <h1>Bine ai venit la Parco!</h1>
-  <p>Închiriază sau oferă spre închiriere locuri de parcare cu ușurință.</p>
-  <button class="btn-signup" *ngIf="!isLoggedIn" (click)="login()" mat-fab extended color="primary">
-    Conecteaza-te
-  </button></section>
+<div class="container">
+  <header>
+    <div class="overlay">
+      <h1>Parco</h1>
+      <p class="main-message">Conectează-te pentru a accesa toate facilitățile Parco!</p>
+      <p>Viitorul tău loc de parcare poate fi chiar lângă tine!</p>
+    </div>
+    <button mat-fab extended color="primary" (click)="login()">
+      Conectează-te
+    </button>
+  </header>
 
-<section class="reasons">
-  <h2>De ce să folosești Parco?</h2>
-  <div class="reason">
-    <h3>Economisește timp</h3>
-    <p>Parco îți permite să găsești rapid și ușor locuri de parcare disponibile în zona ta, economisindu-ți timp prețios.</p>
-  </div>
-  <div class="reason">
-    <h3>Câștigă bani</h3>
-    <p>Dacă ai un loc de parcare disponibil, îl poți oferi spre închiriere și să câștigi bani suplimentari în fiecare lună.</p>
-  </div>
-  <div class="reason">
-    <h3>Siguranță</h3>
-    <p>Parco îți oferă o platformă sigură și de încredere pentru închirierea sau închirierea locurilor de parcare.</p>
-  </div>
-</section>
+  <section class="intro">
+    <h2>Revoluționăm modul în care îți găsești și oferi locuri de parcare</h2>
+    <p>Parco îți oferă posibilitatea de a închiria locuri de parcare într-un mod simplu și eficient. Găsește rapid un loc disponibil sau pune-ți locurile de parcare la dispoziția altora.</p>
+  </section>
+
+  <section class="advantages">
+    <h2>De ce să îți faci cont pe Parco?</h2>
+    <ul>
+      <li class="advantage-item">Închiriază locuri de parcare rapid și ușor.</li>
+      <li class="advantage-item">Oferă spre închiriere locurile tale disponibile.</li>
+      <li class="advantage-item">Lasă ratinguri și recenzii pentru experiențe autentice.</li>
+      <li class="advantage-item">Generează venituri suplimentare simplu și eficient.</li>
+      <li class="advantage-item">Scapă de stresul căutării unui loc de parcare.</li>
+    </ul>
+  </section>
+
+  <section class="revolution">
+    <h2>Parco este mai mult decât o aplicație</h2>
+    <p>Cu Parco, transformăm modul în care trăim în orașe. Tehnologia noastră inovatoare și comunitatea noastră de utilizatori te ajută să economisești timp și bani, reducând în același timp stresul și congestionarea urbană. Alătură-te revoluției Parco și descoperă cum viitorul locului de parcare poate fi chiar lângă tine.</p>
+  </section>
 </div>
-
-

@@ -54,6 +54,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
 import { MyListingComponent } from './my-listing/my-listing.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -95,6 +96,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MyListingsComponent,
     RentDialogComponent,
     MyListingComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
