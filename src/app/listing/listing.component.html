@@ -5,13 +5,14 @@
     <mat-card>
       <mat-card-title >
     <div (click)="navigateToUserProfile()" class="user-info">
+      <div class="picture-name">
       <img [src]="user.profilePicURL" alt="{{ user.name }}" class="user-pic">
       <p>{{user.name}}</p>
+      </div>
+
+      <p class="user-rating">Rating⭐️ {{user.rating}}</p>
     </div>
         </mat-card-title>
-      <mat-card-subtitle>
-          <p class="user-rating">Rating⭐️ {{user.rating}}</p>
-      </mat-card-subtitle>
       <mat-card-content>
         <button mat-fab extended color="primary" (click)="sendMessage()" class="send-message-button">
         Trimite mesaj

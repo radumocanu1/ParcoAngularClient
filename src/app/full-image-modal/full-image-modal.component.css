@@ -1,8 +1,7 @@
-
 /* Stiluri pentru dialogul modal */
 .full-image-dialog {
-  max-width: 90%; /* Lățime maximă a dialogului */
-  max-height: 90%; /* Înălțime maximă a dialogului */
+  max-width: 90vw; /* Lățime maximă a dialogului în procente din lățimea ecranului */
+  max-height: 90vh; /* Înălțime maximă a dialogului în procente din înălțimea ecranului */
   margin: auto; /* Centrare orizontală și verticală a dialogului */
   display: flex;
   align-items: center;

@@ -1,7 +1,3 @@
-<div class="full-image-dialog">
-    <img [src]="imageUrl | bytesToImage">
-  <button mat-icon-button matTooltip="Inchide" color="warn" (click)="closeDialogBox()">
-    <mat-icon>close</mat-icon>
-  </button>
+<div class="full-image-dialog" [ngStyle]="dialogStyles">
+  <img [src]="imageUrl | bytesToImage" (load)="adjustImageSize($event)">
 </div>
-

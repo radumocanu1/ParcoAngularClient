@@ -72,7 +72,6 @@ export class AddListingComponent implements OnInit {
   }
 
   confirmLocation(): void {
-    this.loading = !this.loading;
 
     const { lat, lng } = this.marker.position;
     this.listingForm.patchValue({

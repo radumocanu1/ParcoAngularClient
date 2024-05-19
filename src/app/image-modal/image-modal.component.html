@@ -11,8 +11,8 @@
       </div>
     </div>
     <div class="modal-body">
-      <img *ngIf="!isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)">
-      <img *ngIf="isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)">
+      <img  [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)" alt="">
+<!--      <img *ngIf="isFullScreen" [src]="currentImage | bytesToImage" class="img-fluid" (click)="toggleFullScreen(currentImage)" alt="">-->
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="prevImage()" [disabled]="currentIndex === 0">Prev</button>
