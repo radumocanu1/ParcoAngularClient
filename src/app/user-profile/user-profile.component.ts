@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserProfileView} from "../model/UserProfileView";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../service/UserService";
 import {Feedback} from "../model/Feedback";
+import {ChatService} from "../service/ChatService";
+import {ChatResponse} from "../model/ChatResponse";
 
 @Component({
   selector: 'app-user-profile',
@@ -14,7 +16,9 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private chatService: ChatService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +44,9 @@ export class UserProfileComponent implements OnInit {
     });
   }
   sendMessage(): void {
-    console.log('Mesaj trimis către utilizatorul ' + this.user.username);
+    this.chatService.tryToGetChat(this.user.userUUID).subscribe((chatResponse: ChatResponse) => {
+      this.router.navigate([`/chat/${chatResponse.chatUUID}/${this.user.userUUID}`]);
+    });
   }
 
 }

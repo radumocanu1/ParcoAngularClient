@@ -99,7 +99,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RentDialogComponent,
     MyListingComponent,
     HomeComponent,
-    ChatComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

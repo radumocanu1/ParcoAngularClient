@@ -1,12 +1,23 @@
+<div *ngIf="chatResponse">
 <div class="chat-container">
-  <div class="messages-container">
-    <div *ngFor="let message of chat?.messages"
-         [ngClass]="{'my-message':!isCurrentUserMessage(message), 'other-message':  isCurrentUserMessage(message)}">
-      {{ message.messageContent }}
+  <h2 class="chat-title">Conversatia cu userul {{ chatResponse.otherUserName }}</h2>
+  <div  #messagesContainer class="messages-container">
+    <div *ngFor="let message of chatResponse.messages"
+         [ngClass]="{'my-message': !isCurrentUserMessage(message), 'other-message': isCurrentUserMessage(message)}" class="message-bubble">
+      <div *ngIf="isCurrentUserMessage(message)" class="profile-image-container">
+        <img class="profile-image" *ngIf="chatResponse.otherUserProfileImage" (click)="goToUserProfile()" [src]="chatResponse.otherUserProfileImage | bytesToImage" alt="Profile Image">
+        <img class="profile-image" *ngIf="!chatResponse.otherUserProfileImage" (click)="goToUserProfile()" src="./assets/template_profile_picture.png" alt="Profile Picture">
+
+      </div>
+      <div class="message-content">{{ message.messageContent }}</div>
     </div>
   </div>
   <div class="message-input-container">
     <input [(ngModel)]="newMessage" placeholder="Type a message" (keyup.enter)="sendMessage()" />
     <button (click)="sendMessage()">Send</button>
   </div>
+</div>
+</div>
+<div *ngIf="!chatResponse" class="loading-spinner">
+  <mat-spinner></mat-spinner>
 </div>

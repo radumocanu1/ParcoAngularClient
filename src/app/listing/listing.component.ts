@@ -9,6 +9,7 @@ import { ImageModalComponent } from "../image-modal/image-modal.component";
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import {ChatService} from "../service/ChatService";
 import {Chat} from "../model/Chat";
+import {ChatResponse} from "../model/ChatResponse";
 
 @Component({
   selector: 'app-listing',
@@ -76,8 +77,8 @@ export class ListingComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.chatService.tryToGetChat(this.user.userUUID).subscribe((chat: Chat) => {
-      this.router.navigate([`/chat/${chat.chatUUID}/${this.user.userUUID}`]);
+    this.chatService.tryToGetChat(this.user.userUUID).subscribe((chatResponse: ChatResponse) => {
+      this.router.navigate([`/chat/${chatResponse.chatUUID}/${this.user.userUUID}`]);
     });
   }
 
