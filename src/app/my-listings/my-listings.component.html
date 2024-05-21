@@ -13,8 +13,13 @@
     </mat-card-footer>
     <div class="alert alert-3-danger">
     </div>
+    <div class="same-row">
     <div class="input-button-wrapper">
-      <button mat-flat-button (click)="deleteListing(element.listingUUID)"  color="warn" >Sterge anuntul</button>
+      <button mat-flat-button  color="primary" >Modifica</button>
+    </div>
+    <div class="input-button-wrapper">
+      <button mat-flat-button (click)="deleteListing(element.listingUUID)"  color="accent" >Sterge</button>
+    </div>
     </div>
   </mat-card>
 </div>

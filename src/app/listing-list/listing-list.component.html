@@ -1,49 +1,88 @@
 <mat-card class="main-container">
-  <div class="filter-container">
-    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
-      <mat-form-field>
-        <mat-label>Sector</mat-label>
-        <mat-select formControlName="sector">
-          <mat-option *ngFor="let sector of [1, 2, 3, 4, 5, 6]" [value]="sector">{{ sector }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="startPicker" formControlName="startDate">
-        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-        <mat-datepicker #startPicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="endPicker" formControlName="endDate" [disabled]="filterForm.get('indefinitePeriod')?.value">
-        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-        <mat-datepicker #endPicker></mat-datepicker>
-      </mat-form-field>
-      <mat-checkbox formControlName="indefinitePeriod">Caut pentru perioada nedeterminată de timp</mat-checkbox>
-      <mat-form-field>
-        <mat-label>Price</mat-label>
-        <input matInput formControlName="price" type="number">
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Apply Filter</button>
-    </form>
-  </div>
+  <div class="filter-quick-advanced">
+    <div class="advanced-filter">
+      <h2>Filtrare avansată   (aplicati unul sau mai multe filtre)</h2>
+      <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="sector">Alege sectorul</label>
+            <mat-form-field>
+              <mat-select formControlName="sector" id="sector">
+                <mat-option *ngFor="let sector of [1, 2, 3, 4, 5, 6]" [value]="sector">{{ sector }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <label for="startDate">Data de start</label>
+            <mat-form-field>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate">
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <label for="endDate">Data de sfârșit</label>
+            <mat-form-field>
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="filterForm.get('indefinitePeriod')?.value">
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <label for="perHourPrice">Preț maxim (lei/oră)</label>
+            <mat-form-field>
+              <mat-select formControlName="perHourPrice" id="perHourPrice">
+                <mat-option *ngFor="let range of hourlyPriceRange" [value]="range">{{ range }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-field">
+            <label for="perDayPrice">Preț maxim (lei/zi)</label>
+            <mat-form-field>
+              <mat-select formControlName="perDayPrice" id="perDayPrice">
+                <mat-option *ngFor="let range of dailyPriceRange" [value]="range">{{ range }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>
+            <mat-checkbox formControlName="indefinitePeriod" class="styled-checkbox">Caut pentru perioada nedeterminată de timp</mat-checkbox>
+          </label>
+        </div>
+        <button mat-raised-button color="primary" type="submit">Apply Filter</button>
+      </form>
+    </div>
 
-  <div class="search-bar">
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applySearch($event)" placeholder="Search by title">
-    </mat-form-field>
-  </div>
+    <div class="quick-filter">
+      <h2>Filtrare rapidă</h2>
+      <div class="search-sort-container">
+        <div class="form-field">
+          <label for="searchTitle">Caută în funcție de titlu</label>
+          <div class="search-bar">
+            <mat-form-field>
+              <input matInput (keyup)="applySearch($event)" placeholder="Search by title" id="searchTitle">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="sortBy">Sortare după</label>
+          <div class="sort-bar">
+            <mat-form-field>
+              <mat-select (selectionChange)="applySort($event.value)" id="sortBy">
+                <mat-option value="recent">Cel mai recent</mat-option>
+                <mat-option value="cheap">Cel mai ieftin</mat-option>
+                <mat-option value="rating">Cel mai mare rating</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
 
-  <div class="sort-bar">
-    <mat-form-field>
-      <mat-label>Sort by</mat-label>
-      <mat-select (selectionChange)="applySort($event.value)">
-        <mat-option value="recent">Cel mai recent</mat-option>
-        <mat-option value="cheap">Cel mai ieftin</mat-option>
-        <mat-option value="rating">Cel mai mare rating</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <div class="sort-tips">
+          <p>Pentru rezultate optime, puteți folosiți filtrarea avansată și apoi adăuga filtre rapide.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card-container">

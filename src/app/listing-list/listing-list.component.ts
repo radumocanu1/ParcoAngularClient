@@ -14,6 +14,9 @@ import { Router } from '@angular/router';
 })
 export class ListingListComponent implements OnInit {
   displayedColumns: string[] = ['picture', 'title', 'sector', 'startDate', 'endDate', 'price', 'publishingDate'];
+  hourlyPriceRange: string[] = ['1', '2', '3', '4', '5', '10', '20', 'nedefinit'];
+  dailyPriceRange: string[] = ['5','10','20','30', '50', 'nedefinit'];
+
   dataSource = new MatTableDataSource<MinimalListing>();
   filterForm: FormGroup;
   paginatedListings: MinimalListing[] = [];
@@ -26,7 +29,8 @@ export class ListingListComponent implements OnInit {
       sector: [''],
       startDate: [''],
       endDate: [''],
-      price: [''],
+      dailyPrice: [''],
+      hourlyPrice:[''],
       search: [''],
       indefinitePeriod: [false]
     });

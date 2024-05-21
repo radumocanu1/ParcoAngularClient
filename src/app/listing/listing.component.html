@@ -6,8 +6,9 @@
       <mat-card-title >
     <div (click)="navigateToUserProfile()" class="user-info">
       <div class="picture-name">
-      <img [src]="user.profilePicURL" alt="{{ user.name }}" class="user-pic">
-      <p>{{user.name}}</p>
+        <img *ngIf="!user.profilePicture" src="./assets/template_profile_picture.png" alt="{{ user.username }}" class="user-pic">
+        <img *ngIf="user.profilePicture" [src]="user.profilePicture | bytesToImage" alt="{{ user.username }}" class="user-pic">
+      <p>{{user.username}}</p>
       </div>
 
       <p class="user-rating">Rating⭐️ {{user.rating}}</p>

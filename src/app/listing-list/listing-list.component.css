@@ -4,17 +4,105 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.filter-container, .search-bar, .sort-bar {
+.filter-quick-advanced {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quick-filter, .advanced-filter {
+  background-color: #e8f5e9;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Set width to occupy the entire horizontal space */
+}
+
+.quick-filter {
+  margin-top: 20px;
+}
+
+.quick-filter h2, .advanced-filter h2 {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 5px;
+}
+
+.search-sort-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar, .sort-bar {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.search-bar mat-form-field, .sort-bar mat-form-field {
+  width: 200px; /* Set a specific width for search and sort fields */
+}
+
+.sort-tips {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  align-items: center;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: bold;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.styled-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.styled-checkbox .mat-checkbox-inner-container {
+  border-radius: 5px;
+  border: 2px solid #388e3c;
 }
 
 .mat-form-field {
-  width: 200px;
+  width: 150px;
+}
+
+.advanced-filter .mat-form-field {
+  flex: 1; /* Ensure input fields are on the same line */
 }
 
 .card-container {
@@ -29,6 +117,7 @@
   border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 .listing-card:hover {
@@ -75,4 +164,15 @@
 .mat-paginator {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+}
+
+button.mat-raised-button {
+  background-color: #388e3c;
+  color: #ffffff;
+  transition: background-color 0.3s;
+}
+
+button.mat-raised-button:hover {
+  background-color: #2e7d32;
 }

@@ -55,6 +55,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
 import { MyListingComponent } from './my-listing/my-listing.component';
 import { HomeComponent } from './home/home.component';
+import { ChatComponent } from './chat/chat.component';
+import {ChatService} from "./service/ChatService";
 
 
 
@@ -97,6 +99,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RentDialogComponent,
     MyListingComponent,
     HomeComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -141,7 +144,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 
   ],
-  providers: [UserService, {
+  providers: [UserService, ChatService, {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,

@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ImageModalComponent } from "../image-modal/image-modal.component";
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
+import {ChatService} from "../service/ChatService";
+import {Chat} from "../model/Chat";
 
 @Component({
   selector: 'app-listing',
@@ -15,12 +17,7 @@ import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 })
 export class ListingComponent implements OnInit {
   listing: Listing | undefined;
-  user: MinimalUser = {
-    userUUID: 'user-uuid-placeholder',
-    rating: 4.5,
-    name: 'Test Name',
-    profilePicURL: 'https://randomuser.me/api/portraits/men/1.jpg'
-  };
+  user!: MinimalUser
   mapOptions!: google.maps.MapOptions;
   marker!: any;
   pictures: Array<string> = [];
@@ -29,7 +26,8 @@ export class ListingComponent implements OnInit {
     private listingService: ListingService,
     private modalService: BsModalService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +40,7 @@ export class ListingComponent implements OnInit {
             this.listing = data;
             this.initializeMap();
             this.addPicturesToModal(this.listing)
-
+            this.user = data.minimalUser
           }
         );
       }
@@ -78,7 +76,9 @@ export class ListingComponent implements OnInit {
   }
 
   sendMessage(): void {
-    // Implement send message functionality
+    this.chatService.tryToGetChat(this.user.userUUID).subscribe((chat: Chat) => {
+      this.router.navigate([`/chat/${chat.chatUUID}/${this.user.userUUID}`]);
+    });
   }
 
   openRentDialog(): void {

@@ -12,6 +12,7 @@ import {AddListingComponent} from "./add-listing/add-listing.component";
 import {MyListingsComponent} from "./my-listings/my-listings.component";
 import {AuthGuard} from "./security/AuthGuard";
 import {HomeComponent} from "./home/home.component";
+import {ChatComponent} from "./chat/chat.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -25,6 +26,8 @@ const routes: Routes = [
   {path: 'access-denied', component: AccessDeniedComponent },
   {path: 'add-listing', component: AddListingComponent, canActivate: [AuthGuard] },
   {path: 'my-listings', component: MyListingsComponent, canActivate: [AuthGuard]},
+  { path: 'chat/:chatID/:userUUID', component: ChatComponent },
+
 
 ];
 
