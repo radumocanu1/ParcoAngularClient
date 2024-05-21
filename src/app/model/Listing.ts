@@ -15,6 +15,7 @@ export class Listing {
   location!: string
   mainPicture!: any
   minimalUser!: MinimalUser
+  myListing!:boolean
 
 
 }

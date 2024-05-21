@@ -49,11 +49,16 @@
 <!--      </google-map>-->
 <!--    </div>-->
   </div>
-  <button mat-fab extended color="primary" (click)="openRentDialog()" class="rent-button">
+  <button *ngIf="!listing.myListing" mat-fab extended color="primary" (click)="openRentDialog()" class="rent-button">
     Inchiriaza acest loc de parcare
     <mat-icon>done_outline</mat-icon>
 
   </button>
+    <button *ngIf="listing.myListing" mat-fab extended color="primary" (click)="openRentDialog()" class="rent-button">
+      Schimba statusul anuntului
+      <mat-icon>done_outline</mat-icon>
+
+    </button>
   </mat-card>
 </div>
 

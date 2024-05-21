@@ -17,9 +17,7 @@ export class MyListingsComponent implements OnInit{
               private listingService: ListingService,
               private snackbarService: SnackbarService) {
   }
-  onRowClick(row: MinimalListing): void {
-    this.router.navigate([`/myListing/${row.listingUUID}`]);
-  }
+
 
   ngOnInit(): void {
     this.listingService.getMyListings().subscribe(
@@ -45,5 +43,8 @@ export class MyListingsComponent implements OnInit{
      }
    )
 
+  }
+  public navigateToListing(listingUUID: string): void {
+    this.router.navigate([`/listing/${listingUUID}`]);
   }
 }

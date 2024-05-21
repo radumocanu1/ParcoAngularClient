@@ -53,7 +53,6 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
-import { MyListingComponent } from './my-listing/my-listing.component';
 import { HomeComponent } from './home/home.component';
 import { ChatComponent } from './chat/chat.component';
 import {ChatService} from "./service/ChatService";
@@ -97,7 +96,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FullImageModalComponent,
     MyListingsComponent,
     RentDialogComponent,
-    MyListingComponent,
     HomeComponent,
     ChatComponent
   ],
