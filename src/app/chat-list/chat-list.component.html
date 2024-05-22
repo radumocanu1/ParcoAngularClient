@@ -1,0 +1,10 @@
+<div class="chat-list-container">
+  <div *ngFor="let chat of minimalChats" (click)="openChat(chat)" class="chat-list-item">
+    <img class="profile-image" [src]="chat.otherUserProfilePicture | bytesToImage" alt="Profile Image">
+    <div class="chat-details">
+      <div class="chat-username">{{ chat.otherUsername }}</div>
+      <div class="chat-last-message">{{ chat.lastMessage }}</div>
+      <div *ngIf="chat.hasUnreadMessages" class="unread-indicator"></div>
+    </div>
+  </div>
+</div>

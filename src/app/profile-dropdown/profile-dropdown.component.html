@@ -1,28 +1,30 @@
 <div class="profile-dropdown" (click)="toggleDropdown()">
+  <div class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</div>
+
   <div class="round-image-container">
-    <img *ngIf="!localStorage.getItem('currentUserProfilePicture')"src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
-    <img *ngIf="localStorage.getItem('currentUserProfilePicture')"[src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
+    <img *ngIf="!localStorage.getItem('currentUserProfilePicture')" src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
+    <img *ngIf="localStorage.getItem('currentUserProfilePicture')" [src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
   </div>
 
   <mat-icon class="menu-icon">more_vert</mat-icon>
   <div class="dropdown-content" *ngIf="isDropdownOpen">
     <div *ngIf="isLoggedIn">
       <button mat-button routerLink="/myProfile"><mat-icon>person</mat-icon>Profilul meu</button>
-      <button mat-button routerLink="/add-listing"> <mat-icon>add_box</mat-icon>Adauga un anunt</button>
-      <button mat-button routerLink="/my-listings"> <mat-icon>directions_car</mat-icon>Anunturile mele</button>
-      <button mat-button> <mat-icon>feedback</mat-icon>Recenzii primite</button>
-      <button mat-button><mat-icon>message</mat-icon>Mesaje</button>
+      <button mat-button routerLink="/add-listing"><mat-icon>add_box</mat-icon>Adauga un anunt</button>
+      <button mat-button routerLink="/my-listings"><mat-icon>directions_car</mat-icon>Anunturile mele</button>
+      <button mat-button><mat-icon>feedback</mat-icon>Recenzii primite</button>
+      <button mat-button routerLink="/chat" class="message-button">
+        <div class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</div>
+        <mat-icon>message</mat-icon>Mesaje
+      </button>
       <button mat-button><mat-icon>person_add</mat-icon>Invita un prieten</button>
     </div>
     <div *ngIf="!isLoggedIn">
       <button mat-button (click)="login()">Conecteaza-te</button>
       <button mat-button><mat-icon>lock</mat-icon>Adauga un anunt</button>
     </div>
-    <button mat-button> <mat-icon>report_problem</mat-icon><span>Raporteaza</span></button>
-    <button mat-button (click)="logout()" *ngIf="isLoggedIn"> <mat-icon>exit_to_app</mat-icon>Deconecteaza-te</button>
-    <button mat-button (click)="deleteAccount()" *ngIf="isLoggedIn" color="warn" class="delete_account"> <mat-icon color="warn">delete_forever</mat-icon><span>Sterge contul</span></button>
-
+    <button mat-button><mat-icon>report_problem</mat-icon><span>Raporteaza</span></button>
+    <button mat-button (click)="logout()" *ngIf="isLoggedIn"><mat-icon>exit_to_app</mat-icon>Deconecteaza-te</button>
+    <button mat-button (click)="deleteAccount()" *ngIf="isLoggedIn" color="warn" class="delete_account"><mat-icon color="warn">delete_forever</mat-icon><span>Sterge contul</span></button>
   </div>
-
 </div>
-

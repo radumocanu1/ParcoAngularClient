@@ -78,7 +78,7 @@ export class ListingComponent implements OnInit {
 
   sendMessage(): void {
     this.chatService.tryToGetChat(this.user.userUUID).subscribe((chatResponse: ChatResponse) => {
-      this.router.navigate([`/chat/${chatResponse.chatUUID}/${this.user.userUUID}`]);
+      this.router.navigate([`/chat/${chatResponse.chatUUID}`]);
     });
   }
 

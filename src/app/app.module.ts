@@ -56,6 +56,8 @@ import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
 import { HomeComponent } from './home/home.component';
 import { ChatComponent } from './chat/chat.component';
 import {ChatService} from "./service/ChatService";
+import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatContainerComponent } from './chat-container/chat-container.component';
 
 
 
@@ -97,7 +99,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MyListingsComponent,
     RentDialogComponent,
     HomeComponent,
-    ChatComponent
+    ChatComponent,
+    ChatListComponent,
+    ChatContainerComponent
   ],
   imports: [
     BrowserModule,

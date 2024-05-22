@@ -4,6 +4,8 @@ import {MessageRequest} from "../model/MessageRequest";
 import {Chat} from "../model/Chat";
 import {catchError, Observable} from "rxjs";
 import {ChatResponse} from "../model/ChatResponse";
+import {MinimalChat} from "../model/MinimalChat";
+import {UnreadChat} from "../model/UnreadChat";
 
 @Injectable()
 export class ChatService {
@@ -25,14 +27,16 @@ export class ChatService {
       })
     );
   }
+  public checkForUnreadMessages():Observable<UnreadChat>{
+    return this.http.get<UnreadChat>(`${this.chatUrl}/unread`);
+  }
   public createChat(otherUserID:String):Observable<ChatResponse>{
     console.log("creating chat..")
     return this.http.post<ChatResponse>(`${this.chatUrl}/${otherUserID}`,{});
   }
-  // public getAllUserChats():Observable<ChatResponse>{
-  //   console.log("creating chat..")
-  //   return this.http.post<ChatResponse>(`${this.chatUrl}/${otherUserID}`,{});
-  // }
+  public getAllUserChats():Observable<MinimalChat[]>{
+    return this.http.get<MinimalChat[]>(`${this.chatUrl}/user`,{});
+  }
 
 
 }

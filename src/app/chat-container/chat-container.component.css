@@ -1,0 +1,12 @@
+.chat-container-wrapper {
+  display: flex;
+  height: 87vh;
+}
+
+app-chat-list {
+  width: 40%;
+}
+
+app-chat {
+  width: 60%;
+}
