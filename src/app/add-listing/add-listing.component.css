@@ -102,7 +102,7 @@ google-map {
 }
 .info-popup {
   position: absolute;
-  top: 35%;
+  top: 70%;
   left: 62%;
   transform: translateX(-50%);
   width: auto;

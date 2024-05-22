@@ -33,8 +33,9 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
 
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloak.loadUserProfile();
+      this.startPoolingUnreadMessages()
+
     }
-    this.startPoolingUnreadMessages()
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

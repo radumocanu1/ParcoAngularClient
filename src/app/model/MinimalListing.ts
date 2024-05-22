@@ -8,6 +8,7 @@ export class MinimalListing {
   price!: number;
   publishingDate!: Date;
   rating!: number
+  available!: boolean
 
 
 

@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {ListingRequest} from "../model/ListingRequest";
 import {Listing} from "../model/Listing";
 import {MinimalListing} from "../model/MinimalListing";
+import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,9 @@ export class ListingService {
   getListing(listingId: string| null): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/' + listingId);
   }
+  getFilteredListing(advanceFilteringRequest: AdvanceFilteringRequest): Observable<MinimalListing[]> {
+    return this.http.post<MinimalListing[]>(this.apiUrl + '/filter' , advanceFilteringRequest);
+  }
   getMyListings(): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/userListings');
   }
@@ -25,9 +29,7 @@ export class ListingService {
   getAllListings(): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(this.apiUrl);
   }
-  getFilteredListings(filter: any): Observable<MinimalListing[]> {
-    return this.http.get<MinimalListing[]>(`${this.apiUrl}/filtered`, { params: filter });
-  }
+
   deleteListing(listingId: string | null): Observable<string> {
     console.log(listingId);
     console.log(`${this.apiUrl}/${listingId}`);

@@ -14,6 +14,7 @@ import {AuthGuard} from "./security/AuthGuard";
 import {HomeComponent} from "./home/home.component";
 import {ChatComponent} from "./chat/chat.component";
 import {ChatContainerComponent} from "./chat-container/chat-container.component";
+import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'listings', component: ListingListComponent },
   { path: 'myProfile', component: MyProfileComponent, canActivate: [AuthGuard] },
   {path: 'server-error', component: ServerErrorComponent },
+  {path: 'unauthorized', component:UnauthorizedComponent },
   {path: 'access-denied', component: AccessDeniedComponent },
   {path: 'add-listing', component: AddListingComponent, canActivate: [AuthGuard] },
   {path: 'my-listings', component: MyListingsComponent, canActivate: [AuthGuard]},

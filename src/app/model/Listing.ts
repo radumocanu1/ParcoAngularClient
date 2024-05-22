@@ -16,6 +16,10 @@ export class Listing {
   mainPicture!: any
   minimalUser!: MinimalUser
   myListing!:boolean
+  description!: string;
+  longTermRent!: boolean;
+  monthlyPrice!: number;
+  rating!: number;
 
 
 }

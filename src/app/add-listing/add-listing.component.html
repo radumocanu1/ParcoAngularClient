@@ -12,9 +12,28 @@
       <textarea id="description" formControlName="description" rows="5"></textarea>
     </div>
 
-    <div>
-      <label for="startDate">Data de la care locul de parcare e disponibil:</label>
-      <input id="startDate" formControlName="startDate" type="date" [min]="todayDate()">
+
+    <div class="form-field">
+      <label for="startDate">Data de la care locul de parcare va fi disponibil</label>
+      <mat-form-field>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate" [min]="todayDate()" (dateChange)="updateEndDateMin($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form-field">
+      <label for="endDate">Data până la care locul de parcare e liber:</label>
+      <mat-form-field>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="listingForm.get('indefinitePeriod')?.value" [min]="minEndDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <label>
+        <mat-checkbox formControlName="indefinitePeriod" class="styled-checkbox">Vreau sa inchiriez locul pentru o perioada nedeterminata de timp</mat-checkbox>
+      </label>
     </div>
 
 
@@ -38,15 +57,18 @@
       <label for="price">Pret: (ron/zi)</label>
       <input id="price" formControlName="price" type="number">
     </div>
-    <div class="long-term-rent">
-      <label for="longTermRent" >Sunt de acord cu inchirierea pentru perioade lungi de timp:</label>
-      <input id="longTermRent" formControlName="longTermRent" type="checkbox" (click)="toggleLongPeriod()">
+
+    <div class="form-field">
+      <label>
+        <mat-checkbox formControlName="longTermRent" id="longTermRent" class="styled-checkbox" (click)="toggleLongPeriod()" >Sunt de acord cu inchirierea pentru perioade lungi de timp:</mat-checkbox>
+      </label>
     </div>
+
     <div *ngIf="longPeriod">
       <div class="same-row">
       <label for="monthlyPrice">Pret lunar (ron/luna)</label>
       <div class="info-icon" (mouseenter)="showPricePopup()" (mouseleave)="hidePricePopup()">
-        <p class="price-pop-up" *ngIf="pricePopUpVisible">Puteti considera aplica un discount fata de pretul zilnic</p>
+        <p  *ngIf="pricePopUpVisible">Puteti considera aplicarea un discount fata de pretul zilnic</p>
         <mat-icon>help</mat-icon>
       </div>
       </div>

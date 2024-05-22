@@ -20,6 +20,8 @@ export class ListingListComponent implements OnInit {
   dataSource = new MatTableDataSource<MinimalListing>();
   filterForm: FormGroup;
   paginatedListings: MinimalListing[] = [];
+  minEndDate!: Date | null;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,9 +31,8 @@ export class ListingListComponent implements OnInit {
       sector: [''],
       startDate: [''],
       endDate: [''],
-      dailyPrice: [''],
-      hourlyPrice:[''],
-      search: [''],
+      maxDailyPrice: [''],
+      maxMonthlyPrice:[''],
       indefinitePeriod: [false]
     });
   }
@@ -56,10 +57,25 @@ export class ListingListComponent implements OnInit {
       this.paginateListings();
     });
   }
+  updateEndDateMin(startDate: Date): void {
+    if (startDate) {
+      const minEndDate = new Date(startDate);
+      minEndDate.setDate(minEndDate.getDate() + 1); // Increment by one day
+      this.minEndDate = minEndDate;
+    } else {
+      this.minEndDate = null; // Reset minEndDate if startDate is null
+    }
+  }
+  todayDate(): string {
+    const today = new Date();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${today.getFullYear()}-${month}-${day}`;
+  }
 
   applyFilter(): void {
-    const filterValues = this.filterForm.value;
-    this.listingService.getFilteredListings(filterValues).subscribe(listings => {
+    const advanceFilteringRequest = this.filterForm.getRawValue()
+    this.listingService.getFilteredListing(advanceFilteringRequest).subscribe(listings => {
       this.dataSource.data = listings;
       this.paginateListings();
     });

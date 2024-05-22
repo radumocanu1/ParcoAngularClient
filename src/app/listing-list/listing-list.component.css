@@ -176,3 +176,26 @@ button.mat-raised-button {
 button.mat-raised-button:hover {
   background-color: #2e7d32;
 }
+.available {
+  border: 2px solid green;
+}
+
+.unavailable {
+  border: 2px solid red;
+}
+
+.availability {
+  font-weight: bold;
+  margin-top: 5px;
+}
+.available .availability {
+  font-weight: bold;
+  margin-top: 5px;
+  color: green; /* Textul "Disponibil" va fi verde */
+}
+
+.unavailable .availability {
+  font-weight: bold;
+  margin-top: 5px;
+  color: red; /* Textul "Momentan Indisponibil" va fi roșu */
+}

@@ -15,31 +15,31 @@
           <div class="form-field">
             <label for="startDate">Data de start</label>
             <mat-form-field>
-              <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate">
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate" [min]="todayDate()" (dateChange)="updateEndDateMin($event.value)">
               <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="form-field">
-            <label for="endDate">Data de sfârșit</label>
+            <label for="endDate">Data de sfarsit:</label>
             <mat-form-field>
-              <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="filterForm.get('indefinitePeriod')?.value">
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="filterForm.get('indefinitePeriod')?.value" [min]="minEndDate">
               <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
               <mat-datepicker #endPicker></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="form-field">
-            <label for="perHourPrice">Preț maxim (lei/oră)</label>
+            <label for="maxDailyPrice">Preț maxim (RON/oră)</label>
             <mat-form-field>
-              <mat-select formControlName="perHourPrice" id="perHourPrice">
+              <mat-select formControlName="maxDailyPrice" id="maxDailyPrice">
                 <mat-option *ngFor="let range of hourlyPriceRange" [value]="range">{{ range }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="form-field">
-            <label for="perDayPrice">Preț maxim (lei/zi)</label>
+            <label for="maxMonthlyPrice">Preț maxim (RON/luna)</label>
             <mat-form-field>
-              <mat-select formControlName="perDayPrice" id="perDayPrice">
+              <mat-select formControlName="maxMonthlyPrice" id="maxMonthlyPrice">
                 <mat-option *ngFor="let range of dailyPriceRange" [value]="range">{{ range }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -47,7 +47,7 @@
         </div>
         <div class="form-field">
           <label>
-            <mat-checkbox formControlName="indefinitePeriod" class="styled-checkbox">Caut pentru perioada nedeterminată de timp</mat-checkbox>
+            <mat-checkbox formControlName="indefinitePeriod" id="indefinitePeriod" class="styled-checkbox">Caut pentru perioada nedeterminată de timp</mat-checkbox>
           </label>
         </div>
         <button mat-raised-button color="primary" type="submit">Apply Filter</button>
@@ -86,7 +86,7 @@
   </div>
 
   <div class="card-container">
-    <mat-card *ngFor="let element of paginatedListings" class="listing-card" (click)="onRowClick(element)">
+    <mat-card *ngFor="let element of paginatedListings" class="listing-card" [ngClass]="{ 'available': element.available, 'unavailable': !element.available }" (click)="onRowClick(element)">
       <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Listing image">
       <mat-card-title>{{element.title}}</mat-card-title>
       <mat-card-footer>
@@ -96,10 +96,17 @@
             <span>Sector {{element.sector}}</span>
             <span>Rating: {{element.rating || 'N/A'}}</span>
           </div>
+          <div class="availability" *ngIf="element.available">
+            Disponibil
+          </div>
+          <div class="availability" *ngIf="!element.available">
+            Momentan Indisponibil
+          </div>
         </div>
       </mat-card-footer>
     </mat-card>
   </div>
+
 
   <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" (page)="changePage($event)"></mat-paginator>
 </mat-card>

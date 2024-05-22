@@ -58,6 +58,7 @@ import { ChatComponent } from './chat/chat.component';
 import {ChatService} from "./service/ChatService";
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatContainerComponent } from './chat-container/chat-container.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 
@@ -101,7 +102,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     ChatComponent,
     ChatListComponent,
-    ChatContainerComponent
+    ChatContainerComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,

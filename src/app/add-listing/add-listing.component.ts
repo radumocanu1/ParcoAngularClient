@@ -17,7 +17,6 @@ import {catchError, concatMap, forkJoin, of} from "rxjs";
 // todo show errors on reactive input
 export class AddListingComponent implements OnInit {
   loading: boolean = false;
-  listingForm!: FormGroup;
   previewPictures: string[] = [];
   pictures: File[] = [];
   mainPictureIndex: number = -1;
@@ -25,6 +24,10 @@ export class AddListingComponent implements OnInit {
   sectors: number[] = [1, 2, 3, 4, 5, 6];
   longPeriod: boolean = false
   pricePopUpVisible: boolean = false;
+  listingForm: FormGroup;
+  minEndDate!: Date | null;
+
+
 
 
 
@@ -41,13 +44,12 @@ export class AddListingComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private listingService: ListingService,
               private snackbarService: SnackbarService,
-              private router: Router) {}
-
-  ngOnInit(): void {
+              private router: Router) {
     this.listingForm = this.fb.group({
       pictures: [null, Validators.required],
       title: ['', [Validators.required, Validators.maxLength(20)]],
       startDate: ['', Validators.required],
+      endDate: [''],
       parkingSpotSlotNumber: [null, Validators.min(0)],
       price: [null, Validators.min(0)],
       latitude: [ Validators.required],
@@ -57,6 +59,19 @@ export class AddListingComponent implements OnInit {
       sector: [ null, Validators.required],
       longTermRent: [false],
       monthlyPrice: [null],
+      indefinitePeriod: [false]
+
+    });
+
+  }
+
+  ngOnInit(): void {
+    this.listingForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
+      if (value) {
+        this.listingForm.get('endDate')!.disable();
+      } else {
+        this.listingForm.get('endDate')!.enable();
+      }
     });
 
   }
@@ -98,12 +113,22 @@ export class AddListingComponent implements OnInit {
     });
 
   }
+  updateEndDateMin(startDate: Date): void {
+    if (startDate) {
+      const minEndDate = new Date(startDate);
+      minEndDate.setDate(minEndDate.getDate() + 1); // Increment by one day
+      this.minEndDate = minEndDate;
+    } else {
+      this.minEndDate = null; // Reset minEndDate if startDate is null
+    }
+  }
   onSubmit(): void {
     this.loading = true
     if (this.listingForm.valid) {
       const mainPicture = this.pictures[this.mainPictureIndex]
       this.pictures.splice(this.mainPictureIndex, 1)
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
+      listingRequest.available = true
       console.log(listingRequest);
       this.listingService.createListing(listingRequest).pipe(
         concatMap((data: Listing) => {

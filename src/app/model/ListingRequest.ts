@@ -3,6 +3,7 @@ export class ListingRequest {
   latitude!: string;
   longitude!: string;
   startDate!: string;
+  endDate!: string;
   parkingSpotSlotNumber!: number;
   price!: number;
   sector!: number;
@@ -10,6 +11,7 @@ export class ListingRequest {
   description!: string;
   longTermRent!: boolean;
   monthlyPrice!: number;
+  available: boolean = true
 
 }
 
