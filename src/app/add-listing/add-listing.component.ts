@@ -6,7 +6,6 @@ import {ListingService} from "../service/ListingService";
 import {Listing} from "../model/Listing";
 import {SnackbarService} from "../service/util/SnackbarService";
 import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
 import {catchError, concatMap, forkJoin, of} from "rxjs";
 
 @Component({
@@ -14,6 +13,8 @@ import {catchError, concatMap, forkJoin, of} from "rxjs";
   templateUrl: './add-listing.component.html',
   styleUrl: './add-listing.component.css'
 })
+
+// todo show errors on reactive input
 export class AddListingComponent implements OnInit {
   loading: boolean = false;
   listingForm!: FormGroup;
@@ -21,6 +22,10 @@ export class AddListingComponent implements OnInit {
   pictures: File[] = [];
   mainPictureIndex: number = -1;
   infoPopupVisible: boolean = false;
+  sectors: number[] = [1, 2, 3, 4, 5, 6];
+  longPeriod: boolean = false
+  pricePopUpVisible: boolean = false;
+
 
 
 
@@ -41,17 +46,22 @@ export class AddListingComponent implements OnInit {
   ngOnInit(): void {
     this.listingForm = this.fb.group({
       pictures: [null, Validators.required],
-      title: ['', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(20)]],
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      parkingSpotSlotNumber: [null, Validators.required],
-      price: [null, Validators.required],
+      parkingSpotSlotNumber: [null, Validators.min(0)],
+      price: [null, Validators.min(0)],
       latitude: [ Validators.required],
       longitude: [ Validators.required],
-      location: [ '', Validators.required],
-      sector: [ Validators.required],
+      location: [ '', [Validators.required, Validators.maxLength(50)]],
+      description: [null, [Validators.required,Validators.maxLength(200 )]],
+      sector: [ null, Validators.required],
+      longTermRent: [false],
+      monthlyPrice: [null],
     });
 
+  }
+  public toggleLongPeriod(){
+    this.longPeriod = !this.longPeriod;
   }
 
   onMapClick(event: google.maps.MapMouseEvent): void {
@@ -64,13 +74,21 @@ export class AddListingComponent implements OnInit {
       });
     }
   }
+  get sector() {
+    return this.listingForm.get('sector');
+  }
   openSnackBar() {
     this.snackbarService.openSnackBar('✨ Anuntul dumneavoastra a fost procesat cu succes! ✨');
   }
   makeMainPicture(index: number): void {
     this.mainPictureIndex = index;
   }
-
+  todayDate(): string {
+    const today = new Date();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${today.getFullYear()}-${month}-${day}`;
+  }
   confirmLocation(): void {
 
     const { lat, lng } = this.marker.position;
@@ -86,6 +104,7 @@ export class AddListingComponent implements OnInit {
       const mainPicture = this.pictures[this.mainPictureIndex]
       this.pictures.splice(this.mainPictureIndex, 1)
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
+      console.log(listingRequest);
       this.listingService.createListing(listingRequest).pipe(
         concatMap((data: Listing) => {
           const listingUUID = data.listingUUID;
@@ -115,6 +134,10 @@ export class AddListingComponent implements OnInit {
         this.openSnackBar();
         this.router.navigate(['/my-listings']);
       });
+    }
+    else {
+      this.listingForm.markAllAsTouched();
+
     }
   }
   onFileDrop(files: NgxFileDropEntry[]): void {
@@ -183,5 +206,11 @@ export class AddListingComponent implements OnInit {
 
   hideInfoPopup(): void {
     this.infoPopupVisible = false;
+  }
+  showPricePopup(): void {
+    this.pricePopUpVisible = true;
+  }
+  hidePricePopup(): void {
+    this.pricePopUpVisible = false;
   }
 }

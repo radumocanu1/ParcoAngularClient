@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {KeycloakProfile} from "keycloak-js";
 import {KeycloakService} from "keycloak-angular";
 import {DeleteAccountService} from "../service/util/DeleteAccountService";
-import {interval, Subscription, switchMap} from "rxjs";
+import {interval, Subject, Subscription, switchMap} from "rxjs";
 import {ChatResponse} from "../model/ChatResponse";
 import {ChatService} from "../service/ChatService";
 import {UnreadChat} from "../model/UnreadChat";
@@ -18,6 +18,7 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
   isDropdownOpen = false;
   unreadMessages!: number;
   private subscription: Subscription = new Subscription();
+
   constructor(private deleteAccountService: DeleteAccountService,
               private readonly keycloak: KeycloakService,
               private chatService: ChatService) {
@@ -57,6 +58,7 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
   public login() {
     this.keycloak.login({redirectUri:"http://localhost:4200/myProfile"});
   }
+
 
   public logout(): void {
     this.keycloak.logout("http://localhost:4200/register").then(() => {

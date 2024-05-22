@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {ChatService} from "../service/ChatService";
 import {interval, Subscription, switchMap} from "rxjs";
 import {ChatResponse} from "../model/ChatResponse";
+import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.component";
 
 @Component({
   selector: 'app-chat-list',
@@ -12,7 +13,6 @@ import {ChatResponse} from "../model/ChatResponse";
   styleUrl: './chat-list.component.css'
 })
 export class ChatListComponent implements OnInit, OnDestroy {
-  chatID!: string;
   minimalChats: MinimalChat[] = [];
   private subscription: Subscription = new Subscription();
 
@@ -21,7 +21,6 @@ export class ChatListComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService, private router: Router) {}
 
   ngOnInit(): void {
-    //todo find way to stop showing red dot after conv enter
     this.chatService.getAllUserChats().subscribe((chats: MinimalChat[]) => {
       this.minimalChats = chats;
       this.startPoolingChats();

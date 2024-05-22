@@ -3,11 +3,13 @@ export class ListingRequest {
   latitude!: string;
   longitude!: string;
   startDate!: string;
-  endDate!: string;
   parkingSpotSlotNumber!: number;
-  publishingDate!: string;
   price!: number;
   sector!: number;
   location!: string;
+  description!: string;
+  longTermRent!: boolean;
+  monthlyPrice!: number;
+
 }
 

@@ -6,35 +6,51 @@
       <input id="title" formControlName="title">
     </div>
 
+
     <div>
-      <label for="startDate">Data de la care locul de parcare e disponibil:</label>
-      <input id="startDate" formControlName="startDate" type="date">
+      <label for="description">Descriere scurta:</label>
+      <textarea id="description" formControlName="description" rows="5"></textarea>
     </div>
 
     <div>
-      <label for="endDate">Data pana la care locul de parcare e disponibil:</label>
-      <input id="endDate" formControlName="endDate" type="date">
+      <label for="startDate">Data de la care locul de parcare e disponibil:</label>
+      <input id="startDate" formControlName="startDate" type="date" [min]="todayDate()">
     </div>
+
+
     <div>
       <label for="sector">Sector:</label>
-      <input id="sector" formControlName="sector" type="number">
+      <select id="sector" formControlName="sector" class="sector">
+        <option *ngFor="let sector of sectors" [value]="sector">{{ sector }}</option>
+      </select>
     </div>
     <div>
       <label for="location">Locatia exacta (nume strada + numar):</label>
       <input id="location" formControlName="location">
     </div>
 
-
-
-
     <div>
-      <label for="parkingSpotSlotNumber">Parking Spot Slot Number:</label>
+      <label for="parkingSpotSlotNumber">Numarul locului de parcare:</label>
       <input id="parkingSpotSlotNumber" formControlName="parkingSpotSlotNumber" type="number">
     </div>
 
     <div>
-      <label for="price">Price:</label>
+      <label for="price">Pret: (ron/zi)</label>
       <input id="price" formControlName="price" type="number">
+    </div>
+    <div class="long-term-rent">
+      <label for="longTermRent" >Sunt de acord cu inchirierea pentru perioade lungi de timp:</label>
+      <input id="longTermRent" formControlName="longTermRent" type="checkbox" (click)="toggleLongPeriod()">
+    </div>
+    <div *ngIf="longPeriod">
+      <div class="same-row">
+      <label for="monthlyPrice">Pret lunar (ron/luna)</label>
+      <div class="info-icon" (mouseenter)="showPricePopup()" (mouseleave)="hidePricePopup()">
+        <p class="price-pop-up" *ngIf="pricePopUpVisible">Puteti considera aplica un discount fata de pretul zilnic</p>
+        <mat-icon>help</mat-icon>
+      </div>
+      </div>
+      <input id="monthlyPrice" formControlName="monthlyPrice" type="number">
     </div>
     <div >
       <div class="same-row">Fotografii:
