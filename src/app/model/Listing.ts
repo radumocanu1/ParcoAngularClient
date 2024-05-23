@@ -1,4 +1,5 @@
 import {MinimalUser} from "./MinimalUser";
+import {Status} from "./Status";
 
 export class Listing {
   listingUUID!: string;
@@ -20,6 +21,7 @@ export class Listing {
   longTermRent!: boolean;
   monthlyPrice!: number;
   rating!: number;
+  status!:Status;
 
 
 }

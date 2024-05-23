@@ -6,6 +6,8 @@ import {ChatService} from "../service/ChatService";
 import {interval, Subscription, switchMap} from "rxjs";
 import {ChatResponse} from "../model/ChatResponse";
 import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.component";
+import {datepickerAnimation} from "ngx-bootstrap/datepicker/datepicker-animations";
+import {AdminChat} from "../model/AdminChat";
 
 @Component({
   selector: 'app-chat-list',
@@ -15,12 +17,19 @@ import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.com
 export class ChatListComponent implements OnInit, OnDestroy {
   minimalChats: MinimalChat[] = [];
   private subscription: Subscription = new Subscription();
+  adminUUIDChat!: string
+
 
 
 
   constructor(private chatService: ChatService, private router: Router) {}
 
   ngOnInit(): void {
+    this.chatService.getAdminUUID().subscribe(
+      (data:AdminChat) =>{
+        this.adminUUIDChat = data.genericChatUUID
+      }
+    )
     this.chatService.getAllUserChats().subscribe((chats: MinimalChat[]) => {
       this.minimalChats = chats;
       this.startPoolingChats();

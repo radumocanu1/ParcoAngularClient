@@ -1,5 +1,6 @@
 
-export class MyProfile {
+export class UserProfile {
+  userUUID!: string
   username!: string;
   email!: string;
   isTrusted!: boolean
@@ -11,5 +12,5 @@ export class MyProfile {
   lastName!: string
   age!: number
   sex!: string
-
+  sameUser!: boolean
 }

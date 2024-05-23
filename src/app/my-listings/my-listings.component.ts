@@ -23,6 +23,7 @@ export class MyListingsComponent implements OnInit{
     this.listingService.getMyListings().subscribe(
       (data: MinimalListing[]) => {
         this.paginatedListings = data;
+        console.log(data);
       }
     )
   }

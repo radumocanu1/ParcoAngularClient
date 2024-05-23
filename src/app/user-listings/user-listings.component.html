@@ -1,0 +1,29 @@
+<script src="user-listings.component.ts"></script>
+<div class="card-container">
+  <mat-card *ngFor="let element of paginatedListings" class="listing-card" >
+    <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Listing image" >
+    <mat-card-title>{{element.title}}</mat-card-title>
+    <mat-card-footer>
+      <div class="listing-details">
+        <div class="price">{{element.price | currency}}</div>
+        <div class="sector-rating">
+          <span>Sector {{element.sector}}</span>
+          <span>Rating: {{element.rating || 'N/A'}}</span>
+        </div>
+      </div>
+      <div class="alert alert-3-danger">
+      </div>
+      <div class="same-row">
+        <div class="input-button-wrapper">
+          <button mat-flat-button  color="primary" (click)="navigateToListing(element.listingUUID)">Vizualizeaza</button>
+        </div>
+      </div>
+    </mat-card-footer>
+
+  </mat-card>
+</div>
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+
+</div>
+

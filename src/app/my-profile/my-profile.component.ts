@@ -1,5 +1,5 @@
 import {booleanAttribute, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MyProfile} from "../model/MyProfile";
+import {UserProfile} from "../model/UserProfile";
 import {UserService} from "../service/UserService";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ImageViewService} from "../service/util/ImageViewService";
 import { Location } from '@angular/common';
 import {SnackbarService} from "../service/util/SnackbarService";
+import {ChatService} from "../service/ChatService";
 
 
 
@@ -18,7 +19,7 @@ import {SnackbarService} from "../service/util/SnackbarService";
 export class MyProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  myProfile: MyProfile| undefined;
+  myProfile: UserProfile| undefined;
   myProfileUpdateRequest= new MyProfileUpdateRequest();
   isEditMode: boolean = false;
   currentFile?: File;
@@ -33,7 +34,8 @@ export class MyProfileComponent implements OnInit {
               private userService: UserService,
               private formBuilder: FormBuilder,
               private router:Router,
-              private snackbarService: SnackbarService,) {
+              private snackbarService: SnackbarService,
+              private chatService: ChatService) {
 
   }
 
@@ -48,7 +50,7 @@ export class MyProfileComponent implements OnInit {
   modifyUserDetails(){
     console.log(this.myProfileUpdateRequest)
     this.userService.updateUser(this.myProfileUpdateRequest).subscribe(
-        (profile: MyProfile) => {
+        (profile: UserProfile) => {
           this.myProfile = profile;
           this.snackbarService.openSnackBar('✨ Informatiile personale au fost actualizate cu succes! ✨');
           this.goBack()
@@ -71,16 +73,9 @@ export class MyProfileComponent implements OnInit {
 
   getUserProfile(): void {
     this.userService.getUserProfile().subscribe(
-      (profile: MyProfile) => {
+      (profile: UserProfile) => {
         this.myProfile = profile;
-        if (profile.age == 0 ){
-
-        }
         this.myProfileUpdateRequest = profile;
-        console.log(this.myProfileUpdateRequest);
-        if (this.myProfile.hasProfilePicture){
-          localStorage.setItem("currentUserProfilePicture", this.profilePicture())
-        }
       }
     );
   }
@@ -88,7 +83,6 @@ export class MyProfileComponent implements OnInit {
 
   public profilePicture(): string {
     if (this.myProfile) {
-      console.log(this.myProfile);
     return this.userService.getProfilePictureUrl(this.myProfile.profilePictureBytes)
       }
     return ''

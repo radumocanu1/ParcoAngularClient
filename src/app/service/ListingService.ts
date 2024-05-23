@@ -5,6 +5,7 @@ import {ListingRequest} from "../model/ListingRequest";
 import {Listing} from "../model/Listing";
 import {MinimalListing} from "../model/MinimalListing";
 import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
+import {UserDTO} from "../model/userDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class ListingService {
   private apiUrl = 'http://localhost:8080/listing';
 
   constructor(private http: HttpClient) { }
-
+  getListingsAdmin(): Observable<MinimalListing[]> {
+    return this.http.get<MinimalListing[]>(this.apiUrl + '/admin');
+  }
   getListing(listingId: string| null): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/' + listingId);
   }
@@ -21,7 +24,10 @@ export class ListingService {
     return this.http.post<MinimalListing[]>(this.apiUrl + '/filter' , advanceFilteringRequest);
   }
   getMyListings(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + '/userListings');
+    return this.http.get<any>(this.apiUrl + '/myListings');
+  }
+  getUserListings(userUUID:string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/userListings/${userUUID}`);
   }
   createListing(listingRequest:ListingRequest): Observable<any> {
     return this.http.post<Listing>(this.apiUrl , listingRequest);

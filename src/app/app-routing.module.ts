@@ -15,6 +15,9 @@ import {HomeComponent} from "./home/home.component";
 import {ChatComponent} from "./chat/chat.component";
 import {ChatContainerComponent} from "./chat-container/chat-container.component";
 import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
+import {UserListingsComponent} from "./user-listings/user-listings.component";
+import {AdminListingComponent} from "./admin-listing/admin-listing.component";
+import {AdminListingListComponent} from "./admin-listing-list/admin-listing-list.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -32,6 +35,11 @@ const routes: Routes = [
   { path: 'chat', component: ChatContainerComponent, children: [
       { path: ':chatUUID', component: ChatComponent }
     ]},
+  {path: 'userListings/:userUUID', component: UserListingsComponent, canActivate: [AuthGuard] },
+  {path: 'admin/listing/:listingUUID', component: AdminListingComponent, canActivate: [AuthGuard] },
+  {path: 'admin/listings', component: AdminListingListComponent, canActivate: [AuthGuard] },
+
+
 
 
 ];

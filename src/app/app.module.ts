@@ -59,6 +59,10 @@ import {ChatService} from "./service/ChatService";
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatContainerComponent } from './chat-container/chat-container.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { UserListingsComponent } from './user-listings/user-listings.component';
+import {TranslateStatusPipe} from "./service/util/TranslateStatusPipe";
+import { AdminListingListComponent } from './admin-listing-list/admin-listing-list.component';
+import { AdminListingComponent } from './admin-listing/admin-listing.component';
 
 
 
@@ -95,6 +99,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ServerErrorComponent,
     AccessDeniedComponent,
     BytesToImagePipe,
+    TranslateStatusPipe,
     ImageModalComponent,
     FullImageModalComponent,
     MyListingsComponent,
@@ -103,7 +108,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ChatComponent,
     ChatListComponent,
     ChatContainerComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    UserListingsComponent,
+    AdminListingListComponent,
+    AdminListingComponent
   ],
   imports: [
     BrowserModule,

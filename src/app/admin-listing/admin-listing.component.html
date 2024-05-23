@@ -1,0 +1,81 @@
+<div class="admin-page">
+  <div class="listing-details" *ngIf="listing">
+    <div class="listing-info">
+      <h2>{{ listing.title }}</h2>
+      <p>{{ listing.description }}</p>
+
+      <!-- Detalii listare sub forma de cheie-valoare -->
+      <div class="details-column">
+        <div class="detail-item">
+          <span class="detail-title">UUID:</span>
+          <span class="detail-value">{{ listing.listingUUID }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Preț:</span>
+          <span class="detail-value">{{ listing.price }} RON</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Sector:</span>
+          <span class="detail-value">{{ listing.sector }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Locație:</span>
+          <span class="detail-value">{{ listing.location }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Data de început:</span>
+          <span class="detail-value">{{ listing.startDate }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Data de sfârșit:</span>
+          <span class="detail-value">{{ listing.endDate }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Număr loc de parcare:</span>
+          <span class="detail-value">{{ listing.parkingSpotSlotNumber }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Data publicării:</span>
+          <span class="detail-value">{{ listing.publishingDate }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Închiriere pe termen lung:</span>
+          <span class="detail-value">{{ listing.longTermRent ? 'Da' : 'Nu' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="listing.monthlyPrice">
+          <span class="detail-title">Preț lunar:</span>
+          <span class="detail-value">{{ listing.monthlyPrice }} RON</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Rating:</span>
+          <span class="detail-value">{{ listing.rating }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-title">Status:</span>
+          <span class="detail-value" [ngClass]="{
+              'status-active': listing.status === 'ACTIVE',
+              'status-deactivated': listing.status === 'DEACTIVATED',
+              'status-pending': listing.status === 'PENDING'
+            }">{{ listing.status }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="image-modal-container">
+      <app-image-modal *ngIf="listing" [images]="pictures"></app-image-modal>
+    </div>
+  </div>
+  <div class="same-row">
+  <button class="accept-button" (click)="acceptListing()">Acceptă anunț</button>
+
+  <button class="reject-button" (click)="toggleRejectDialog()">Respinge anunț</button>
+  </div>
+
+  <div class="reject-dialog" *ngIf="showRejectDialog">
+    <input type="text" [(ngModel)]="rejectionReason" placeholder="Justificare">
+    <button (click)="submitRejection()">Trimite</button>
+  </div>
+</div>
+
+<div *ngIf="!listing" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+</div>

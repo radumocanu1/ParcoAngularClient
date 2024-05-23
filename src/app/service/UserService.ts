@@ -1,11 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from "@angular/common/http";
-import {catchError, Observable} from "rxjs";
+import {catchError, concatMap, Observable, of, tap} from "rxjs";
 import {UserDTO} from "../model/userDTO";
 import {User} from "../model/User";
 import {UserProfileView} from "../model/UserProfileView";
-import {MyProfile} from "../model/MyProfile";
+import {UserProfile} from "../model/UserProfile";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
+import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
+import {ChatService} from "./ChatService";
 
 @Injectable()
 export class UserService {
@@ -13,7 +15,8 @@ export class UserService {
 
   private userUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private chatService: ChatService) {
     this.userUrl = 'http://localhost:8080/user';
   }
 
@@ -22,20 +25,20 @@ export class UserService {
   }
 
 
-  public getUser(userUUID: string | null)  : Observable<UserProfileView> {
-    return this.http.get<UserProfileView>(`${this.userUrl}/${userUUID}`);
+  public getUser(userUUID: string | null)  : Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.userUrl}/${userUUID}`);
   }
   public deleteUser()  : Observable<void> {
     return this.http.delete<void>(this.userUrl);
   }
-  public updateUser(myProfileUpdateRequest: MyProfileUpdateRequest | undefined)  : Observable<MyProfile> {
-    return this.http.put<MyProfile>(this.userUrl, myProfileUpdateRequest);
+  public updateUser(myProfileUpdateRequest: MyProfileUpdateRequest | undefined)  : Observable<UserProfile> {
+    return this.http.put<UserProfile>(this.userUrl, myProfileUpdateRequest);
   }
   public getProfilePicturePath(userUUID: string | null)  : Observable<string> {
     return this.http.get(`${this.userUrl}/profilePic/${userUUID}`, { responseType: 'text' });
   }
-  getUserProfile(): Observable<MyProfile> {
-    return this.http.get<MyProfile>(`${this.userUrl}/profile`).pipe(
+  getUserProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.userUrl}/profile`).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
           return this.createUser();
@@ -56,8 +59,19 @@ export class UserService {
   public getProfilePictureUrl(profilePictureBytes: string): string {
     return `data:image/jpeg;base64, ${profilePictureBytes}`;
   }
+  public getUserProfileImage(): Observable<ProfilePictureResponse> {
+    return this.http.get<ProfilePictureResponse>(`${this.userUrl}/profilePic`);
+  }
 
-  private createUser(): Observable<MyProfile> {
-    return this.http.post<MyProfile>(this.userUrl, {});
+  private createUser(): Observable<UserProfile> {
+    return this.http.post<UserProfile>(this.userUrl, {}).pipe(
+      concatMap(user =>
+        this.chatService.sendWelcomeMessage().pipe(
+          tap(() => console.log('Welcome message sent successfully')),
+          // Return the created user after sending the welcome message
+          concatMap(() => of(user))
+        )
+      )
+    );
   }
 }

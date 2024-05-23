@@ -1,79 +1,171 @@
-body {
-  background-color: #f0f4f7; /* Culoare de fundal albastru deschis */
+/* Container styles */
+.user-profile-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.user-profile-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Header styles */
+.profile-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  margin-right: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-picture:hover {
+  transform: scale(1.05);
+}
+
+/* Profile info styles */
+.profile-info h1 {
+  font-size: 2em;
   margin: 0;
-  font-family: Arial, sans-serif;
+  color: #333;
+  font-weight: bold;
 }
 
-
-.profile-pic {
-  width: 30px; /* ajustează dimensiunea după preferință */
-  height: 30px; /* ajustează dimensiunea după preferință */
-  border-radius: 50%; /* face imaginea rotundă */
-  object-fit: cover; /* asigură că imaginea este întotdeauna întinsă în interiorul formei rotunde */
+.profile-info h2 {
+  font-size: 1.5em;
+  margin: 5px 0;
+  color: #555;
+  font-weight: normal;
 }
 
-.custom-card {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* adăugăm o umbră subtilă */
-  margin-bottom: 20px; /* adăugăm spațiu între carduri */
+.profile-info p {
+  font-size: 1.2em;
+  color: #777;
+  margin: 0;
 }
 
-/*.feedback-content {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: flex-start;*/
-/*}*/
+/* Details section */
+.profile-details p {
+  font-size: 1.1em;
+  margin: 10px 0;
+  color: #555;
+}
 
-
-.message {
-  margin-bottom: 5px; /* spațiu între mesaj și nota acordată */
+.profile-details strong {
+  color: #333;
 }
 
 .rating {
   font-weight: bold;
+  color: #ff9900;
 }
 
-/*.container {*/
-/*  max-width: 1200px;*/
-/*  margin: 0 auto;*/
-/*  padding: 20px;*/
-/*}*/
+.trusted {
+  color: #28a745;
+}
 
-.profile {
+.not-trusted {
+  color: #dc3545;
+}
+
+/* Button styles */
+.button-container {
   display: flex;
-  align-items: center;
-  background-color: #fff; /* Culoare de fundal alb */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Umbra */
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
-.profile-image img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 20px;
-}
-
-.profile-info {
-  flex: 1;
-}
-
-
-.verified-badge, .unverified-badge {
-  padding: 5px 10px;
-  border-radius: 5px;
+.button-container .btn-send-message,
+.button-container .btn-view-listings,
+.button-container .btn-view-feedback {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
   color: #fff;
-  font-size: 12px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  min-width: 200px;
 }
 
-.verified-badge {
-  background-color: #4caf50; /* Verde */
+.button-container .btn-send-message:hover,
+.button-container .btn-view-listings:hover,
+.button-container .btn-view-feedback:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
-.unverified-badge {
-  background-color: #f44336; /* Rosu */
+.button-container .btn-send-message:active,
+.button-container .btn-view-listings:active,
+.button-container .btn-view-feedback:active {
+  transform: translateY(0);
 }
 
-.small-button{
-  font-size: 12px;
+/* Media queries */
+@media (max-width: 768px) {
+  .user-profile-container {
+    padding: 20px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-picture {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .profile-info h1 {
+    font-size: 1.8em;
+  }
+
+  .profile-info h2 {
+    font-size: 1.3em;
+  }
+
+  .profile-info p {
+    font-size: 1em;
+  }
+
+  .profile-details p {
+    font-size: 1em;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-container .btn-send-message,
+  .button-container .btn-view-listings,
+  .button-container .btn-view-feedback {
+    width: 100%;
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
 }

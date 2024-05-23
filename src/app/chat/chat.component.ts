@@ -5,6 +5,7 @@ import { MessageRequest } from '../model/MessageRequest';
 import { Message } from '../model/Message';
 import { ChatService } from '../service/ChatService';
 import { ChatResponse } from '../model/ChatResponse';
+import {AdminChat} from "../model/AdminChat";
 
 @Component({
   selector: 'app-chat',
@@ -16,6 +17,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   chatResponse!: ChatResponse;
   newMessage: string = '';
   private subscription: Subscription = new Subscription();
+  adminUUIDChat!: string
+  adminGenericChat:boolean = false
+
 
   @ViewChildren('messagesContainer') messagesContainers!: QueryList<ElementRef>;
 
@@ -26,14 +30,24 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.chatID = params.get('chatUUID')!;
-      this.chatService.getChat(this.chatID).subscribe((chatResponse: ChatResponse) => {
-        this.chatResponse = chatResponse;
-        this.startPollingChat();
-        this.scrollToBottom();
-      });
-    });
+    this.chatService.getAdminUUID().subscribe(
+      (data:AdminChat) =>{
+        this.adminUUIDChat = data.genericChatUUID
+        this.route.paramMap.subscribe(params => {
+          this.chatID = params.get('chatUUID')!;
+          if (this.adminUUIDChat == this.chatID)
+            this.adminGenericChat = true
+
+          this.chatService.getChat(this.chatID).subscribe((chatResponse: ChatResponse) => {
+            this.chatResponse = chatResponse;
+            console.log(this.chatResponse);
+            this.startPollingChat();
+            this.scrollToBottom();
+          });
+        });
+      }
+    )
+
   }
 
   ngOnDestroy() {
@@ -68,7 +82,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   isCurrentUserMessage(message: Message): boolean {
-    return message.senderUUID === this.chatResponse.otherUserUUID;
+    if (!this.adminGenericChat)
+      return message.senderUUID === this.chatResponse.otherUserUUID;
+    return false
   }
 
   scrollToBottom() {

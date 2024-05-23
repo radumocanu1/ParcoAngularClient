@@ -1,3 +1,5 @@
+import {Status} from "./Status";
+
 export class MinimalListing {
   listingUUID!: string
   title!: string ;
@@ -9,6 +11,7 @@ export class MinimalListing {
   publishingDate!: Date;
   rating!: number
   available!: boolean
+  status!:Status
 
 
 

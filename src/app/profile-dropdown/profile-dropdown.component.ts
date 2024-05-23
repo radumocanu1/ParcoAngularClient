@@ -6,6 +6,8 @@ import {interval, Subject, Subscription, switchMap} from "rxjs";
 import {ChatResponse} from "../model/ChatResponse";
 import {ChatService} from "../service/ChatService";
 import {UnreadChat} from "../model/UnreadChat";
+import {UserService} from "../service/UserService";
+import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -17,30 +19,38 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
   public userProfile: KeycloakProfile | null = null;
   isDropdownOpen = false;
   unreadMessages!: number;
+  profilePic!:string
   private subscription: Subscription = new Subscription();
+  ready: boolean = true;
 
   constructor(private deleteAccountService: DeleteAccountService,
               private readonly keycloak: KeycloakService,
-              private chatService: ChatService) {
+              private chatService: ChatService,
+              private userService: UserService) {
   }
 
   public async ngOnInit() {
     this.isLoggedIn = this.keycloak.isLoggedIn();
-    if (!this.isLoggedIn) {
-      localStorage.removeItem("currentUserProfilePicture");
-
-    }
 
     if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
+      this.userService.getUserProfileImage().subscribe(
+        (profilePictureResponse:ProfilePictureResponse) =>{
+          this.profilePic = profilePictureResponse.profilePictureBytes
+          // rest call was done to backend service, component can be show now
+        }
+      )
       this.startPoolingUnreadMessages()
 
+    }
+    else
+    {
     }
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
   startPoolingUnreadMessages(){
+
     // first call straight away, not wait 5 sec
     this.chatService.checkForUnreadMessages().subscribe((unreadChat: UnreadChat) => {
       this.unreadMessages = unreadChat.numberOfUnreadChats;

@@ -115,11 +115,11 @@
       <input type="file" id="fileInput" accept="image/*" (change)="onFileInputChange($event)">
     </div>
 
-<!--    <div>-->
-<!--      <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">-->
-<!--        <map-marker [position]="marker.position"></map-marker>-->
-<!--      </google-map>-->
-<!--    </div>-->
+    <div>
+      <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
+        <map-marker [position]="marker.position"></map-marker>
+      </google-map>
+    </div>
 
 
     <button type="button" (click)="confirmLocation()">Locatie corecta</button>

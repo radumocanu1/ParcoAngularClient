@@ -63,6 +63,8 @@ export class ImagePreviewComponent {
         complete: () => {
           this.currentFile = undefined;
           this.closeDialogBox()
+          //todo try to find another solution...
+          window.location.reload()
         }
       });
     }

@@ -1,39 +1,23 @@
-<div class="container">
-  <div class="profile">
-    <div class="profile-image">
-      <img src="assets/template_profile_picture.png" alt="Imagine profil">
-    </div>
+<div class="user-profile-container" *ngIf="user">
+  <div class="profile-header">
+    <img class="profile-picture" *ngIf="user.hasProfilePicture" [src]="user.profilePictureBytes | bytesToImage" alt="Poza de Profil">
+    <img class="profile-picture" *ngIf="!user.hasProfilePicture" src="./assets/template_profile_picture.png" alt="Poza de Profil">
     <div class="profile-info">
+      <h1>{{ user.firstName }} {{ user.lastName }}</h1>
       <h2>{{ user.username }}</h2>
-      <div *ngIf="user.trusted" class="verified-badge">Verificat</div>
-      <div *ngIf="!user.trusted" class="unverified-badge">Neconfirmat</div>
-      <div class="rating">Rating: {{ user.rating }}</div>
-      <div *ngIf="user.feedbackList.length > 0; else noFeedbacks" class="feedbacks">
-        <h3>Feedback-uri:</h3>
-        <div *ngFor="let feedback of user.feedbackList" class="feedback-card">
-          <mat-card class="custom-card">
-            <mat-card-content>
-      <span *ngIf="!feedback.anonymous">
-        <img *ngIf="feedback.profilePicPath" [src]="feedback.profilePicPath" [routerLink]="['/profile/', feedback.feedbackAuthor]" class="profile-pic">
-      </span>
-              <span *ngIf="feedback.anonymous">(Feedback anonim)</span>
-              {{ feedback.message }}
-              <span>Nota acordată: {{feedback.ratingGiven}}</span>
-              <div style="margin-top: 10px;">
-                <button mat-icon-button color="primary" aria-label="Like" class="small-button">
-                  <mat-icon>thumb_up</mat-icon>
-                </button>
-              </div>
-            </mat-card-content>
-
-          </mat-card>
-        </div>
-      </div>
-      <ng-template #noFeedbacks>
-        <p>Nu există feedback-uri disponibile.</p>
-      </ng-template>
-
-      <button (click)="sendMessage()">Trimite Mesaj</button>
+      <p>{{ user.email }}</p>
     </div>
+  </div>
+  <div class="profile-details">
+    <p><strong>Număr de telefon:</strong> {{ user.phoneNumber }}</p>
+    <p><strong>Vârstă:</strong> {{ user.age }}</p>
+    <p><strong>Sex:</strong> {{ user.sex }}</p>
+    <p><strong>Rating:</strong> <span class="rating">{{ user.rating }}</span></p>
+    <p><strong>Utilizator de încredere:</strong> <span [ngClass]="{'trusted': user.isTrusted, 'not-trusted': !user.isTrusted}">{{ user.isTrusted ? 'Da' : 'Nu' }}</span></p>
+  </div>
+  <div class="button-container">
+    <button class="btn-send-message" (click)="sendMessage()">Trimite mesaj</button>
+    <button class="btn-view-listings" [routerLink]="['/userListings/', user.userUUID]">Vezi anunțurile utilizatorului</button>
+    <button class="btn-view-feedback">Vezi feedbackuri primite</button>
   </div>
 </div>

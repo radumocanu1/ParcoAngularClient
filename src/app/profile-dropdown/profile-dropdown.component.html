@@ -1,9 +1,10 @@
+<div *ngIf="ready">
 <div class="profile-dropdown" (click)="toggleDropdown()">
   <div class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</div>
 
   <div class="round-image-container">
-    <img *ngIf="!localStorage.getItem('currentUserProfilePicture')" src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
-    <img *ngIf="localStorage.getItem('currentUserProfilePicture')" [src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture" class="profile-picture">
+    <img *ngIf="!profilePic" src="./assets/template_profile_picture.png" alt="Profile Picture" class="profile-picture">
+    <img *ngIf="profilePic" [src]="profilePic| bytesToImage " alt="Profile Picture" class="profile-picture">
   </div>
 
   <mat-icon class="menu-icon">more_vert</mat-icon>
@@ -27,4 +28,8 @@
     <button mat-button (click)="logout()" *ngIf="isLoggedIn"><mat-icon>exit_to_app</mat-icon>Deconecteaza-te</button>
     <button mat-button (click)="deleteAccount()" *ngIf="isLoggedIn" color="warn" class="delete_account"><mat-icon color="warn">delete_forever</mat-icon><span>Sterge contul</span></button>
   </div>
+</div>
+</div>
+<div  *ngIf="!ready">
+  <mat-spinner></mat-spinner>
 </div>

@@ -89,6 +89,24 @@ body, html {
   padding: 20px;
 }
 
+.status {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.status-active {
+  color: #28a745;
+}
+
+.status-deactivated {
+  color: #dc3545;
+}
+
+.status-pending {
+  color: #ff9900;
+}
+
 .image-modal-container {
   flex: 2;
   min-width: 400px;

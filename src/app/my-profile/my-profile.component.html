@@ -4,7 +4,7 @@
           <div class="card-header">Profilul meu</div>
         <div class="same-row">
           <div class="round-image-container">
-            <img mat-card-image class="profile-picture" *ngIf="myProfile.hasProfilePicture" [src]="localStorage.getItem('currentUserProfilePicture')" alt="Profile Picture">
+            <img mat-card-image class="profile-picture" *ngIf="myProfile.hasProfilePicture" [src]="myProfile.profilePictureBytes | bytesToImage " alt="Profile Picture">
             <img mat-card-image class="profile-picture" *ngIf="!myProfile.hasProfilePicture" src="./assets/template_profile_picture.png" alt="Profile Picture">
           </div>
           <input #fileInput type="file" accept="image/*" (change)="selectFile($event)" style="display: none;" />

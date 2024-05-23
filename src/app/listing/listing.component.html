@@ -63,18 +63,25 @@
       </div>
     </div>
   </div>
+  <div class="status" [ngClass]="{
+        'status-active': listing.status === 'ACTIVE',
+        'status-deactivated': listing.status === 'DEACTIVATED',
+        'status-pending': listing.status === 'PENDING'
+      }">
+    Status : {{ listing.status | translateStatus }}
+  </div>
 
   <div class="listing-description">
     <h2>Descriere</h2>
     <p>{{ listing.description }}</p>
   </div>
 
-<!--  <div class="map-container">-->
-<!--    <h2>Localizare pe hartă</h2>-->
-<!--    <google-map [options]="mapOptions">-->
-<!--      <map-marker [position]="marker.position"></map-marker>-->
-<!--    </google-map>-->
-<!--  </div>-->
+  <div class="map-container">
+    <h2>Localizare pe hartă</h2>
+    <google-map [options]="mapOptions">
+      <map-marker [position]="marker.position"></map-marker>
+    </google-map>
+  </div>
 
   <button *ngIf="!listing.myListing" class="rent-button" (click)="openRentDialog()">
     Închiriază acest loc de parcare <mat-icon>done_outline</mat-icon>

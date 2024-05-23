@@ -1,0 +1,104 @@
+.admin-page {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.listing-details {
+  margin-bottom: 20px;
+}
+
+.listing-info {
+  margin-bottom: 10px;
+}
+
+.image-modal-container {
+  margin-bottom: 20px;
+}
+
+.accept-button,
+.reject-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.accept-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.reject-dialog {
+  margin-top: 20px;
+}
+
+.reject-dialog input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.reject-dialog button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.listing-details {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.listing-info {
+  width: 60%;
+}
+
+.details-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.detail-title {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.image-modal-container {
+  width: 40%;
+}
+
+
+.reject-dialog {
+  margin-top: 20px;
+}
+
+.reject-dialog input {
+  margin-bottom: 10px;
+}
+
+.loading-spinner {
+  margin-top: 50px;
+}

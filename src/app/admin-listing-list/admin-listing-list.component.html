@@ -1,0 +1,37 @@
+<div class="listing-container">
+  <h2>Anunțuri ce așteaptă aprobare</h2>
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+    <!-- Pozele mici rotunde -->
+    <ng-container matColumnDef="mainPicture">
+      <mat-header-cell *matHeaderCellDef> Poză </mat-header-cell>
+      <mat-cell *matCellDef="let listing">
+        <img [src]="listing.mainPicture | bytesToImage" alt="{{ listing.title }}" class="small-rounded-image">
+      </mat-cell>
+    </ng-container>
+
+    <!-- Titlul listării -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Titlu </mat-header-cell>
+      <mat-cell *matCellDef="let listing"> {{ listing.title }} </mat-cell>
+    </ng-container>
+
+    <!-- Prețul listării -->
+    <ng-container matColumnDef="publishingDate">
+      <mat-header-cell *matHeaderCellDef> Adaugat pe data de </mat-header-cell>
+      <mat-cell *matCellDef="let listing"> {{ listing.publishingDate | date }} </mat-cell>
+    </ng-container>
+
+    <!-- Mai multe detalii pot fi adăugate aici -->
+    <ng-container matColumnDef="details">
+      <mat-header-cell *matHeaderCellDef> Detalii anunt </mat-header-cell>
+      <mat-cell *matCellDef="let listing"> <button (click)="navigateToListingDetails(listing.listingUUID)">vizualizeaza</button> </mat-cell>
+    </ng-container>
+
+    <!-- Coloanele definite -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" [class.clickable-row]="true"></mat-row>
+  </mat-table>
+
+  <!-- Paginator -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
