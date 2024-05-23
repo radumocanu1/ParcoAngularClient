@@ -10,6 +10,9 @@ import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import {ChatService} from "../service/ChatService";
 import {Chat} from "../model/Chat";
 import {ChatResponse} from "../model/ChatResponse";
+import {StripeService} from "../service/StripeService";
+import {loadStripe} from "@stripe/stripe-js";
+import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
 
 @Component({
   selector: 'app-listing',
@@ -22,13 +25,14 @@ export class ListingComponent implements OnInit {
   mapOptions!: google.maps.MapOptions;
   marker!: any;
   pictures: Array<string> = [];
+
   constructor(
     private route: ActivatedRoute,
     private listingService: ListingService,
     private modalService: BsModalService,
     private router: Router,
     public dialog: MatDialog,
-    private chatService: ChatService
+    private chatService: ChatService,
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +57,7 @@ export class ListingComponent implements OnInit {
       this.pictures.push(listing.pictures[index]);
     }
   }
+
   initializeMap(): void {
     if (this.listing) {
       this.mapOptions = {

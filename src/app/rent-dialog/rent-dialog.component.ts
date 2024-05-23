@@ -2,6 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Listing} from "../model/Listing";
+import {loadStripe} from "@stripe/stripe-js";
+import {StripeService} from "../service/StripeService";
+import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
 
 @Component({
   selector: 'app-rent-dialog',
@@ -10,11 +13,15 @@ import {Listing} from "../model/Listing";
 })
 export class RentDialogComponent implements OnInit {
   rentForm: FormGroup
+  stripePromise = loadStripe('pk_test_51PJjZcLWWVz5JGxgQSeSt6L9AgbNUfduZkh4vXSiNVuXpXaJ2wXF2dlDBtXEcgbp4a74IboBchMGqdUQsJPFQNWD008ANiDKXo');
+
 
   constructor(
     public dialogRef: MatDialogRef<RentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { listing: Listing },
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private stripeService: StripeService
+
   ) {
     this.rentForm = this.fb.group({
       startDate: [''],
@@ -36,10 +43,16 @@ export class RentDialogComponent implements OnInit {
 
     // Add logic to disable dates
   }
+  async initiatePayment(title: string, amount: number): Promise<void> {
+    this.stripeService.createCheckoutSession(new ListingPaymentRequest(title,amount)).subscribe(async (sessionUrl: string) => {
+      const stripe = await this.stripePromise;
+      stripe?.redirectToCheckout({ sessionId: sessionUrl });
+    });
+  }
 
-  onConfirm(): void {
+   onConfirm(): void {
     if (this.rentForm.valid) {
-      this.dialogRef.close(this.rentForm.value);
+     this.initiatePayment(this.data.listing.title, this.data.listing.price)
     }
   }
 

@@ -83,7 +83,7 @@
 <!--    </google-map>-->
   </div>
 
-  <button *ngIf="!listing.myListing" class="rent-button" (click)="openRentDialog()">
+  <button *ngIf="!listing.myListing" class="rent-button" (click)="openRentDialog()" >
     Închiriază acest loc de parcare <mat-icon>done_outline</mat-icon>
   </button>
   <button *ngIf="listing.myListing" class="rent-button" (click)="openRentDialog()">
