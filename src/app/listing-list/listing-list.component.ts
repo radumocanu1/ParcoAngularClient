@@ -36,6 +36,12 @@ export class ListingListComponent implements OnInit {
       indefinitePeriod: [false]
     });
   }
+  convertDateToDDMMYYYY(date: Date): string {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
 
   ngOnInit(): void {
     this.loadListings();
@@ -75,6 +81,14 @@ export class ListingListComponent implements OnInit {
 
   applyFilter(): void {
     const advanceFilteringRequest = this.filterForm.getRawValue()
+    if (advanceFilteringRequest.startDate) {
+      advanceFilteringRequest.startDate = this.convertDateToDDMMYYYY(new Date(advanceFilteringRequest.startDate));
+    }
+
+    if (advanceFilteringRequest.endDate) {
+        advanceFilteringRequest.endDate = this.convertDateToDDMMYYYY(new Date(advanceFilteringRequest.endDate));
+    }
+
     this.listingService.getFilteredListing(advanceFilteringRequest).subscribe(listings => {
       this.dataSource.data = listings;
       this.paginateListings();

@@ -32,8 +32,19 @@
 
     <div class="form-field">
       <label>
-        <mat-checkbox formControlName="indefinitePeriod" class="styled-checkbox">Vreau sa inchiriez locul pentru o perioada nedeterminata de timp</mat-checkbox>
+        <mat-checkbox formControlName="longTermRent" id="longTermRent" class="styled-checkbox" (click)="toggleLongPeriod()" >Sunt de acord cu inchirierea pentru perioade lungi de timp:</mat-checkbox>
       </label>
+    </div>
+
+    <div *ngIf="longPeriod">
+      <div class="same-row">
+        <label for="monthlyPrice">Pret lunar (ron/luna)</label>
+        <div class="info-icon" (mouseenter)="showPricePopup()" (mouseleave)="hidePricePopup()">
+          <p  *ngIf="pricePopUpVisible">Puteti considera aplicarea un discount fata de pretul zilnic</p>
+          <mat-icon>help</mat-icon>
+        </div>
+      </div>
+      <input id="monthlyPrice" formControlName="monthlyPrice" type="number">
     </div>
 
 
@@ -58,22 +69,6 @@
       <input id="price" formControlName="price" type="number">
     </div>
 
-    <div class="form-field">
-      <label>
-        <mat-checkbox formControlName="longTermRent" id="longTermRent" class="styled-checkbox" (click)="toggleLongPeriod()" >Sunt de acord cu inchirierea pentru perioade lungi de timp:</mat-checkbox>
-      </label>
-    </div>
-
-    <div *ngIf="longPeriod">
-      <div class="same-row">
-      <label for="monthlyPrice">Pret lunar (ron/luna)</label>
-      <div class="info-icon" (mouseenter)="showPricePopup()" (mouseleave)="hidePricePopup()">
-        <p  *ngIf="pricePopUpVisible">Puteti considera aplicarea un discount fata de pretul zilnic</p>
-        <mat-icon>help</mat-icon>
-      </div>
-      </div>
-      <input id="monthlyPrice" formControlName="monthlyPrice" type="number">
-    </div>
     <div >
       <div class="same-row">Fotografii:
         <div class="preview-container">

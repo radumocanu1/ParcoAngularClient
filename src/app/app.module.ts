@@ -50,7 +50,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
 import { HomeComponent } from './home/home.component';
@@ -63,6 +63,7 @@ import { UserListingsComponent } from './user-listings/user-listings.component';
 import {TranslateStatusPipe} from "./service/util/TranslateStatusPipe";
 import { AdminListingListComponent } from './admin-listing-list/admin-listing-list.component';
 import { AdminListingComponent } from './admin-listing/admin-listing.component';
+import {CustomDateAdapter} from "./service/util/CustomDateAdapter";
 
 
 
@@ -161,7 +162,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService]
-  }],
+  },
+    { provide: MAT_DATE_LOCALE, useValue: 'ro-RO' },],
   bootstrap: [AppComponent],
   exports: [
     ProfileDropdownComponent

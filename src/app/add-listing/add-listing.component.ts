@@ -105,7 +105,7 @@ export class AddListingComponent implements OnInit {
     return `${today.getFullYear()}-${month}-${day}`;
   }
   confirmLocation(): void {
-    console.log(this.listingForm.errors)
+    console.log(this.listingForm.get("startDate"))
 
     const { lat, lng } = this.marker.position;
     this.listingForm.patchValue({
@@ -129,8 +129,15 @@ export class AddListingComponent implements OnInit {
       const mainPicture = this.pictures[this.mainPictureIndex]
       this.pictures.splice(this.mainPictureIndex, 1)
       const listingRequest: ListingRequest = this.listingForm.getRawValue();
+      if (listingRequest.startDate) {
+        listingRequest.startDate = this.convertDateToDDMMYYYY(new Date(listingRequest.startDate));
+      }
+
+      if (listingRequest.endDate) {
+        listingRequest.endDate = this.convertDateToDDMMYYYY(new Date(listingRequest.endDate));
+      }
+      console.log(this.listingForm);
       listingRequest.available = true
-      console.log(listingRequest);
       this.listingService.createListing(listingRequest).pipe(
         concatMap((data: Listing) => {
           const listingUUID = data.listingUUID;
@@ -192,6 +199,13 @@ export class AddListingComponent implements OnInit {
       this.processFiles(files);
     }
   }
+  convertDateToDDMMYYYY(date: Date): string {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
 
   private processFiles(files: File[]): void {
     for (const file of files) {
