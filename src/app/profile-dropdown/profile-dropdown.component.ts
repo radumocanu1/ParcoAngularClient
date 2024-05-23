@@ -8,6 +8,7 @@ import {ChatService} from "../service/ChatService";
 import {UnreadChat} from "../model/UnreadChat";
 import {UserService} from "../service/UserService";
 import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -23,27 +24,37 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   ready: boolean = true;
 
+
   constructor(private deleteAccountService: DeleteAccountService,
               private readonly keycloak: KeycloakService,
               private chatService: ChatService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
   }
 
   public async ngOnInit() {
     this.isLoggedIn = this.keycloak.isLoggedIn();
 
     if (this.isLoggedIn) {
-      this.userService.getUserProfileImage().subscribe(
-        (profilePictureResponse:ProfilePictureResponse) =>{
-          this.profilePic = profilePictureResponse.profilePictureBytes
-          // rest call was done to backend service, component can be show now
-        }
-      )
-      this.startPoolingUnreadMessages()
+      const token = await this.keycloak.getToken();
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const roles = decodedToken.realm_access.roles;
+      console.log(roles);
+      if (roles.includes('admin')) {
+        this.router.navigate(['/admin/listings']);
+      }
+      else{
+        this.userService.getUserProfileImage().subscribe(
+          (profilePictureResponse:ProfilePictureResponse) =>{
+            this.profilePic = profilePictureResponse.profilePictureBytes
+            // rest call was done to backend service, component can be show now
+          }
+        )
+        this.startPoolingUnreadMessages()
+      }
 
-    }
-    else
-    {
+
+
     }
   }
   ngOnDestroy() {

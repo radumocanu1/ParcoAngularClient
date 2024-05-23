@@ -105,6 +105,7 @@ export class AddListingComponent implements OnInit {
     return `${today.getFullYear()}-${month}-${day}`;
   }
   confirmLocation(): void {
+    console.log(this.listingForm.errors)
 
     const { lat, lng } = this.marker.position;
     this.listingForm.patchValue({
