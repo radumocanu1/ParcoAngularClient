@@ -143,7 +143,6 @@ export class AddListingComponent implements OnInit {
       if (listingRequest.endDate) {
         listingRequest.endDate = this.convertDateToDDMMYYYY(new Date(listingRequest.endDate));
       }
-      console.log(this.listingForm);
       listingRequest.available = true
       this.listingService.createListing(listingRequest).pipe(
         concatMap((data: Listing) => {
