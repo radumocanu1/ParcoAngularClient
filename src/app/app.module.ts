@@ -63,6 +63,8 @@ import { UserListingsComponent } from './user-listings/user-listings.component';
 import {TranslateStatusPipe} from "./service/util/TranslateStatusPipe";
 import { AdminListingListComponent } from './admin-listing-list/admin-listing-list.component';
 import { AdminListingComponent } from './admin-listing/admin-listing.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { PaymentRejectComponent } from './payment-reject/payment-reject.component';
 
 
 
@@ -112,6 +114,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UserListingsComponent,
     AdminListingListComponent,
     AdminListingComponent,
+    PaymentSuccessComponent,
+    PaymentRejectComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import {ChatService} from "../service/ChatService";
 import {Chat} from "../model/Chat";
 import {ChatResponse} from "../model/ChatResponse";
-import {StripeService} from "../service/StripeService";
+import {PaymentService} from "../service/PaymentService";
 import {loadStripe} from "@stripe/stripe-js";
 import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
 

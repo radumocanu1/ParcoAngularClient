@@ -18,6 +18,8 @@ import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
 import {UserListingsComponent} from "./user-listings/user-listings.component";
 import {AdminListingComponent} from "./admin-listing/admin-listing.component";
 import {AdminListingListComponent} from "./admin-listing-list/admin-listing-list.component";
+import {PaymentSuccessComponent} from "./payment-success/payment-success.component";
+import {PaymentRejectComponent} from "./payment-reject/payment-reject.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -38,6 +40,9 @@ const routes: Routes = [
   {path: 'userListings/:userUUID', component: UserListingsComponent, canActivate: [AuthGuard] },
   {path: 'admin/listing/:listingUUID', component: AdminListingComponent, canActivate: [AuthGuard] },
   {path: 'admin/listings', component: AdminListingListComponent, canActivate: [AuthGuard] },
+  {path:'payment/success', component: PaymentSuccessComponent, canActivate: [AuthGuard] },
+  {path:'payment/cancel', component: PaymentRejectComponent, canActivate: [AuthGuard] },
+
 
 
 

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Listing} from "../model/Listing";
 import {loadStripe} from "@stripe/stripe-js";
-import {StripeService} from "../service/StripeService";
+import {PaymentService} from "../service/PaymentService";
 import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
 
 @Component({
@@ -20,7 +20,7 @@ export class RentDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<RentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { listing: Listing },
     private fb: FormBuilder,
-    private stripeService: StripeService
+    private stripeService: PaymentService
 
   ) {
     this.rentForm = this.fb.group({
@@ -43,8 +43,8 @@ export class RentDialogComponent implements OnInit {
 
     // Add logic to disable dates
   }
-  async initiatePayment(title: string, amount: number): Promise<void> {
-    this.stripeService.createCheckoutSession(new ListingPaymentRequest(title,amount)).subscribe(async (sessionUrl: string) => {
+  async initiatePayment(title: string, amount: number, listingUUID:string): Promise<void> {
+    this.stripeService.createCheckoutSession(new ListingPaymentRequest(title,amount,listingUUID)).subscribe(async (sessionUrl: string) => {
       const stripe = await this.stripePromise;
       stripe?.redirectToCheckout({ sessionId: sessionUrl });
     });
@@ -52,7 +52,7 @@ export class RentDialogComponent implements OnInit {
 
    onConfirm(): void {
     if (this.rentForm.valid) {
-     this.initiatePayment(this.data.listing.title, this.data.listing.price)
+     this.initiatePayment(this.data.listing.title, this.data.listing.price, this.data.listing.listingUUID)
     }
   }
 

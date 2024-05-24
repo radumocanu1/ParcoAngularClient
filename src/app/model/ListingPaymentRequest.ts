@@ -1,9 +1,12 @@
 export class ListingPaymentRequest {
-  title!:string
-  price!:number
-
-  constructor(title: string, price: number) {
+  constructor(title: string, price: number, listingUUID: string) {
     this.title = title;
     this.price = price;
+    this.listingUUID = listingUUID;
   }
+  title!:string
+  price!:number
+  listingUUID!:string
+
+
 }
