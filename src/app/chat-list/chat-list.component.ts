@@ -1,12 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MinimalChat} from "../model/MinimalChat";
-import {UserService} from "../service/UserService";
 import {Router} from "@angular/router";
 import {ChatService} from "../service/ChatService";
 import {interval, Subscription, switchMap} from "rxjs";
-import {ChatResponse} from "../model/ChatResponse";
-import {ProfileDropdownComponent} from "../profile-dropdown/profile-dropdown.component";
-import {datepickerAnimation} from "ngx-bootstrap/datepicker/datepicker-animations";
 import {AdminChat} from "../model/AdminChat";
 
 @Component({
@@ -18,6 +14,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
   minimalChats: MinimalChat[] = [];
   private subscription: Subscription = new Subscription();
   adminUUIDChat!: string
+
 
 
 

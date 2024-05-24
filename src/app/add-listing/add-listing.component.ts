@@ -26,6 +26,9 @@ export class AddListingComponent implements OnInit {
   pricePopUpVisible: boolean = false;
   listingForm: FormGroup;
   minEndDate!: Date | null;
+  maxEndDate!: Date | null;
+
+  periodPopUpVisible: boolean = false;
 
 
 
@@ -66,13 +69,13 @@ export class AddListingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listingForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
-      if (value) {
-        this.listingForm.get('endDate')!.disable();
-      } else {
-        this.listingForm.get('endDate')!.enable();
-      }
-    });
+    // this.listingForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
+    //   if (value) {
+    //     this.listingForm.get('endDate')!.disable();
+    //   } else {
+    //     this.listingForm.get('endDate')!.enable();
+    //   }
+    // });
 
   }
   public toggleLongPeriod(){
@@ -114,13 +117,17 @@ export class AddListingComponent implements OnInit {
     });
 
   }
-  updateEndDateMin(startDate: Date): void {
+  updateEndDateMinMax(startDate: Date): void {
     if (startDate) {
       const minEndDate = new Date(startDate);
-      minEndDate.setDate(minEndDate.getDate() + 1); // Increment by one day
+      minEndDate.setDate(minEndDate.getDate() + 1);
+      const maxEndDate = new Date(startDate);
+      maxEndDate.setFullYear(maxEndDate.getFullYear() + 1);
       this.minEndDate = minEndDate;
+      this.maxEndDate = maxEndDate;
     } else {
-      this.minEndDate = null; // Reset minEndDate if startDate is null
+      this.minEndDate = null;
+      this.maxEndDate = null// Reset minEndDate if startDate is null
     }
   }
   onSubmit(): void {
@@ -252,5 +259,11 @@ export class AddListingComponent implements OnInit {
   }
   hidePricePopup(): void {
     this.pricePopUpVisible = false;
+  }
+  showPeriodPopup(): void {
+    this.periodPopUpVisible = true
+  }
+  hidePeriodPopup(): void {
+    this.periodPopUpVisible = false;
   }
 }

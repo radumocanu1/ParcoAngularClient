@@ -16,18 +16,29 @@
     <div class="form-field">
       <label for="startDate">Data de la care locul de parcare va fi disponibil</label>
       <mat-form-field>
-        <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate" [min]="todayDate()" (dateChange)="updateEndDateMin($event.value)">
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" id="startDate" [min]="todayDate()" (dateChange)="updateEndDateMinMax($event.value)">
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="form-field">
+      <div class="same-row">
       <label for="endDate">Data până la care locul de parcare e liber:</label>
+        <div class="info-icon" (mouseenter)="showPeriodPopup()" (mouseleave)="hidePeriodPopup()">
+          <p  *ngIf="periodPopUpVisible" class="period-popup">Durata maxima pe care o puteti selecta este de 1 an. Anuntul va trebui reaprobat dupa aceasta perioada.</p>
+          <mat-icon>help</mat-icon>
+
+        </div>
+      </div>
       <mat-form-field>
-        <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="listingForm.get('indefinitePeriod')?.value" [min]="minEndDate">
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="listingForm.get('indefinitePeriod')?.value" [min]="minEndDate" [max]="maxEndDate">
         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
+    </div>
+    <div>
+      <label for="price">Pret: (ron/zi)</label>
+      <input id="price" formControlName="price" type="number">
     </div>
 
     <div class="form-field">
@@ -40,7 +51,7 @@
       <div class="same-row">
         <label for="monthlyPrice">Pret lunar (ron/luna)</label>
         <div class="info-icon" (mouseenter)="showPricePopup()" (mouseleave)="hidePricePopup()">
-          <p  *ngIf="pricePopUpVisible">Puteti considera aplicarea un discount fata de pretul zilnic</p>
+          <p  *ngIf="pricePopUpVisible" class="price-pop-up">Puteti considera aplicarea un discount fata de pretul zilnic</p>
           <mat-icon>help</mat-icon>
         </div>
       </div>
@@ -62,11 +73,6 @@
     <div>
       <label for="parkingSpotSlotNumber">Numarul locului de parcare:</label>
       <input id="parkingSpotSlotNumber" formControlName="parkingSpotSlotNumber" type="number">
-    </div>
-
-    <div>
-      <label for="price">Pret: (ron/zi)</label>
-      <input id="price" formControlName="price" type="number">
     </div>
 
     <div >

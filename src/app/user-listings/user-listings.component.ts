@@ -11,7 +11,8 @@ import {ChatResponse} from "../model/ChatResponse";
   styleUrl: './user-listings.component.css'
 })
 export class UserListingsComponent implements OnInit {
-  loading: boolean = false;
+  hasListings: boolean = true;
+  loading: boolean = true;
   userUUID!:string;
   paginatedListings: MinimalListing[] = [];
 
@@ -28,6 +29,10 @@ export class UserListingsComponent implements OnInit {
     this.listingService.getUserListings(this.userUUID).subscribe(
       (data: MinimalListing[]) => {
         this.paginatedListings = data;
+        this.loading = false;
+        if(this.paginatedListings.length == 0){
+          this.hasListings = false;
+        }
       }
     )
   });

@@ -1,5 +1,4 @@
-<script src="user-listings.component.ts"></script>
-<div class="card-container">
+<div class="card-container" *ngIf="hasListings">
   <mat-card *ngFor="let element of paginatedListings" class="listing-card" >
     <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Listing image" >
     <mat-card-title>{{element.title}}</mat-card-title>
@@ -24,6 +23,12 @@
 </div>
 <div *ngIf="loading" class="loading-spinner">
   <mat-spinner></mat-spinner>
-
+</div>
+<div *ngIf="!hasListings">
+  <div class="container">
+    <div class="message-box">
+      <h1>Userul nu a publicat niciun anunt</h1>
+    </div>
+  </div>
 </div>
 

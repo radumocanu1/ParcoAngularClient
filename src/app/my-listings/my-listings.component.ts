@@ -11,7 +11,8 @@ import {UserService} from "../service/UserService";
   styleUrl: './my-listings.component.css'
 })
 export class MyListingsComponent implements OnInit{
-  loading:boolean = false;
+  loading:boolean = true;
+  hasListings:boolean = true;
   paginatedListings: MinimalListing[] = [];
   constructor(private router: Router,
               private listingService: ListingService,
@@ -23,7 +24,10 @@ export class MyListingsComponent implements OnInit{
     this.listingService.getMyListings().subscribe(
       (data: MinimalListing[]) => {
         this.paginatedListings = data;
-        console.log(data);
+        if (this.paginatedListings.length == 0) {
+          this.hasListings = false
+        }
+        this.loading = false;
       }
     )
   }

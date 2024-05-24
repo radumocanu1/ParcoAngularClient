@@ -39,7 +39,6 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
       const token = await this.keycloak.getToken();
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const roles = decodedToken.realm_access.roles;
-      console.log(roles);
       if (roles.includes('admin')) {
         this.router.navigate(['/admin/listings']);
       }

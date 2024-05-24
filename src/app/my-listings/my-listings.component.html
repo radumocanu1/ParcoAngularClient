@@ -1,3 +1,4 @@
+<div *ngIf="hasListings">
 <div class="card-container">
   <mat-card *ngFor="let element of paginatedListings" class="listing-card">
     <img mat-card-image [src]="element.mainPicture | bytesToImage" alt="Imaginea anunțului">
@@ -29,6 +30,14 @@
       </div>
     </mat-card-footer>
   </mat-card>
+</div>
+</div>
+<div *ngIf="!hasListings">
+  <div class="container">
+    <div class="message-box">
+      <h1>Nu ati publicat niciun anunt</h1>
+    </div>
+  </div>
 </div>
 <div *ngIf="loading" class="loading-spinner">
   <mat-spinner></mat-spinner>

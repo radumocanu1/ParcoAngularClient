@@ -4,15 +4,12 @@ import { MinimalUser } from "../model/MinimalUser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ListingService } from "../service/ListingService";
 import { MatDialog } from '@angular/material/dialog';
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { ImageModalComponent } from "../image-modal/image-modal.component";
+import {Location} from '@angular/common';
+
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import {ChatService} from "../service/ChatService";
-import {Chat} from "../model/Chat";
 import {ChatResponse} from "../model/ChatResponse";
-import {PaymentService} from "../service/PaymentService";
-import {loadStripe} from "@stripe/stripe-js";
-import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
+
 
 @Component({
   selector: 'app-listing',
@@ -29,10 +26,10 @@ export class ListingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private listingService: ListingService,
-    private modalService: BsModalService,
     private router: Router,
     public dialog: MatDialog,
     private chatService: ChatService,
+
   ) {}
 
   ngOnInit(): void {

@@ -1,32 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ListingService } from "../service/ListingService";
-import { MatTableDataSource } from "@angular/material/table";
-import { MinimalListing } from "../model/MinimalListing";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ListingService} from "../service/ListingService";
+import {MatTableDataSource} from "@angular/material/table";
+import {MinimalListing} from "../model/MinimalListing";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {Router} from '@angular/router';
+import {AppStateService} from "../service/util/AppStateService";
+import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
 
 @Component({
   selector: 'app-listing-list',
   templateUrl: './listing-list.component.html',
   styleUrls: ['./listing-list.component.css']
 })
-export class ListingListComponent implements OnInit {
+export class ListingListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['picture', 'title', 'sector', 'startDate', 'endDate', 'price', 'publishingDate'];
   hourlyPriceRange: string[] = ['1', '2', '3', '4', '5', '10', '20', 'nedefinit'];
   dailyPriceRange: string[] = ['5','10','20','30', '50', 'nedefinit'];
-
+  advanceFilteringRequest!:AdvanceFilteringRequest
   dataSource = new MatTableDataSource<MinimalListing>();
   filterForm: FormGroup;
   paginatedListings: MinimalListing[] = [];
   minEndDate!: Date | null;
+  foundListings:boolean = true
+  loading = true;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private listingService: ListingService, private fb: FormBuilder, private router: Router) {
+  constructor(private listingService: ListingService, private fb: FormBuilder, private router: Router,  private appStateService: AppStateService) {
     this.filterForm = this.fb.group({
       sector: [''],
       startDate: [''],
@@ -36,6 +40,9 @@ export class ListingListComponent implements OnInit {
       indefinitePeriod: [false]
     });
   }
+  ngOnDestroy(): void {
+    this.appStateService.setState("filters", this.advanceFilteringRequest)
+  }
   convertDateToDDMMYYYY(date: Date): string {
     const day = ('0' + date.getDate()).slice(-2);
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -44,7 +51,26 @@ export class ListingListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadListings();
+    this.advanceFilteringRequest = this.appStateService.getState("filters");
+    if(this.advanceFilteringRequest){
+      this.listingService.getFilteredListing(this.advanceFilteringRequest).subscribe(listings => {
+        this.dataSource.data = listings;
+        this.foundListings = this.dataSource.data.length > 0;
+        this.paginateListings();
+        this.loading = false;
+        console.log( this.advanceFilteringRequest.startDate.toString());
+        this.filterForm.patchValue({sector: this.advanceFilteringRequest.sector,
+          startDate: this.convertDateString(this.advanceFilteringRequest.startDate.toString()),
+          endDate:this.convertDateString(this.advanceFilteringRequest.endDate.toString()),
+          maxDailyPrice:this.advanceFilteringRequest.maxDailyPrice,
+          maxMonthlyPrice:this.advanceFilteringRequest.maxMonthlyPrice,
+          indefinitePeriod:this.advanceFilteringRequest.indefinitePeriod})
+
+      });
+    }
+    else{
+      this.loadListings();
+    }
     this.filterForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
       if (value) {
         this.filterForm.get('endDate')!.disable();
@@ -53,14 +79,21 @@ export class ListingListComponent implements OnInit {
       }
     });
   }
-
+  convertDateString(dateString: string): string {
+    const [day, month, year] = dateString.split('/');
+    return `${year}-${month}-${day}`;
+  }
 
   loadListings(): void {
     this.listingService.getAllListings().subscribe(minimalListings => {
       this.dataSource.data = minimalListings;
       this.dataSource.paginator = this.paginator;
+      if(this.dataSource.data.length == 0) {
+        this.foundListings = false
+      }
       this.dataSource.sort = this.sort;
       this.paginateListings();
+      this.loading = false;
     });
   }
   updateEndDateMin(startDate: Date): void {
@@ -80,17 +113,20 @@ export class ListingListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    const advanceFilteringRequest = this.filterForm.getRawValue()
-    if (advanceFilteringRequest.startDate) {
-      advanceFilteringRequest.startDate = this.convertDateToDDMMYYYY(new Date(advanceFilteringRequest.startDate));
+     this.advanceFilteringRequest = this.filterForm.getRawValue()
+    if (this.advanceFilteringRequest.startDate) {
+      // @ts-ignore
+      this.advanceFilteringRequest.startDate = this.convertDateToDDMMYYYY(new Date(this.advanceFilteringRequest.startDate));
     }
 
-    if (advanceFilteringRequest.endDate) {
-        advanceFilteringRequest.endDate = this.convertDateToDDMMYYYY(new Date(advanceFilteringRequest.endDate));
+    if (this.advanceFilteringRequest.endDate) {
+      // @ts-ignore
+      this.advanceFilteringRequest.endDate = this.convertDateToDDMMYYYY(new Date(this.advanceFilteringRequest.endDate));
     }
-
-    this.listingService.getFilteredListing(advanceFilteringRequest).subscribe(listings => {
+    console.log(this.advanceFilteringRequest);
+    this.listingService.getFilteredListing(this.advanceFilteringRequest).subscribe(listings => {
       this.dataSource.data = listings;
+      this.foundListings = this.dataSource.data.length > 0;
       this.paginateListings();
     });
   }
