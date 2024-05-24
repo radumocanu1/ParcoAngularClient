@@ -49,7 +49,13 @@ import { MyListingsComponent } from './my-listings/my-listings.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker, MatStartDate
+} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
@@ -65,6 +71,7 @@ import { AdminListingListComponent } from './admin-listing-list/admin-listing-li
 import { AdminListingComponent } from './admin-listing/admin-listing.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentRejectComponent } from './payment-reject/payment-reject.component';
+import { RentedListingsComponent } from './rented-listings/rented-listings.component';
 
 
 
@@ -116,6 +123,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AdminListingComponent,
     PaymentSuccessComponent,
     PaymentRejectComponent,
+    RentedListingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,7 +164,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatDatepickerToggle,
     MatDatepicker,
     MatNativeDateModule,
-    MatCheckbox
+    MatCheckbox,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatStartDate
 
 
   ],

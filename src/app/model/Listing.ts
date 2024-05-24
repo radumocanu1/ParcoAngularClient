@@ -22,6 +22,7 @@ export class Listing {
   monthlyPrice!: number;
   rating!: number;
   status!:Status;
+  currentCarNumber!:string
 
 
 }

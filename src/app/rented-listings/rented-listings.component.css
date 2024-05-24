@@ -1,0 +1,114 @@
+/* user-listings.component.css */
+.listings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.listing {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.listing-active {
+  background-color: #e3f2fd;
+}
+
+.listing-inactive {
+  background-color: #f0f0f0;
+}
+
+.listing:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.listing-image {
+  width: 300px; /* Mărim imaginea */
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.listing:hover .listing-image {
+  transform: scale(1.05);
+}
+
+.listing-details {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listing-details h2 {
+  margin: 0 0 10px;
+  font-size: 1.8em; /* Text mai mare și accentuat */
+  color: #333;
+}
+
+.listing-details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 1.1em;
+}
+
+.listing-details strong {
+  color: #333;
+}
+
+.active-parking {
+  color: red;
+  font-weight: bold;
+  font-size: 1.3em; /* Mai accentuat */
+  background-color: aqua;
+}
+
+.feedback-button {
+  align-self: start;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.feedback-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .listings-container {
+    padding: 10px;
+  }
+
+  .listing {
+    flex-direction: column;
+  }
+
+  .listing-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .listing-details {
+    padding: 10px;
+  }
+}

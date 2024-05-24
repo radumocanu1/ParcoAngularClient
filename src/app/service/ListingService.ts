@@ -7,6 +7,7 @@ import {MinimalListing} from "../model/MinimalListing";
 import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
 import {UserDTO} from "../model/userDTO";
 import {AdminUpdateListingRequest} from "../model/AdminUpdateListingRequest";
+import {DateRange} from "../model/DateRange";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,12 @@ export class ListingService {
   private apiUrl = 'http://localhost:8080/listing';
 
   constructor(private http: HttpClient) { }
+  getRentedListings(): Observable<MinimalListing[]> {
+    return this.http.get<MinimalListing[]>(this.apiUrl + '/rented');
+  }
+  getUnavailableDates(listingUUID: string): Observable<DateRange[]> {
+    return this.http.get<DateRange[]>(`${this.apiUrl}/${listingUUID}/unavailable-dates`);
+  }
   getListingsAdmin(): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(this.apiUrl + '/admin');
   }
@@ -31,6 +38,7 @@ export class ListingService {
   getMyListings(): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/myListings');
   }
+
   getUserListings(userUUID:string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/userListings/${userUUID}`);
   }

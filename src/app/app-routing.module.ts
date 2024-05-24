@@ -20,6 +20,7 @@ import {AdminListingComponent} from "./admin-listing/admin-listing.component";
 import {AdminListingListComponent} from "./admin-listing-list/admin-listing-list.component";
 import {PaymentSuccessComponent} from "./payment-success/payment-success.component";
 import {PaymentRejectComponent} from "./payment-reject/payment-reject.component";
+import {RentedListingsComponent} from "./rented-listings/rented-listings.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'admin/listings', component: AdminListingListComponent, canActivate: [AuthGuard] },
   {path:'payment/success', component: PaymentSuccessComponent, canActivate: [AuthGuard] },
   {path:'payment/cancel', component: PaymentRejectComponent, canActivate: [AuthGuard] },
+  {path:'rented-listings', component: RentedListingsComponent, canActivate: [AuthGuard] },
 
 
 

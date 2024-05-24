@@ -60,6 +60,14 @@
           <span class="detail-title">Închiriere pe termen lung:</span>
           <span class="detail-value">{{ listing.longTermRent ? 'Da' : 'Nu' }}</span>
         </div>
+        <div *ngIf="listing.currentCarNumber" class="detail-item">
+          <span class="detail-title">Parcheaza  :</span>
+          <span class="detail-value">{{ listing.currentCarNumber }}</span>
+        </div>
+        <div *ngIf="!listing.currentCarNumber" class="detail-item">
+          <span class="detail-title">Nu exista nicio masina parcata pe acest loc</span>
+        </div>
+
       </div>
     </div>
   </div>

@@ -18,7 +18,7 @@
         <div class="notification-badge" *ngIf="unreadMessages > 0">{{ unreadMessages }}</div>
         <mat-icon>message</mat-icon>Mesaje
       </button>
-      <button mat-button><mat-icon>person_add</mat-icon>Invita un prieten</button>
+      <button mat-button routerLink="rented-listings"><mat-icon>commute</mat-icon>Locuri inchiriate</button>
     </div>
     <div *ngIf="!isLoggedIn">
       <button mat-button (click)="login()">Conecteaza-te</button>

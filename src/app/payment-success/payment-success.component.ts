@@ -14,7 +14,7 @@ export class PaymentSuccessComponent implements OnInit {
   ngOnInit(): void {
     this.paymentService.notifySuccessPayment().subscribe(
       () =>
-        this.router.navigate(['/payment-success'])
+        this.router.navigate(['/rented-listings'])
     )
   }
 
