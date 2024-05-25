@@ -1,25 +1,25 @@
 <h2 mat-dialog-title>Confirmare Închiriere</h2>
 <div mat-dialog-content>
-  <form [formGroup]="rentForm">
+  <form [formGroup]="bookingForm">
     <mat-form-field>
       <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="startPicker" formControlName="startDate"  [min]="todayDate()" (dateChange)="updateEndDateMinMax($event.value)">
+      <input matInput [matDatepicker]="startPicker" formControlName="startDate" [matDatepickerFilter]="dateFilter" [min]="todayDate()" (dateChange)="validateDates()">
       <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>End Date</mat-label>
-      <input matInput [matDatepicker]="endPicker" formControlName="endDate" [min]="minEndDate" [max]="maxEndDate">
+      <input matInput [matDatepicker]="endPicker" formControlName="endDate" [matDatepickerFilter]="endDateFilter" [min]="minEndDate" [max]="maxEndDate"(dateChange)="validateDates()">
       <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Durata</mat-label>
       <mat-select formControlName="duration">
-        <mat-option value="1 week">Alegere manuala</mat-option>
-        <mat-option value="1 week">1 săptămână</mat-option>
-        <mat-option value="1 month">1 lună</mat-option>
-        <mat-option value="indefinite">Nedeterminat</mat-option>
+        <mat-option value="Alegere manuala">Alegere manuala</mat-option>
+        <mat-option value="1">1 saptamana</mat-option>
+        <mat-option value="2">1 lună</mat-option>
+        <mat-option value="3">3 luni</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
@@ -30,5 +30,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Anulare</button>
-  <button mat-button [disabled]="!rentForm.valid" (click)="onConfirm()">Catre plata</button>
+  <button type="submit" mat-raised-button color="primary" [disabled]="bookingForm.invalid" (click)="onConfirm()">Spre plata</button>
 </div>

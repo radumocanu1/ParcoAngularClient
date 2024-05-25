@@ -49,13 +49,7 @@ import { MyListingsComponent } from './my-listings/my-listings.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
-import {
-  MatDatepicker,
-  MatDatepickerInput,
-  MatDatepickerToggle,
-  MatDateRangeInput,
-  MatDateRangePicker, MatStartDate
-} from "@angular/material/datepicker";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { RentDialogComponent } from './rent-dialog/rent-dialog.component';
@@ -164,10 +158,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatDatepickerToggle,
     MatDatepicker,
     MatNativeDateModule,
-    MatCheckbox,
-    MatDateRangeInput,
-    MatDateRangePicker,
-    MatStartDate
+    MatCheckbox
 
 
   ],
