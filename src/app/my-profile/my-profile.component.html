@@ -16,8 +16,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ myProfile.username }}</h5>
             <ng-container *ngIf="myProfile.rating !== 0; else noRatingBlock">
-              <p class="card-text" > Rating : {{ myProfile.rating }}</p>
-              <button mat-fab extended color="primary">
+              <p class="card-text" > Rating : {{ myProfile.rating }}<mat-icon>star</mat-icon></p>
+              <button mat-fab extended color="primary" (click)="showUserFeedbacks()">
                 Feedback-uri primite
                 <mat-icon>whatshot</mat-icon>
               </button>
@@ -146,11 +146,39 @@
     </div>
 
 </div>
+<div *ngIf="showFeedbacks">
+  <div class="feedback-section">
+    <h2>Feedback-uri primite</h2>
+
+    <div class="filter-section">
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrează după rating</mat-label>
+        <mat-select (selectionChange)="filterFeedbacks($event)">
+          <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }} stele</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="feedback-container">
+      <div *ngFor="let feedback of filteredFeedbacks" class="feedback-card">
+        <div class="feedback-header">
+          <small>Postat pe {{ feedback.publishingDate}}</small>
+        </div>
+        <div class="feedback-body">
+          <img *ngIf="!feedback.userProfilePicture" src="./assets/template_profile_picture.png" alt="user picture" class="user-pic" (click)="navigateToProfile(feedback.authorUUID)">
+          <img *ngIf="feedback.userProfilePicture" [src]="feedback.userProfilePicture | bytesToImage" alt="user picture" class="user-pic" (click)="navigateToProfile(feedback.authorUUID)">
+          <div class="feedback-rating">
+            <mat-icon>star</mat-icon> {{ feedback.ratingGiven }}
+          </div>
+          <p>{{ feedback.message }}</p>
+        </div>
+      </div>
+    </div>
+</div>
 
 
 
 
-<div *ngIf="!myProfile">
+<div *ngIf="!myProfile || loading">
   <mat-spinner></mat-spinner>
-
 </div>

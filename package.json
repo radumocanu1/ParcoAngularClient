@@ -23,6 +23,7 @@
     "@angular/router": "^17.3.0",
     "@stripe/stripe-js": "^3.4.1",
     "bootstrap": "^5.3.3",
+    "date-fns": "^3.6.0",
     "keycloak-angular": "^15.2.1",
     "keycloak-js": "^24.0.3",
     "ng-lazyload-image": "^9.1.3",

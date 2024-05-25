@@ -3,4 +3,5 @@ export class FeedbackResponse {
   authorUUID!: string
   message!:string
   ratingGiven!:string
+  publishingDate!: Date
 }

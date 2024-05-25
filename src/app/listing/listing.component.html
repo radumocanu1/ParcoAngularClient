@@ -25,6 +25,10 @@
       <h2>Detalii</h2>
       <div class="details-column">
         <div class="detail-item">
+          <span class="detail-title">Rating</span>
+          <span class="detail-value">{{ listing.rating | number : '2.2'}} <mat-icon>star</mat-icon> </span>
+        </div>
+        <div class="detail-item">
           <span class="detail-title">Preț pe zi:</span>
           <span class="detail-value">{{ listing.price | currency:'RON':'symbol':'1.2-2' }}</span>
         </div>
@@ -97,6 +101,36 @@
   <button *ngIf="listing.myListing" class="rent-button" (click)="openRentDialog()">
     Schimbă statusul anunțului <mat-icon>done_outline</mat-icon>
   </button>
+  <div class="feedback-section">
+    <h2>Feedback-uri</h2>
+    <p>Consultați feedback-urile altor utilizatori pentru acest anunț. Puteți filtra feedback-urile în funcție de numărul de stele acordate.</p>
+
+    <div class="filter-section">
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrează după rating</mat-label>
+        <mat-select (selectionChange)="filterFeedbacks($event)">
+          <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }} stele</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="feedback-container">
+      <div *ngFor="let feedback of filteredFeedbacks" class="feedback-card">
+        <div class="feedback-header">
+          <small>Postat pe {{ feedback.publishingDate}}</small>
+        </div>
+        <div class="feedback-body">
+          <img *ngIf="!feedback.userProfilePicture" src="./assets/template_profile_picture.png" alt="{{ user.username }}" class="user-pic" (click)="navigateToProfile(feedback.authorUUID)">
+          <img *ngIf="feedback.userProfilePicture" [src]="feedback.userProfilePicture | bytesToImage" alt="{{ user.username }}" class="user-pic" (click)="navigateToProfile(feedback.authorUUID)">
+          <div class="feedback-rating">
+            <mat-icon>star</mat-icon> {{ feedback.ratingGiven }}
+          </div>
+          <p>{{ feedback.message }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div *ngIf="!listing" class="loading-spinner">

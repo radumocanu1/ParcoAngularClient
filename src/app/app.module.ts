@@ -80,6 +80,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'testClientID'
       },
       initOptions: {
+        checkLoginIframe: false,
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html'

@@ -14,6 +14,7 @@ import {FeedbackDialogComponent} from "../feedback-dialog/feedback-dialog.compon
 export class RentedListingsComponent implements OnInit {
   listings: MinimalListing[] = [];
   currentDate = new Date();
+  loading: boolean = true;
 
   constructor(private listingService: ListingService, private router: Router,    public dialog: MatDialog,
   ) {}
@@ -21,6 +22,7 @@ export class RentedListingsComponent implements OnInit {
   ngOnInit(): void {
     this.listingService.getRentedListings().subscribe((data:MinimalListing[]) => {
       this.listings = data;
+      this.loading = false;
     });
   }
 

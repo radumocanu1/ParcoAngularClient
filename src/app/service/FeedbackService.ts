@@ -13,4 +13,10 @@ export class FeedbackService {
   addFeedback(feedbackRequest: FeedbackRequest, listingUUID:string): Observable<FeedbackResponse> {
     return this.http.post<FeedbackResponse>(`${this.apiUrl}/${listingUUID}`, feedbackRequest);
   }
+  getAllListingFeedbacks(listingUUID:String): Observable<FeedbackResponse[]> {
+    return this.http.get<FeedbackResponse[]>(`${this.apiUrl}/${listingUUID}`);
+  }
+  getAllUserFeedbacks(): Observable<FeedbackResponse[]> {
+    return this.http.get<FeedbackResponse[]>(`${this.apiUrl}`);
+  }
 }

@@ -9,6 +9,7 @@ import {RentDialogComponent} from "../rent-dialog/rent-dialog.component";
 import {FeedbackService} from "../service/FeedbackService";
 import {FeedbackRequest} from "../model/FeedbackRequest";
 import {FeedbackResponse} from "../model/FeedbackResponse";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-feedback-dialog',
@@ -25,6 +26,7 @@ export class FeedbackDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { listing: Listing },
     private snackbarService: SnackbarService,
     private feedbackService: FeedbackService,
+    private router: Router,
   ){}
 
 
@@ -36,13 +38,14 @@ export class FeedbackDialogComponent {
       };
       const feedbackRequest: FeedbackRequest = new FeedbackRequest(this.feedbackMessage,this.selectedRating);
       this.feedbackService.addFeedback(feedbackRequest,this.data.listing.listingUUID).subscribe((feedbackResponse: FeedbackResponse) => {
-
-        console.log('feedbackResponse', feedbackResponse);
+        this.openSnackbar();
+        this.dialogRef.close();
+        this.router.navigate([`/listing/${this.data.listing.listingUUID}`]);
       })
     }
   }
   openSnackbar(): void {
-    this.snackbarService.openSnackBar("Feedbackul a fost adaugat!")
+    this.snackbarService.openSnackBar("✨ Feedbackul a fost adaugat cu succes !✨")
   }
 
 

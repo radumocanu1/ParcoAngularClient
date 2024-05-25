@@ -8,6 +8,9 @@ import {ImageViewService} from "../service/util/ImageViewService";
 import { Location } from '@angular/common';
 import {SnackbarService} from "../service/util/SnackbarService";
 import {ChatService} from "../service/ChatService";
+import {FeedbackService} from "../service/FeedbackService";
+import {Feedback} from "../model/Feedback";
+import {FeedbackResponse} from "../model/FeedbackResponse";
 
 
 
@@ -23,19 +26,24 @@ export class MyProfileComponent implements OnInit {
   myProfileUpdateRequest= new MyProfileUpdateRequest();
   isEditMode: boolean = false;
   currentFile?: File;
+  showFeedbacks: boolean = false
+  loading: boolean = false;
+  feedbacks: FeedbackResponse[] = [];
+  ratings: number[] = Array.from({ length: 10 }, (_, i) => i + 1); // [1, 2, 3, ..., 10]
+  filteredFeedbacks: FeedbackResponse[] = [];
+  feedbackCounts: { [key: number]: number } = {};
 
 
 
 
   constructor(
               private route: ActivatedRoute,
-              private location: Location,
               private ImageViewService: ImageViewService,
               private userService: UserService,
               private formBuilder: FormBuilder,
               private router:Router,
               private snackbarService: SnackbarService,
-              private chatService: ChatService) {
+              private feedbackService: FeedbackService,) {
 
   }
 
@@ -46,6 +54,17 @@ export class MyProfileComponent implements OnInit {
     this.getUserProfile();
 
 
+  }
+  navigateToProfile(authorUUID: string) {
+    this.router.navigate([`/profile/${authorUUID}`]);
+  }
+  filterFeedbacks(event: any) {
+    const selectedRating = event.value;
+    if (selectedRating) {
+      this.filteredFeedbacks = this.feedbacks.filter(feedback => +feedback.ratingGiven === selectedRating);
+    } else {
+      this.filteredFeedbacks = [...this.feedbacks];
+    }
   }
   modifyUserDetails(){
     console.log(this.myProfileUpdateRequest)
@@ -88,8 +107,17 @@ export class MyProfileComponent implements OnInit {
     return ''
   }
 
-  public cancelEdit(): void{
-    window.location.reload()
+  showUserFeedbacks(){
+    this.loading = true;
+    this.showFeedbacks = !this.showFeedbacks;
+    this.feedbackService.getAllUserFeedbacks().subscribe(
+      (feedbacks: FeedbackResponse[]) => {
+        this.feedbacks = feedbacks
+        this.filteredFeedbacks = feedbacks
+        this.loading = false
+      }
+    )
+
   }
   protected readonly localStorage = localStorage;
   updateProfileForm = this.formBuilder.group({

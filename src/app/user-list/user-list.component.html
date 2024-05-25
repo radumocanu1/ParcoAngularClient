@@ -1,12 +1,17 @@
+<div *ngIf="!loading">
 <div class="user-list-container">
-  <h1>Top 10 Utilizatori</h1>
-  <div class="user-card" *ngFor="let user of users" (click)="navigateToProfile(user.userUUID)">
-    <img *ngIf="user.profilePicture" [src]="user.profilePicture | bytesToImage" alt="{{user.username}}'s profile picture" class="profile-picture">
-    <img *ngIf="!user.profilePicture" src="assets/template_profile_picture.png" alt="{{user.username}}'s profile picture" class="profile-picture">
+    <h1>Top 10 Utilizatori</h1>
+    <div class="user-card" *ngFor="let user of users" (click)="navigateToProfile(user.userUUID)">
+      <img *ngIf="user.profilePicture" [src]="user.profilePicture | bytesToImage" alt="{{user.username}}'s profile picture" class="profile-picture">
+      <img *ngIf="!user.profilePicture" src="assets/template_profile_picture.png" alt="{{user.username}}'s profile picture" class="profile-picture">
 
-    <div class="user-info">
-      <h2>{{user.username}}</h2>
-      <p><mat-icon>star</mat-icon> {{user.rating}}</p>
+      <div class="user-info">
+        <h2>{{user.username}}</h2>
+        <p><mat-icon>star</mat-icon> {{user.rating}}</p>
+      </div>
     </div>
   </div>
+</div>
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
 </div>

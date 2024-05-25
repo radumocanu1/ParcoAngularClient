@@ -9,6 +9,8 @@ import {Location} from '@angular/common';
 import { RentDialogComponent } from '../rent-dialog/rent-dialog.component';
 import {ChatService} from "../service/ChatService";
 import {ChatResponse} from "../model/ChatResponse";
+import {FeedbackService} from "../service/FeedbackService";
+import {FeedbackResponse} from "../model/FeedbackResponse";
 
 
 @Component({
@@ -22,6 +24,12 @@ export class ListingComponent implements OnInit {
   mapOptions!: google.maps.MapOptions;
   marker!: any;
   pictures: Array<string> = [];
+  feedbacks!:FeedbackResponse[]
+  ratings: number[] = Array.from({ length: 10 }, (_, i) => i + 1); // [1, 2, 3, ..., 10]
+  filteredFeedbacks: FeedbackResponse[] = [];
+  feedbackCounts: { [key: number]: number } = {};
+
+
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +37,7 @@ export class ListingComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private chatService: ChatService,
+    private feedbackService: FeedbackService
 
   ) {}
 
@@ -45,13 +54,30 @@ export class ListingComponent implements OnInit {
             this.user = data.minimalUser
           }
         );
+        this.feedbackService.getAllListingFeedbacks(listingId).subscribe(
+          (data:FeedbackResponse[]) => {
+            console.log(data)
+            this.feedbacks = data
+            this.filteredFeedbacks = this.feedbacks
+        }
+        )
       }
     });
   }
+
   addPicturesToModal(listing: Listing): void{
     this.pictures.push(listing.mainPicture)
     for (let index = 0; index < listing.pictures.length; index++) {
       this.pictures.push(listing.pictures[index]);
+    }
+  }
+
+  filterFeedbacks(event: any) {
+    const selectedRating = event.value;
+    if (selectedRating) {
+      this.filteredFeedbacks = this.feedbacks.filter(feedback => +feedback.ratingGiven === selectedRating);
+    } else {
+      this.filteredFeedbacks = [...this.feedbacks];
     }
   }
 
@@ -95,5 +121,10 @@ export class ListingComponent implements OnInit {
         // Handle rental confirmation
       }
     });
+  }
+
+
+  navigateToProfile(authorUUID: string) {
+    this.router.navigate([`/profile/${authorUUID}`]);
   }
 }

@@ -8,6 +8,7 @@ import {ListingPaymentRequest} from "../model/ListingPaymentRequest";
 import {ListingService} from "../service/ListingService";
 import {DateRange} from "../model/DateRange";
 import {SnackbarService} from "../service/util/SnackbarService";
+import {differenceInDays} from "date-fns";
 
 @Component({
   selector: 'app-rent-dialog',
@@ -41,6 +42,8 @@ export class RentDialogComponent implements OnInit {
   ngOnInit(): void {
     this.listingService.getUnavailableDates(this.data.listing.listingUUID).subscribe(dates => {
       this.unavailableDates = dates;
+      this.updateEndDateMinMax(this.tomorrowDate());
+
     });
 
     this.bookingForm.get('startDate')?.valueChanges.subscribe(date => {
@@ -64,11 +67,7 @@ export class RentDialogComponent implements OnInit {
     const duration = this.bookingForm.get('duration')?.value;
     let endDate = new Date(startDate);
     if (duration === '1') {
-      endDate.setDate(endDate.getDate() + 7); // 1 week
-    } else if (duration === '2') {
       endDate.setMonth(endDate.getMonth() + 1); // 1 month
-    } else if (duration === '3') {
-      endDate.setMonth(endDate.getMonth() + 3); // 3 months
     }
 
     this.bookingForm.get('endDate')?.setValue(endDate);
@@ -136,8 +135,7 @@ export class RentDialogComponent implements OnInit {
       this.maxEndDate.setDate(this.maxEndDate.getDate() - 1);
     } else {
       this.minEndDate = startDate;
-      this.maxEndDate = new Date(startDate);
-      this.maxEndDate.setFullYear(this.maxEndDate.getFullYear() + 1); // Assuming maximum one year
+      this.maxEndDate = new Date(this.data.listing.endDate) // Assuming maximum one year
     }
   }
 
@@ -148,8 +146,10 @@ export class RentDialogComponent implements OnInit {
     });
   }
 
-  todayDate(): Date {
-    return new Date();
+  tomorrowDate(): Date {
+    const today = new Date() ;
+    today.setDate(today.getDate() +1);
+    return today;
   }
 
   convertDateToDDMMYYYY(date: Date): string {
@@ -161,7 +161,13 @@ export class RentDialogComponent implements OnInit {
    onConfirm(): void {
     if (this.bookingForm.valid) {
       const listingPaymentRequest: ListingPaymentRequest =  this.bookingForm.getRawValue()
-     this.initiatePayment(this.data.listing.title, this.data.listing.price, this.data.listing.listingUUID, this.convertDateToDDMMYYYY(new Date(listingPaymentRequest.startDate)), this.convertDateToDDMMYYYY(new Date(listingPaymentRequest.endDate)), listingPaymentRequest.carNumber)
+      let price:number
+      if (this.bookingForm.get('duration')?.value === '1') {
+        price = this.data.listing.monthlyPrice;
+      }
+      else
+        price = this.data.listing.price * ( 1 + differenceInDays( listingPaymentRequest.endDate, listingPaymentRequest.startDate));
+     this.initiatePayment(this.data.listing.title, price, this.data.listing.listingUUID, this.convertDateToDDMMYYYY(new Date(listingPaymentRequest.startDate)), this.convertDateToDDMMYYYY(new Date(listingPaymentRequest.endDate)), listingPaymentRequest.carNumber)
     }
   }
 

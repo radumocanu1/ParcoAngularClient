@@ -1,10 +1,9 @@
-<!-- user-listings.component.html -->
+<div *ngIf="!loading">
 <div class="listings-container" *ngIf="listings.length > 0; else noListings">
   <div *ngFor="let listing of listings"
        [ngClass]="{'listing-active': isCurrentOrPast(listing.startDate, listing.endDate), 'listing-inactive': !isCurrentOrPast(listing.startDate, listing.endDate)}"
-       class="listing"
-       (click)="navigateToListing(listing.listingUUID)">
-    <img [src]="listing.mainPicture | bytesToImage" alt="{{listing.title}}" class="listing-image">
+       class="listing">
+    <img [src]="listing.mainPicture | bytesToImage" alt="{{listing.title}}" class="listing-image" (click)="navigateToListing(listing.listingUUID)">
     <div class="listing-details">
       <h2>{{ listing.title }}</h2>
       <p><strong>Sector:</strong> {{ listing.sector }}</p>
@@ -15,6 +14,7 @@
       <p><strong>Status:</strong> {{ listing.status }}</p>
       <p *ngIf="isCurrentOrPast(listing.startDate, listing.endDate)" class="active-parking">Puteți parca în acest moment</p>
       <p *ngIf="!isPast(listing.endDate) && !isCurrentOrPast(listing.startDate, listing.endDate)"><strong>Mai aveți:</strong> {{ daysUntil(listing.startDate) }} zile</p>
+      <p *ngIf="isPast(listing.endDate)"><strong>Perioada in care puteati parca pe acest loc s-a terminat. Speram ca ati avut o experienta placuta!</strong> </p>
       <button *ngIf="isPast(listing.endDate)" (click)="openFeedbackDialog(listing)" class="feedback-button">Te rugăm să lași un feedback acestui anunț</button>
     </div>
   </div>
@@ -22,3 +22,7 @@
 <ng-template #noListings>
   <p>Nu aveți anunțuri rezervate.</p>
 </ng-template>
+</div>
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner></mat-spinner>
+</div>

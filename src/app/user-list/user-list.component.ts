@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   styleUrl: './user-list.component.css'
 })
 export class UserListComponent implements OnInit {
-
+  loading:boolean = true;
   users!: MinimalUser[];
 
   constructor(private userService: UserService, private router: Router) {}
@@ -19,6 +19,7 @@ export class UserListComponent implements OnInit {
     this.userService.findMostAppreciatedUsers().subscribe(
       (data: MinimalUser[]) => {
         this.users = data;
+        this.loading = false;
       });
   }
 
