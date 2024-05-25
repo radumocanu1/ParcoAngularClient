@@ -15,7 +15,7 @@
       <p><strong>Status:</strong> {{ listing.status }}</p>
       <p *ngIf="isCurrentOrPast(listing.startDate, listing.endDate)" class="active-parking">Puteți parca în acest moment</p>
       <p *ngIf="!isPast(listing.endDate) && !isCurrentOrPast(listing.startDate, listing.endDate)"><strong>Mai aveți:</strong> {{ daysUntil(listing.startDate) }} zile</p>
-      <button *ngIf="isPast(listing.endDate)" (click)="leaveFeedback(listing)" class="feedback-button">Te rugăm să lași un feedback acestui anunț</button>
+      <button *ngIf="isPast(listing.endDate)" (click)="openFeedbackDialog(listing)" class="feedback-button">Te rugăm să lași un feedback acestui anunț</button>
     </div>
   </div>
 </div>

@@ -107,16 +107,6 @@ export class AddListingComponent implements OnInit {
     const day = today.getDate().toString().padStart(2, '0');
     return `${today.getFullYear()}-${month}-${day}`;
   }
-  confirmLocation(): void {
-    console.log(this.listingForm.get("startDate"))
-
-    const { lat, lng } = this.marker.position;
-    this.listingForm.patchValue({
-      latitude: lat,
-      longitude: lng
-    });
-
-  }
   updateEndDateMinMax(startDate: Date): void {
     if (startDate) {
       const minEndDate = new Date(startDate);
@@ -129,6 +119,16 @@ export class AddListingComponent implements OnInit {
       this.minEndDate = null;
       this.maxEndDate = null// Reset minEndDate if startDate is null
     }
+  }
+  confirmLocation(): void {
+    console.log(this.listingForm.get("startDate"))
+
+    const { lat, lng } = this.marker.position;
+    this.listingForm.patchValue({
+      latitude: lat,
+      longitude: lng
+    });
+
   }
   onSubmit(): void {
     this.loading = true

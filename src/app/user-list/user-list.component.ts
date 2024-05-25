@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDTO} from "../model/userDTO";
 import {UserService} from "../service/UserService";
+import {MinimalUser} from "../model/MinimalUser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-list',
@@ -9,14 +11,18 @@ import {UserService} from "../service/UserService";
 })
 export class UserListComponent implements OnInit {
 
-  users!: UserDTO[];
+  users!: MinimalUser[];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-      this.userService.findAll().subscribe((data: UserDTO[]) => {
+    this.userService.findMostAppreciatedUsers().subscribe(
+      (data: MinimalUser[]) => {
         this.users = data;
-        console.log(data);
       });
+  }
+
+  navigateToProfile(userUUID: string): void {
+    this.router.navigate(['/profile', userUUID]);
   }
 }

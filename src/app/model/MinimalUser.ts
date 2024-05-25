@@ -3,7 +3,4 @@ export class MinimalUser {
   rating!: number;
   username!: string
   profilePicture!: any
-
-
-
 }

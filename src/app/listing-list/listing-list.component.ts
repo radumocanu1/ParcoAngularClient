@@ -16,15 +16,16 @@ import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
 })
 export class ListingListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['picture', 'title', 'sector', 'startDate', 'endDate', 'price', 'publishingDate'];
-  hourlyPriceRange: string[] = ['1', '2', '3', '4', '5', '10', '20', 'nedefinit'];
-  dailyPriceRange: string[] = ['5','10','20','30', '50', 'nedefinit'];
+  dailyPriceRange: string[] = ['1', '2', '3', '4', '5', '10', '20','30'];
+  monthlyPriceRange: string[] = [ '50', '70', '100', '150', '200', '300'];
   advanceFilteringRequest!:AdvanceFilteringRequest
   dataSource = new MatTableDataSource<MinimalListing>();
   filterForm: FormGroup;
   paginatedListings: MinimalListing[] = [];
-  minEndDate!: Date | null;
   foundListings:boolean = true
   loading = true;
+  minEndDate!: Date | null;
+  maxEndDate!: Date | null;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -83,7 +84,19 @@ export class ListingListComponent implements OnInit, OnDestroy {
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
   }
-
+  updateEndDateMinMax(startDate: Date): void {
+    if (startDate) {
+      const minEndDate = new Date(startDate);
+      minEndDate.setDate(minEndDate.getDate() + 1);
+      const maxEndDate = new Date(startDate);
+      maxEndDate.setFullYear(maxEndDate.getFullYear() + 1);
+      this.minEndDate = minEndDate;
+      this.maxEndDate = maxEndDate;
+    } else {
+      this.minEndDate = null;
+      this.maxEndDate = null// Reset minEndDate if startDate is null
+    }
+  }
   loadListings(): void {
     this.listingService.getAllListings().subscribe(minimalListings => {
       this.dataSource.data = minimalListings;
@@ -110,6 +123,16 @@ export class ListingListComponent implements OnInit, OnDestroy {
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
     const day = today.getDate().toString().padStart(2, '0');
     return `${today.getFullYear()}-${month}-${day}`;
+  }
+  resetFilters(): void {
+    this.filterForm.reset({
+      sector: '',
+      startDate: '',
+      endDate: '',
+      maxDailyPrice: '',
+      maxMonthlyPrice: '',
+      indefinitePeriod: false
+    });
   }
 
   applyFilter(): void {

@@ -1,20 +1,12 @@
-<div class="card my-5">
-  <div class="card-body">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of users" [routerLink]="['/profile/', user.userUUID]">
-        <td>{{ user.userUUID }}</td>
-        <td>{{ user.username }}</td>
-        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
-      </tr>
-      </tbody>
-    </table>
+<div class="user-list-container">
+  <h1>Top 10 Utilizatori</h1>
+  <div class="user-card" *ngFor="let user of users" (click)="navigateToProfile(user.userUUID)">
+    <img *ngIf="user.profilePicture" [src]="user.profilePicture | bytesToImage" alt="{{user.username}}'s profile picture" class="profile-picture">
+    <img *ngIf="!user.profilePicture" src="assets/template_profile_picture.png" alt="{{user.username}}'s profile picture" class="profile-picture">
+
+    <div class="user-info">
+      <h2>{{user.username}}</h2>
+      <p><mat-icon>star</mat-icon> {{user.rating}}</p>
+    </div>
   </div>
 </div>

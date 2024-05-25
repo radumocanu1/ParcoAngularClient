@@ -66,6 +66,8 @@ import { AdminListingComponent } from './admin-listing/admin-listing.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { PaymentRejectComponent } from './payment-reject/payment-reject.component';
 import { RentedListingsComponent } from './rented-listings/rented-listings.component';
+import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
+import {FeedbackService} from "./service/FeedbackService";
 
 
 
@@ -118,6 +120,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PaymentSuccessComponent,
     PaymentRejectComponent,
     RentedListingsComponent,
+    FeedbackDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -162,7 +165,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 
   ],
-  providers: [UserService, ChatService, {
+  providers: [UserService, ChatService, FeedbackService, {
     provide: APP_INITIALIZER,
     useFactory: initializeKeycloak,
     multi: true,

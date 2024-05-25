@@ -172,6 +172,10 @@ button.mat-raised-button {
   color: #ffffff;
   transition: background-color 0.3s;
 }
+.reset-button{
+  margin-top: 10px ;
+  width: 200px;
+}
 
 button.mat-raised-button:hover {
   background-color: #2e7d32;

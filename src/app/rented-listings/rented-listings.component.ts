@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MinimalListing} from "../model/MinimalListing";
 import {Router} from "@angular/router";
 import {ListingService} from "../service/ListingService";
+import {RentDialogComponent} from "../rent-dialog/rent-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {FeedbackDialogComponent} from "../feedback-dialog/feedback-dialog.component";
 
 @Component({
   selector: 'app-rented-listings',
@@ -12,7 +15,8 @@ export class RentedListingsComponent implements OnInit {
   listings: MinimalListing[] = [];
   currentDate = new Date();
 
-  constructor(private listingService: ListingService, private router: Router) {}
+  constructor(private listingService: ListingService, private router: Router,    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.listingService.getRentedListings().subscribe((data:MinimalListing[]) => {
@@ -40,8 +44,18 @@ export class RentedListingsComponent implements OnInit {
     return end < this.currentDate;
   }
 
-  leaveFeedback(listing: MinimalListing): void {
-    // Implement feedback functionality
+
+  openFeedbackDialog(listing: MinimalListing): void {
+    const dialogRef = this.dialog.open(FeedbackDialogComponent, {
+      width: '300px',
+      data: { listing: listing }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle rental confirmation
+      }
+    });
   }
 
 }

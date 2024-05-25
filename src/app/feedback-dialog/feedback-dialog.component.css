@@ -1,0 +1,16 @@
+.rating-field, .message-field {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 15px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  margin-left: 10px;
+}

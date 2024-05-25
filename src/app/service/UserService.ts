@@ -8,6 +8,8 @@ import {UserProfile} from "../model/UserProfile";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
 import {ChatService} from "./ChatService";
+import {MinimalUser} from "../model/MinimalUser";
+import {MinimalListing} from "../model/MinimalListing";
 
 @Injectable()
 export class UserService {
@@ -20,8 +22,8 @@ export class UserService {
     this.userUrl = 'http://localhost:8080/user';
   }
 
-  public findAll(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(this.userUrl);
+  public findMostAppreciatedUsers(): Observable<MinimalUser[]> {
+    return this.http.get<MinimalUser[]>(this.userUrl);
   }
 
 
