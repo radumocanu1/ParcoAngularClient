@@ -27,6 +27,8 @@ export class AddListingComponent implements OnInit {
   listingForm: FormGroup;
   minEndDate!: Date | null;
   maxEndDate!: Date | null;
+  confirmedLocation:boolean = false;
+  wasMapClicked:boolean = false;
 
   periodPopUpVisible: boolean = false;
 
@@ -69,13 +71,6 @@ export class AddListingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.listingForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
-    //   if (value) {
-    //     this.listingForm.get('endDate')!.disable();
-    //   } else {
-    //     this.listingForm.get('endDate')!.enable();
-    //   }
-    // });
 
   }
   public toggleLongPeriod(){
@@ -91,6 +86,7 @@ export class AddListingComponent implements OnInit {
         longitude: coords.lng()
       });
     }
+    this.wasMapClicked = true
   }
   get sector() {
     return this.listingForm.get('sector');
@@ -121,13 +117,13 @@ export class AddListingComponent implements OnInit {
     }
   }
   confirmLocation(): void {
-    console.log(this.listingForm.get("startDate"))
-
+    this.confirmedLocation = true
     const { lat, lng } = this.marker.position;
     this.listingForm.patchValue({
       latitude: lat,
       longitude: lng
     });
+    this.snackbarService.openSnackBar("Locatie salvata! ")
 
   }
   onSubmit(): void {
@@ -232,7 +228,6 @@ export class AddListingComponent implements OnInit {
     }
   }
   removePicture(index: number): void {
-    // todo handle index change case
     this.previewPictures.splice(index, 1);
     this.pictures.splice(index, 1);
     // if with a lower index that mainPicture was deleted, make sure mainPicture stays the same

@@ -1,5 +1,5 @@
 <div class="listing-form">
-  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="listingForm">
 
     <div>
       <label for="title">Titlul anuntului:</label>
@@ -117,16 +117,16 @@
     </div>
 
     <div>
-<!--      <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">-->
-<!--        <map-marker [position]="marker.position"></map-marker>-->
-<!--      </google-map>-->
+      <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
+        <map-marker [position]="marker.position"></map-marker>
+      </google-map>
+      <button mat-flat-button color="primary" class="map-button" (click)="confirmLocation()" [disabled]="!wasMapClicked">Confirm faptul ca locatia markerului de pe harta e corecta</button>
+
     </div>
 
 
-    <button type="button" (click)="confirmLocation()">Locatie corecta</button>
 
-    <button type="submit" [disabled]="listingForm.invalid">Adauga anunt</button>
-
+    <button mat-flat-button color="primary" [disabled]="listingForm.invalid || !confirmedLocation" (click)="onSubmit()">Adauga anunt</button>
   </form>
 </div>
 <div *ngIf="loading" class="loading-spinner">
