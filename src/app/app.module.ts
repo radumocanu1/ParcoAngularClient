@@ -68,6 +68,7 @@ import { PaymentRejectComponent } from './payment-reject/payment-reject.componen
 import { RentedListingsComponent } from './rented-listings/rented-listings.component';
 import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
 import {FeedbackService} from "./service/FeedbackService";
+import {AppConfigService} from "./service/AppConfigService";
 
 
 
@@ -171,6 +172,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService]
+  },{
+    provide: APP_INITIALIZER,
+    multi: true,
+    deps: [AppConfigService],
+    useFactory: (appConfigService: AppConfigService) => {
+      return () => {
+        return appConfigService.loadAppConfig();
+      };
+    }
   },
     { provide: MAT_DATE_LOCALE, useValue: 'ro-RO' },],
   bootstrap: [AppComponent],

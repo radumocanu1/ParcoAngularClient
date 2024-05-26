@@ -9,6 +9,7 @@ import {UnreadChat} from "../model/UnreadChat";
 import {UserService} from "../service/UserService";
 import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
 import {Router} from "@angular/router";
+import {AppConfigService} from "../service/AppConfigService";
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -16,6 +17,8 @@ import {Router} from "@angular/router";
   styleUrl: './profile-dropdown.component.css'
 })
 export class ProfileDropdownComponent implements OnInit, OnDestroy {
+  websiteDomain:string
+
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
   isDropdownOpen = false;
@@ -29,7 +32,10 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
               private readonly keycloak: KeycloakService,
               private chatService: ChatService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private appConfig: AppConfigService) {
+    this.websiteDomain = this.appConfig.websiteDomain;
+
   }
 
   public async ngOnInit() {
@@ -77,12 +83,12 @@ export class ProfileDropdownComponent implements OnInit, OnDestroy {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
   public login() {
-    this.keycloak.login({redirectUri:"http://localhost:4200/myProfile"});
+    this.keycloak.login({redirectUri:`${this.websiteDomain}/myProfile`});
   }
 
 
   public logout(): void {
-    this.keycloak.logout("http://localhost:4200/register").then(() => {
+    this.keycloak.logout(`${this.websiteDomain}/register`).then(() => {
       console.log("Logout successful");
     }).catch((error: any) => {
       console.error("Logout failed:", error);

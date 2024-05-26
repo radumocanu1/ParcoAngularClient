@@ -7,11 +7,17 @@ import {ChatResponse} from "../model/ChatResponse";
 import {MinimalChat} from "../model/MinimalChat";
 import {UnreadChat} from "../model/UnreadChat";
 import {AdminChat} from "../model/AdminChat";
+import {AppConfigService} from "./AppConfigService";
 
 @Injectable()
 export class ChatService {
-  private chatUrl:string = "http://localhost:8080/chat";
-  constructor(private http:HttpClient) { }
+
+  private chatUrl:string
+
+  constructor(private http:HttpClient,
+              private appConfigService: AppConfigService) {
+    this.chatUrl = this.appConfigService.apiBaseUrl + "/chat";
+  }
   public sendMessage(chatID: string, messageRequest:MessageRequest): Observable<void>{
     return this.http.post<void>(`${this.chatUrl}/send-message/${chatID}`, messageRequest);
   }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {KeycloakService} from "keycloak-angular";
+import {AppConfigService} from "../service/AppConfigService";
 
 @Component({
   selector: 'app-register',
@@ -7,15 +8,17 @@ import {KeycloakService} from "keycloak-angular";
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
+  websiteDomain:string
   public isLoggedIn = false;
-  constructor(private readonly keycloak: KeycloakService) {
+  constructor(private readonly keycloak: KeycloakService,
+              private appConfig: AppConfigService) {
+    this.websiteDomain = this.appConfig.websiteDomain;
   }
   public async ngOnInit() {
     this.isLoggedIn = this.keycloak.isLoggedIn();
 
   }
   public login() {
-    this.keycloak.login({redirectUri:"http://localhost:4200/myProfile"});
+    this.keycloak.login({redirectUri:`${this.websiteDomain}/myProfile`});
   }
 }

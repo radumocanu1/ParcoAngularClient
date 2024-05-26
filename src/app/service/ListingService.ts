@@ -9,14 +9,19 @@ import {UserDTO} from "../model/userDTO";
 import {AdminUpdateListingRequest} from "../model/AdminUpdateListingRequest";
 import {DateRange} from "../model/DateRange";
 import {ListingStatusChangeRequest} from "../model/ListingStatusChangeRequest";
+import {AppConfigService} from "./AppConfigService";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListingService {
-  private apiUrl = 'http://localhost:8080/listing';
+  private apiUrl:string
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private appConfigService: AppConfigService) {
+    this.apiUrl = this.appConfigService.apiBaseUrl + "/listing";
+
+  }
   getRentedListings(): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(this.apiUrl + '/rented');
   }

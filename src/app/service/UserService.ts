@@ -1,15 +1,13 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, concatMap, Observable, of, tap} from "rxjs";
-import {UserDTO} from "../model/userDTO";
-import {User} from "../model/User";
-import {UserProfileView} from "../model/UserProfileView";
+
 import {UserProfile} from "../model/UserProfile";
 import {MyProfileUpdateRequest} from "../model/MyProfileUpdateRequest";
 import {ProfilePictureResponse} from "../model/ProfilePictureResponse";
 import {ChatService} from "./ChatService";
 import {MinimalUser} from "../model/MinimalUser";
-import {MinimalListing} from "../model/MinimalListing";
+import {AppConfigService} from "./AppConfigService";
 
 @Injectable()
 export class UserService {
@@ -18,8 +16,9 @@ export class UserService {
   private userUrl: string;
 
   constructor(private http: HttpClient,
-              private chatService: ChatService) {
-    this.userUrl = 'http://localhost:8080/user';
+              private chatService: ChatService,
+              private appConfigService: AppConfigService) {
+    this.userUrl = this.appConfigService.apiBaseUrl + "/user";
   }
 
   public findMostAppreciatedUsers(): Observable<MinimalUser[]> {

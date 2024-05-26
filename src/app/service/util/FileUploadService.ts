@@ -1,15 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {AppConfigService} from "../AppConfigService";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileUploadService {
-  //TODO load from config file 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private appConfigService: AppConfigService) {
+    this.baseUrl = this.appConfigService.apiBaseUrl + "/feedback";
+  }
 
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

@@ -4,6 +4,7 @@ import {SnackbarService} from "../service/util/SnackbarService";
 import {UserService} from "../service/UserService";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {KeycloakService} from "keycloak-angular";
+import {AppConfigService} from "../service/AppConfigService";
 
 @Component({
   selector: 'app-delete-account',
@@ -12,6 +13,8 @@ import {KeycloakService} from "keycloak-angular";
 })
 export class DeleteAccountComponent {
   confirmText: string = '';
+  websiteDomain:string
+
 
   constructor(
     private keycloakService: KeycloakService,
@@ -19,8 +22,11 @@ export class DeleteAccountComponent {
     private snackbarService: SnackbarService,
     private userService: UserService,
     public dialogRef: MatDialogRef<DeleteAccountComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private appConfig: AppConfigService
   ) {
+    this.websiteDomain = this.appConfig.websiteDomain;
+
   }
   // TODO try to see if there is a way to show this
   openSnackBar() {
@@ -37,7 +43,7 @@ export class DeleteAccountComponent {
         this.closeDialogBox()
         this.openSnackBar();
         // workaround to revoke current access token
-        this.keycloakService.logout("http://localhost:4200/register").then(() => {
+        this.keycloakService.logout(`${this.websiteDomain}/register`).then(() => {
           console.log("Logout successful");
         }).catch((error: any) => {
           console.error("Logout failed:", error);
