@@ -42,7 +42,7 @@ export class RentDialogComponent implements OnInit {
   ngOnInit(): void {
     this.listingService.getUnavailableDates(this.data.listing.listingUUID).subscribe(dates => {
       this.unavailableDates = dates;
-      this.updateEndDateMinMax(this.tomorrowDate());
+      this.updateEndDateMinMax(this.minStartDate());
 
     });
 
@@ -146,10 +146,12 @@ export class RentDialogComponent implements OnInit {
     });
   }
 
-  tomorrowDate(): Date {
-    const today = new Date() ;
-    today.setDate(today.getDate() +1);
-    return today;
+  minStartDate(): Date {
+    const tomorrow = new Date() ;
+    tomorrow.setDate(tomorrow.getDate() +1);
+    if (tomorrow >  new Date(this.data.listing.startDate))
+      return tomorrow
+    return new Date(this.data.listing.startDate)
   }
 
   convertDateToDDMMYYYY(date: Date): string {

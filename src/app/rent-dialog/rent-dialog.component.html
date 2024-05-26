@@ -3,7 +3,7 @@
   <form [formGroup]="bookingForm">
     <mat-form-field>
       <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="startPicker" formControlName="startDate" [matDatepickerFilter]="dateFilter" [min]="tomorrowDate()" (dateChange)="validateDates()">
+      <input matInput [matDatepicker]="startPicker" formControlName="startDate" [matDatepickerFilter]="dateFilter" [min]="minStartDate()" [max]="maxEndDate" (dateChange)="validateDates()">
       <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
@@ -16,7 +16,7 @@
     <mat-form-field>
       <mat-label>Durata</mat-label>
       <mat-select formControlName="duration">
-        <mat-option value="1" [disabled]="data.listing.longTermRent">1 lună</mat-option>
+        <mat-option value="1" [disabled]="!data.listing.longTermRent">1 lună</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>

@@ -3,7 +3,9 @@ import {MinimalListing} from "../model/MinimalListing";
 import {Router} from "@angular/router";
 import {ListingService} from "../service/ListingService";
 import {SnackbarService} from "../service/util/SnackbarService";
-import {UserService} from "../service/UserService";
+import {ListingStatusChangeRequest} from "../model/ListingStatusChangeRequest";
+import {Listing} from "../model/Listing";
+import {Status} from "../model/Status";
 
 @Component({
   selector: 'app-my-listings',
@@ -31,17 +33,16 @@ export class MyListingsComponent implements OnInit{
       }
     )
   }
-  openSnackBar() {
-    this.snackbarService.openSnackBar(' Anuntul a fost sters! ');
+  openSnackBar(message: string): void {
+    this.snackbarService.openSnackBar(message);
   }
 
   public deleteListing(listingUUID: string): void {
     this.loading = true
    this.listingService.deleteListing(listingUUID).subscribe(
      (data:string) => {
-       console.log(data);
        this.loading = false
-       this.openSnackBar()
+       this.openSnackBar(' Anuntul a fost sters! ')
        this.ngOnInit()
 
 
@@ -52,4 +53,21 @@ export class MyListingsComponent implements OnInit{
   public navigateToListing(listingUUID: string): void {
     this.router.navigate([`/listing/${listingUUID}`]);
   }
+  public changeListingStatus(listing: MinimalListing): void {
+    this.loading =  true
+    let listingStatusChangeRequest: ListingStatusChangeRequest =  new ListingStatusChangeRequest();
+    if (listing.status === Status.ACTIVE)
+      listingStatusChangeRequest.status = Status.DEACTIVATED;
+    else
+      listingStatusChangeRequest.status = Status.ACTIVE;
+    this.listingService.updateListingStatusUser(listing.listingUUID, listingStatusChangeRequest).subscribe(
+      (data:Listing) => {
+        this.snackbarService.openSnackBar("✨Statusul anuntului a fost modificat cu secces!✨");
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/my-listings']);
+      });
+  })
+}
+
+  protected readonly Status = Status;
 }

@@ -7,7 +7,7 @@
         <img *ngIf="user.profilePicture" [src]="user.profilePicture | bytesToImage" alt="{{ user.username }}" class="user-pic">
         <div class="user-details">
           <p>{{ user.username }}</p>
-          <p class="user-rating">Rating ⭐️ {{ user.rating }}</p>
+          <p class="user-rating">Rating ⭐️ {{ user.rating  ||  'N/A' }} </p>
         </div>
       </div>
       <button class="send-message-button" (click)="sendMessage()" *ngIf="!listing.myListing">
@@ -26,7 +26,8 @@
       <div class="details-column">
         <div class="detail-item">
           <span class="detail-title">Rating</span>
-          <span class="detail-value">{{ listing.rating | number : '2.2'}} <mat-icon>star</mat-icon> </span>
+          <span class="detail-value" *ngIf="listing.rating !== 0">{{ (listing.rating | number : '2.2') }} <mat-icon>star</mat-icon> </span>
+          <span class="detail-value" *ngIf="listing.rating === 0">N/A</span>
         </div>
         <div class="detail-item">
           <span class="detail-title">Preț pe zi:</span>
@@ -97,9 +98,6 @@
 
   <button *ngIf="!listing.myListing" class="rent-button" (click)="openRentDialog()" >
     Închiriază acest loc de parcare <mat-icon>done_outline</mat-icon>
-  </button>
-  <button *ngIf="listing.myListing" class="rent-button" (click)="openRentDialog()">
-    Schimbă statusul anunțului <mat-icon>done_outline</mat-icon>
   </button>
   <div class="feedback-section">
     <h2>Feedback-uri</h2>

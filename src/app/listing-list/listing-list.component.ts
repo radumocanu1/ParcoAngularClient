@@ -72,6 +72,9 @@ export class ListingListComponent implements OnInit, OnDestroy {
     else{
       this.loadListings();
     }
+    this.filterForm.get('startDate')?.valueChanges.subscribe(date => {
+      this.updateEndDateMinMax(date);
+    });
     this.filterForm.get('indefinitePeriod')!.valueChanges.subscribe(value => {
       if (value) {
         this.filterForm.get('endDate')!.disable();
@@ -87,7 +90,7 @@ export class ListingListComponent implements OnInit, OnDestroy {
   updateEndDateMinMax(startDate: Date): void {
     if (startDate) {
       const minEndDate = new Date(startDate);
-      minEndDate.setDate(minEndDate.getDate() + 1);
+      minEndDate.setDate(minEndDate.getDate());
       const maxEndDate = new Date(startDate);
       maxEndDate.setFullYear(maxEndDate.getFullYear() + 1);
       this.minEndDate = minEndDate;

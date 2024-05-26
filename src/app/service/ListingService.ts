@@ -8,6 +8,7 @@ import {AdvanceFilteringRequest} from "../model/AdvanceFilteringRequest";
 import {UserDTO} from "../model/userDTO";
 import {AdminUpdateListingRequest} from "../model/AdminUpdateListingRequest";
 import {DateRange} from "../model/DateRange";
+import {ListingStatusChangeRequest} from "../model/ListingStatusChangeRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,9 @@ export class ListingService {
     console.log(listingId);
     console.log(`${this.apiUrl}/${listingId}`);
     return this.http.delete<string>(`${this.apiUrl}/${listingId}`);
+  }
+  updateListingStatusUser(listingUUID:string, listingChangeStatusRequest: ListingStatusChangeRequest) :Observable<Listing> {
+    return this.http.patch<Listing>(`${this.apiUrl}/status/${listingUUID}`, listingChangeStatusRequest);
   }
   addPhotoToListing(listingUUID: string, file: File): Observable<string> {
     const formData: FormData = new FormData();

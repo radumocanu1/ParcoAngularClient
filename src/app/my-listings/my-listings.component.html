@@ -25,8 +25,12 @@
           <button mat-flat-button color="primary" (click)="navigateToListing(element.listingUUID)">Vizualizează</button>
         </div>
         <div class="input-button-wrapper">
-          <button mat-flat-button color="accent" (click)="deleteListing(element.listingUUID)">Șterge</button>
+          <button mat-flat-button color="warn" (click)="deleteListing(element.listingUUID)">Șterge<mat-icon>perm_scan_wifi</mat-icon></button>
         </div>
+      </div>
+      <div class="input-button-wrapper">
+        <button *ngIf="element.status === Status.ACTIVE" mat-flat-button color="accent" (click)="changeListingStatus(element)">Dezactiveaza anunt</button>
+        <button *ngIf="element.status === Status.DEACTIVATED" mat-flat-button color="primary" (click)="changeListingStatus(element)">Activeaza anuntul</button>
       </div>
     </mat-card-footer>
   </mat-card>
