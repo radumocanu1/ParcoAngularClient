@@ -69,23 +69,30 @@ import { RentedListingsComponent } from './rented-listings/rented-listings.compo
 import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
 import {FeedbackService} from "./service/FeedbackService";
 import {AppConfigService} from "./service/AppConfigService";
+import { FullScreenMapComponent } from './full-screen-map/full-screen-map.component';
 
 
 
-function initializeKeycloak(keycloak: KeycloakService) {
+function initializeApp(appConfigService: AppConfigService) {
+  return () => appConfigService.loadAppConfig();
+}
+
+function initializeKeycloak(keycloak: KeycloakService, appConfigService: AppConfigService) {
   return () =>
-    keycloak.init({
-      config: {
-        realm: 'Parco',
-        url: 'http://localhost:8081',
-        clientId: 'testClientID'
-      },
-      initOptions: {
-        checkLoginIframe: false,
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      }
+    appConfigService.loadAppConfig().then(() => {
+      return keycloak.init({
+        config: {
+          realm: 'Parco',
+          url: appConfigService.keycloakUrl,
+          clientId: 'testClientID'
+        },
+        initOptions: {
+          checkLoginIframe: false,
+          onLoad: 'check-sso',
+          silentCheckSsoRedirectUri:
+            window.location.origin + '/assets/silent-check-sso.html'
+        }
+      });
     });
 }
 
@@ -123,6 +130,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PaymentRejectComponent,
     RentedListingsComponent,
     FeedbackDialogComponent,
+    FullScreenMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -167,21 +175,18 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 
   ],
-  providers: [UserService, ChatService, FeedbackService, {
+  providers: [UserService, ChatService, FeedbackService, BytesToImagePipe, {
     provide: APP_INITIALIZER,
-    useFactory: initializeKeycloak,
+    useFactory: initializeApp,
     multi: true,
-    deps: [KeycloakService]
-  },{
-    provide: APP_INITIALIZER,
-    multi: true,
-    deps: [AppConfigService],
-    useFactory: (appConfigService: AppConfigService) => {
-      return () => {
-        return appConfigService.loadAppConfig();
-      };
-    }
+    deps: [AppConfigService]
   },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, AppConfigService]
+    },
     { provide: MAT_DATE_LOCALE, useValue: 'ro-RO' },],
   bootstrap: [AppComponent],
   exports: [

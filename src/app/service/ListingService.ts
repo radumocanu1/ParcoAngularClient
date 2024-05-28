@@ -10,6 +10,7 @@ import {AdminUpdateListingRequest} from "../model/AdminUpdateListingRequest";
 import {DateRange} from "../model/DateRange";
 import {ListingStatusChangeRequest} from "../model/ListingStatusChangeRequest";
 import {AppConfigService} from "./AppConfigService";
+import {MapsListing} from "../model/MapsListing";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,9 @@ export class ListingService {
               private appConfigService: AppConfigService) {
     this.apiUrl = this.appConfigService.apiBaseUrl + "/listing";
 
+  }
+  getAllMapsListings():Observable<MapsListing[]>{
+    return this.http.get<MapsListing[]>(`${this.apiUrl}/map`, {})
   }
   getRentedListings(): Observable<MinimalListing[]> {
     return this.http.get<MinimalListing[]>(this.apiUrl + '/rented');

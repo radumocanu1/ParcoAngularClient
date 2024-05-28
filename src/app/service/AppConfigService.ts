@@ -33,4 +33,7 @@ export class AppConfigService {
 
     return this.appConfig.websiteDomain;
   }
+  get keycloakUrl(): string {
+    return this.appConfig?.keycloakUrl;
+  }
 }

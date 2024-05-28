@@ -21,6 +21,7 @@ import {AdminListingListComponent} from "./admin-listing-list/admin-listing-list
 import {PaymentSuccessComponent} from "./payment-success/payment-success.component";
 import {PaymentRejectComponent} from "./payment-reject/payment-reject.component";
 import {RentedListingsComponent} from "./rented-listings/rented-listings.component";
+import {FullScreenMapComponent} from "./full-screen-map/full-screen-map.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path:'payment/success', component: PaymentSuccessComponent, canActivate: [AuthGuard] },
   {path:'payment/cancel', component: PaymentRejectComponent, canActivate: [AuthGuard] },
   {path:'rented-listings', component: RentedListingsComponent, canActivate: [AuthGuard] },
+  {path:'map', component: FullScreenMapComponent},
 
 
 
