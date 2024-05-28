@@ -1,0 +1,42 @@
+.map-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+.google-map {
+  height: 100%;
+  width: 100%;
+}
+
+.info-window {
+  display: flex;
+  width: 100%;
+  height: 100%  ;
+  flex-direction: column;
+  align-items: center;
+}
+.title{
+  margin-top: 20px;
+}
+.info-window img {
+  margin-bottom: 10px;
+}
+
+.info-window p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.info-window button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+#map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
