@@ -1,5 +1,6 @@
 {
   "apiBaseUrl": "http://localhost:8080",
   "websiteDomain": "http://localhost:4200",
-  "keycloakUrl": "http://localhost:8081"
+  "keycloakUrl": "http://localhost:8081",
+  "googleMapsApiKey": ""
 }

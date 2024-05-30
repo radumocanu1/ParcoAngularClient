@@ -36,4 +36,10 @@ export class AppConfigService {
   get keycloakUrl(): string {
     return this.appConfig?.keycloakUrl;
   }
+  get googleMapsApiKey(): string {
+    if (!this.appConfig) {
+      throw Error('Config file not loaded!');
+    }
+    return this.appConfig.googleMapsApiKey;
+  }
 }
