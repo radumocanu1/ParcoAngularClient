@@ -5,4 +5,6 @@ export class MapsListing {
   title!:string
   price!:number
   mainPicture!:string
+  longTermRent!: boolean;
+  monthlyPrice!:number;
 }

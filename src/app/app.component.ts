@@ -5,18 +5,30 @@ import {AppConfigService} from "./service/AppConfigService";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
-})
-export class AppComponent implements OnInit{
+})export class AppComponent implements OnInit {
   title = 'Parco';
+
   constructor(private configService: AppConfigService) {}
+
   ngOnInit() {
-    this.loadGoogleMaps();
+    this.loadGoogleMaps().then(() => {
+      // Google Maps API is loaded, you can initialize your map here
+    });
   }
-  loadGoogleMaps() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${this.configService.googleMapsApiKey}`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
+
+  loadGoogleMaps(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.configService.googleMapsApiKey}`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        resolve();
+      };
+      script.onerror = (error: any) => {
+        reject(error);
+      };
+      document.head.appendChild(script);
+    });
   }
 }

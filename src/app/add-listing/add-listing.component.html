@@ -126,7 +126,7 @@
 
 
 
-    <button mat-flat-button color="primary" [disabled]="listingForm.invalid || !confirmedLocation" (click)="onSubmit()">Adauga anunt</button>
+    <button mat-flat-button color="primary" [disabled]="!confirmedLocation" (click)="onSubmit()">Adauga anunt</button>
   </form>
 </div>
 <div *ngIf="loading" class="loading-spinner">

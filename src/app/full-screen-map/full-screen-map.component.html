@@ -1,18 +1,19 @@
-<div class="map-container">
-  <h2>Localizare pe hartă</h2>
-  <google-map #map [options]="mapOptions" style="height: 100vh; width: 100%;">
-    <map-marker *ngFor="let marker of markers"
-                [position]="marker.position"
-                (mapClick)="onMarkerClick(marker, map.googleMap)">
-    </map-marker>
-  </google-map>
+<div class="page-container">
+  <h1>Harta anunturilor:</h1>
+  <p>Selectati un marker de pe harta pentru a afla detalii pentru locul de parcare respectiv. De asemenea, puteți apăsa pe butonul din dreapta sus a hărții pentru a intra în modul ecran complet.</p>
 
-  <ng-template #infoWindowTemplate let-marker="marker">
-    <div class="info-window">
-      <img [src]="marker.listing.mainPicture | bytesToImage" alt="Listing Image" style="width: 50px; height: 50px;">
-      <p>Title: {{ marker.listing.title }}</p>
-      <p>Price: {{ marker.listing.price }}</p>
-<!--      <button (click)="navigateToListing(marker.listing.listingUUID)">View Details</button>-->
-    </div>
-  </ng-template>
+  <div class="map-container">
+    <google-map #map [options]="mapOptions">
+      <map-marker *ngFor="let marker of markers"
+                  [position]="marker.position"
+                  (mapClick)="onMarkerClick(marker, map.googleMap)">
+      </map-marker>
+    </google-map>
+
+    <ng-template #infoWindowTemplate let-marker="marker">
+      <div class="info-window">
+        <img [src]="marker.listing.mainPicture | bytesToImage" alt="Listing Image" style="width: 50px; height: 50px;">
+      </div>
+    </ng-template>
+  </div>
 </div>

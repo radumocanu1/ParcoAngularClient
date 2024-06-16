@@ -52,11 +52,14 @@ export class FullScreenMapComponent implements OnInit {
   }
 
   onMarkerClick(marker: { position: google.maps.LatLngLiteral; listing: MapsListing }, map: google.maps.Map | undefined): void {
+    const indefinitePeriodContent = marker.listing.longTermRent ? `<p>Preț/lună: ${marker.listing.monthlyPrice} RON</p>` : '';
+
     const contentString = `
       <div class="info-window">
         <img src="${this.bytesToImagePipe.transform(marker.listing.mainPicture)}" alt="Listing Image" style="width: 200px; height: 200px;">
         <p class="title"> <strong>Titlu: ${marker.listing.title}</p>
         <p>Pret/zi: ${marker.listing.price} RON</p>
+        ${indefinitePeriodContent}
         <button mat-fab extended color="primary" id="navigate-button">Vezi detalii</button>
       </div>
     `;
