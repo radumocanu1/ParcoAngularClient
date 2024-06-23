@@ -5,6 +5,7 @@ import {UserService} from "../service/UserService";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {KeycloakService} from "keycloak-angular";
 import {AppConfigService} from "../service/AppConfigService";
+import {ChatService} from "../service/ChatService";
 
 @Component({
   selector: 'app-delete-account',
@@ -19,6 +20,7 @@ export class DeleteAccountComponent {
   constructor(
     private keycloakService: KeycloakService,
     private router: Router,
+    private chatService: ChatService,
     private snackbarService: SnackbarService,
     private userService: UserService,
     public dialogRef: MatDialogRef<DeleteAccountComponent>,
@@ -35,21 +37,25 @@ export class DeleteAccountComponent {
 
   public closeDialogBox(){
     this.dialogRef.close();
-
   }
   public deleteAccount(): void {
-    this.userService.deleteUser().subscribe({
-      next: (event: any) => {
-        this.closeDialogBox()
-        this.openSnackBar();
-        // workaround to revoke current access token
-        this.keycloakService.logout(`${this.websiteDomain}/register`).then(() => {
-          console.log("Logout successful");
-        }).catch((error: any) => {
-          console.error("Logout failed:", error);
-        });
+    this.chatService.deleteAllUserChats().subscribe(
+      () => {
+        this.userService.deleteUser().subscribe({
+          next: (event: any) => {
+            this.closeDialogBox()
+            this.openSnackBar();
+            // workaround to revoke current access token
+            this.keycloakService.logout(`${this.websiteDomain}/register`).then(() => {
+              console.log("Logout successful");
+            }).catch((error: any) => {
+              console.error("Logout failed:", error);
+            });
+          }
+        })
       }
-    })
+    )
+
   }
 
 }

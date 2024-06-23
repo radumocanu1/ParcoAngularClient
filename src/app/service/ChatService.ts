@@ -18,6 +18,9 @@ export class ChatService {
               private appConfigService: AppConfigService) {
     this.chatUrl = this.appConfigService.apiBaseUrl + "/chat";
   }
+  public deleteAllUserChats(): Observable<void> {
+    return this.http.delete<void>(`${this.chatUrl}`);
+  }
   public sendMessage(chatID: string, messageRequest:MessageRequest): Observable<void>{
     return this.http.post<void>(`${this.chatUrl}/send-message/${chatID}`, messageRequest);
   }

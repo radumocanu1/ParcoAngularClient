@@ -28,10 +28,12 @@ export class MyProfileComponent implements OnInit {
   currentFile?: File;
   showFeedbacks: boolean = false
   loading: boolean = false;
+  isPhoneNumberValid: boolean = true;
+  isFullNameValid = true;
+  isAgeValid = true;
   feedbacks: FeedbackResponse[] = [];
-  ratings: number[] = Array.from({ length: 10 }, (_, i) => i + 1); // [1, 2, 3, ..., 10]
+  ratings: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
   filteredFeedbacks: FeedbackResponse[] = [];
-  feedbackCounts: { [key: number]: number } = {};
 
 
 
@@ -52,8 +54,23 @@ export class MyProfileComponent implements OnInit {
       this.isEditMode = true;
     }
     this.getUserProfile();
+  }
 
+  validatePhoneNumber() {
+    const phonePattern = /^07\d{8}$/;
+    if (this.myProfileUpdateRequest.phoneNumber && !phonePattern.test(this.myProfileUpdateRequest.phoneNumber)) {
+      this.isPhoneNumberValid = false;
+    } else {
+      this.isPhoneNumberValid = true;
+    }
+  }
+  validateFullName() {
+    const sqlInjectionRegex = /('|"|;|--|\/\*|\*\/|\\)/;
+    this.isFullNameValid = !sqlInjectionRegex.test(this.myProfileUpdateRequest.username);
+  }
 
+  validateAge() {
+    this.isAgeValid = this.myProfileUpdateRequest.age >= 18;
   }
   navigateToProfile(authorUUID: string) {
     this.router.navigate([`/profile/${authorUUID}`]);
@@ -67,7 +84,6 @@ export class MyProfileComponent implements OnInit {
     }
   }
   modifyUserDetails(){
-    console.log(this.myProfileUpdateRequest)
     this.userService.updateUser(this.myProfileUpdateRequest).subscribe(
         (profile: UserProfile) => {
           this.myProfile = profile;
@@ -76,6 +92,15 @@ export class MyProfileComponent implements OnInit {
         }
       )
 
+  }
+  deleteProfilePicture(){
+    this.loading = true;
+    this.userService.deleteProfilePic().subscribe({
+        complete: () => {
+          window.location.reload()
+        }
+      }
+    )
   }
 
   enterEditMode(): void {
@@ -95,17 +120,11 @@ export class MyProfileComponent implements OnInit {
       (profile: UserProfile) => {
         this.myProfile = profile;
         this.myProfileUpdateRequest = profile;
+        console.log(this.myProfile);
       }
     );
   }
 
-
-  public profilePicture(): string {
-    if (this.myProfile) {
-    return this.userService.getProfilePictureUrl(this.myProfile.profilePictureBytes)
-      }
-    return ''
-  }
 
   showUserFeedbacks(){
     this.loading = true;

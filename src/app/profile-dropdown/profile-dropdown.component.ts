@@ -3,7 +3,6 @@ import {KeycloakProfile} from "keycloak-js";
 import {KeycloakService} from "keycloak-angular";
 import {DeleteAccountService} from "../service/util/DeleteAccountService";
 import {interval, Subject, Subscription, switchMap} from "rxjs";
-import {ChatResponse} from "../model/ChatResponse";
 import {ChatService} from "../service/ChatService";
 import {UnreadChat} from "../model/UnreadChat";
 import {UserService} from "../service/UserService";

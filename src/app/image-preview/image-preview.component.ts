@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
   styleUrl: './image-preview.component.css'
 })
 export class ImagePreviewComponent {
+  loading: boolean = false;
   imageFile: File | null;
   imageUrl: string | ArrayBuffer | null;
   currentFile?: File;
@@ -42,6 +43,7 @@ export class ImagePreviewComponent {
   }
 
   upload(): void {
+    this.loading = true
     if (this.imageFile) {
       this.userService.changeProfilePic(this.imageFile).subscribe({
         next: (event: any) => {
@@ -63,7 +65,6 @@ export class ImagePreviewComponent {
         complete: () => {
           this.currentFile = undefined;
           this.closeDialogBox()
-          //todo try to find another solution...
           window.location.reload()
         }
       });

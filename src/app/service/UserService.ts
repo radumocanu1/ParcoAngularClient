@@ -26,6 +26,7 @@ export class UserService {
   }
 
 
+
   public getUser(userUUID: string | null)  : Observable<UserProfile> {
     return this.http.get<UserProfile>(`${this.userUrl}/${userUUID}`);
   }
@@ -35,9 +36,7 @@ export class UserService {
   public updateUser(myProfileUpdateRequest: MyProfileUpdateRequest | undefined)  : Observable<UserProfile> {
     return this.http.put<UserProfile>(this.userUrl, myProfileUpdateRequest);
   }
-  public getProfilePicturePath(userUUID: string | null)  : Observable<string> {
-    return this.http.get(`${this.userUrl}/profilePic/${userUUID}`, { responseType: 'text' });
-  }
+
   getUserProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>(`${this.userUrl}/profile`).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -57,8 +56,10 @@ export class UserService {
       responseType: 'text'
     });
   }
-  public getProfilePictureUrl(profilePictureBytes: string): string {
-    return `data:image/jpeg;base64, ${profilePictureBytes}`;
+  deleteProfilePic(): Observable<string> {
+    return this.http.delete(`${this.userUrl}/profilePic`, {
+      responseType: 'text'
+    });
   }
   public getUserProfileImage(): Observable<ProfilePictureResponse> {
     return this.http.get<ProfilePictureResponse>(`${this.userUrl}/profilePic`);

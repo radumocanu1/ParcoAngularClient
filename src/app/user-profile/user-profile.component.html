@@ -13,7 +13,6 @@
     <p><strong>Vârstă:</strong> {{ user.age }}</p>
     <p><strong>Sex:</strong> {{ user.sex }}</p>
     <p><strong>Rating:</strong> <span class="rating">{{ user.rating }}</span></p>
-    <p><strong>Utilizator de încredere:</strong> <span [ngClass]="{'trusted': user.isTrusted, 'not-trusted': !user.isTrusted}">{{ user.isTrusted ? 'Da' : 'Nu' }}</span></p>
   </div>
   <div class="button-container">
     <button class="btn-send-message" (click)="sendMessage()">Trimite mesaj</button>
