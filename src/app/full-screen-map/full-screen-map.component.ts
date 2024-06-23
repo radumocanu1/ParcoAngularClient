@@ -37,7 +37,6 @@ export class FullScreenMapComponent implements OnInit {
         this.mapOptions = {
           center: { lat: 44.4286545011596, lng: 26.101418742985853 },
           zoom: 12,
-          mapTypeId: 'satellite'
         };
 
         this.markers = listings.map(listing => ({

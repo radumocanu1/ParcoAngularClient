@@ -50,7 +50,7 @@
             <mat-checkbox formControlName="indefinitePeriod" id="indefinitePeriod" class="styled-checkbox">Caut pentru perioada nedeterminată de timp</mat-checkbox>
           </label>
         </div>
-        <button mat-raised-button color="primary" type="submit">Aplica Filtrarea</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="isFormInvalid()">Aplica Filtrarea</button>
 
       </form>
       <button mat-raised-button color="accent" type="submit" (click)="resetFilters()" class="reset-button">Reseteaza filtrele</button>

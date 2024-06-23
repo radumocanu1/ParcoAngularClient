@@ -112,15 +112,7 @@ export class ListingListComponent implements OnInit, OnDestroy {
       this.loading = false;
     });
   }
-  updateEndDateMin(startDate: Date): void {
-    if (startDate) {
-      const minEndDate = new Date(startDate);
-      minEndDate.setDate(minEndDate.getDate() + 1); // Increment by one day
-      this.minEndDate = minEndDate;
-    } else {
-      this.minEndDate = null; // Reset minEndDate if startDate is null
-    }
-  }
+
   todayDate(): string {
     const today = new Date();
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
@@ -137,6 +129,20 @@ export class ListingListComponent implements OnInit, OnDestroy {
       indefinitePeriod: false
     });
   }
+  isFormInvalid(): boolean {
+    const values = this.filterForm.value;
+    const noInput = !values.sector &&
+      !values.startDate &&
+      !values.endDate &&
+      !values.maxDailyPrice &&
+      !values.maxMonthlyPrice &&
+      !values.indefinitePeriod;
+
+    const dateIncomplete = (values.startDate && !values.endDate && !values.indefinitePeriod) || (!values.startDate && values.endDate);
+
+    return noInput || dateIncomplete;
+  }
+
 
   applyFilter(): void {
      this.advanceFilteringRequest = this.filterForm.getRawValue()

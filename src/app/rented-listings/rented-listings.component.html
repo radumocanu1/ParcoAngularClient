@@ -9,7 +9,6 @@
       <p><strong>Sector:</strong> {{ listing.sector }}</p>
       <p><strong>Data de început:</strong> {{ listing.startDate | date:'dd/MM/yyyy' }}</p>
       <p><strong>Data de sfârșit:</strong> {{ listing.endDate | date:'dd/MM/yyyy' }}</p>
-      <p><strong>Preț:</strong> {{ listing.price | currency }}</p>
       <p><strong>Rating:</strong> {{ listing.rating }}</p>
       <p><strong>Status:</strong> {{ listing.status }}</p>
       <p *ngIf="isCurrentOrPast(listing.startDate, listing.endDate)" class="active-parking">Puteți parca în acest moment</p>
@@ -20,7 +19,11 @@
   </div>
 </div>
 <ng-template #noListings>
-  <p>Nu aveți anunțuri rezervate.</p>
+  <div class="container">
+    <div class="message-box">
+  <h1>Nu aveți locuri de parcare rezervate.</h1>
+    </div>
+  </div>
 </ng-template>
 </div>
 <div *ngIf="loading" class="loading-spinner">

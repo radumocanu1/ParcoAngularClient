@@ -170,25 +170,31 @@ body, html {
 }
 
 .map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
   width: 100%;
+  align-content: center;
   height: 500px;
   margin-top: 20px;
   background: #f9f9f9;
   border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   animation: fadeInUp 1s ease-in-out;
 }
 
+
 .map-container h2 {
   margin-top: 0;
+  margin-bottom: 30px;
   color: #003366;
   text-align: center;
 }
 
 .rent-button {
   display: block;
-  margin: 20px auto;
+  margin: 100px auto;
   background-color: #4CAF50;
   color: #fff;
   border: none;

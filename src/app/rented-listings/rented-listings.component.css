@@ -43,6 +43,7 @@
   transition: transform 0.3s;
 }
 
+
 .listing:hover .listing-image {
   transform: scale(1.05);
 }
