@@ -25,7 +25,7 @@
           <button mat-flat-button color="primary" (click)="navigateToListing(element.listingUUID)">Vizualizează</button>
         </div>
         <div class="input-button-wrapper">
-          <button mat-flat-button color="warn" (click)="deleteListing(element.listingUUID)">Șterge<mat-icon>perm_scan_wifi</mat-icon></button>
+          <button mat-flat-button color="warn" (click)="deleteListing(element.listingUUID)" [disabled]="element.rented">Șterge<mat-icon>perm_scan_wifi</mat-icon></button>
         </div>
       </div>
       <div class="input-button-wrapper">

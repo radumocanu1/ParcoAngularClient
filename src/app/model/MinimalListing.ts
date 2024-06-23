@@ -12,6 +12,7 @@ import {Status} from "./Status";
     rating!: number
     available!: boolean
     status!:Status
+    rented!: boolean
 
 
 

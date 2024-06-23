@@ -25,6 +25,7 @@ export class MyListingsComponent implements OnInit{
   ngOnInit(): void {
     this.listingService.getMyListings().subscribe(
       (data: MinimalListing[]) => {
+        console.log(data);
         this.paginatedListings = data;
         if (this.paginatedListings.length == 0) {
           this.hasListings = false

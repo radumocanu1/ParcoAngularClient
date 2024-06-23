@@ -7,10 +7,9 @@
     <div class="listing-details">
       <h2>{{ listing.title }}</h2>
       <p><strong>Sector:</strong> {{ listing.sector }}</p>
-      <p><strong>Data de început:</strong> {{ listing.startDate | date:'dd/MM/yyyy' }}</p>
-      <p><strong>Data de sfârșit:</strong> {{ listing.endDate | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Data de început a închirierii:</strong> {{ listing.startDate | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Data de sfârșit a închirierii:</strong> {{ listing.endDate | date:'dd/MM/yyyy' }}</p>
       <p><strong>Rating:</strong> {{ listing.rating }}</p>
-      <p><strong>Status:</strong> {{ listing.status }}</p>
       <p *ngIf="isCurrentOrPast(listing.startDate, listing.endDate)" class="active-parking">Puteți parca în acest moment</p>
       <p *ngIf="!isPast(listing.endDate) && !isCurrentOrPast(listing.startDate, listing.endDate)"><strong>Mai aveți:</strong> {{ daysUntil(listing.startDate) }} zile</p>
       <p *ngIf="isPast(listing.endDate)"><strong>Perioada in care puteati parca pe acest loc s-a terminat. Speram ca ati avut o experienta placuta!</strong> </p>
