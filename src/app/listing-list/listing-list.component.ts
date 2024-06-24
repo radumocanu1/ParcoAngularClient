@@ -137,10 +137,10 @@ export class ListingListComponent implements OnInit, OnDestroy {
       !values.maxDailyPrice &&
       !values.maxMonthlyPrice &&
       !values.indefinitePeriod;
-
     const dateIncomplete = (values.startDate && !values.endDate && !values.indefinitePeriod) || (!values.startDate && values.endDate);
-
-    return noInput || dateIncomplete;
+    if (dateIncomplete)
+      return true;
+    return noInput ;
   }
 
 
