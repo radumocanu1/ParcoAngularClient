@@ -145,6 +145,7 @@ export class ListingListComponent implements OnInit, OnDestroy {
 
 
   applyFilter(): void {
+    this.loading = true
      this.advanceFilteringRequest = this.filterForm.getRawValue()
     if (this.advanceFilteringRequest.startDate) {
       // @ts-ignore
@@ -155,11 +156,12 @@ export class ListingListComponent implements OnInit, OnDestroy {
       // @ts-ignore
       this.advanceFilteringRequest.endDate = this.convertDateToDDMMYYYY(new Date(this.advanceFilteringRequest.endDate));
     }
-    console.log(this.advanceFilteringRequest);
     this.listingService.getFilteredListing(this.advanceFilteringRequest).subscribe(listings => {
       this.dataSource.data = listings;
       this.foundListings = this.dataSource.data.length > 0;
       this.paginateListings();
+      this.loading =  false
+
     });
   }
 
