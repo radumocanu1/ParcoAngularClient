@@ -10,6 +10,22 @@
 .listing-form div {
   margin-bottom: 12px;
 }
+/* Stiluri pentru mesajele de eroare */
+.error-messages {
+  color: #d9534f; /* Roșu pentru a indica eroarea */
+  font-size: 0.875em; /* Mărime mai mică pentru text */
+  margin-top: 5px; /* Spațiu deasupra mesajului de eroare */
+}
+
+.error-messages div {
+  margin-bottom: 5px; /* Spațiu între mesajele de eroare */
+}
+
+textarea.ng-invalid.ng-touched {
+  border-color: #d9534f; /* Bordură roșie pentru câmpurile invalide */
+  background-color: #f2dede; /* Fundal ușor roșu pentru câmpurile invalide */
+}
+
 
 .listing-form label {
   display: block;

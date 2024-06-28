@@ -6,11 +6,16 @@
       <input id="title" formControlName="title">
     </div>
 
-
     <div>
       <label for="description">Descriere scurta:</label>
       <textarea id="description" formControlName="description" rows="5"></textarea>
+      <div *ngIf="listingForm.get('description')?.touched && listingForm.get('description')?.invalid" class="error-messages">
+        <div *ngIf="listingForm.get('description')?.errors?.['required']">Descrierea este obligatorie.</div>
+        <div *ngIf="listingForm.get('description')?.errors?.['minlength']">Descrierea trebuie să aibă cel puțin 10 caractere.</div>
+        <div *ngIf="listingForm.get('description')?.errors?.['maxlength']">Descrierea nu poate avea mai mult de 100 de caractere.</div>
+      </div>
     </div>
+
 
 
     <div class="form-field">
@@ -31,7 +36,7 @@
         </div>
       </div>
       <mat-form-field>
-        <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="listingForm.get('indefinitePeriod')?.value" [min]="minEndDate" [max]="maxEndDate">
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" id="endDate" [disabled]="listingForm.get('indefinitePeriod')?.value" [min]="minEndDate || todayDate()" [max]="maxEndDate">
         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
@@ -120,13 +125,13 @@
       <google-map height="400px" width="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
         <map-marker [position]="marker.position"></map-marker>
       </google-map>
-      <button mat-flat-button color="primary" class="map-button" (click)="confirmLocation()" [disabled]="!wasMapClicked">Confirm faptul ca locatia markerului de pe harta e corecta</button>
+      <button mat-flat-button color="primary" class="map-button" (click)="confirmLocation()" [disabled]="!wasMapClicked">Locatia e corecta</button>
 
     </div>
 
 
 
-    <button mat-flat-button color="primary" [disabled]="!confirmedLocation" (click)="onSubmit()">Adauga anunt</button>
+    <button mat-flat-button color="primary" [disabled]="!confirmedLocation || listingForm.invalid" (click)="onSubmit()">Adauga anunt</button>
   </form>
 </div>
 <div *ngIf="loading" class="loading-spinner">

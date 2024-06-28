@@ -63,7 +63,7 @@ export class MyListingsComponent implements OnInit{
       listingStatusChangeRequest.status = Status.ACTIVE;
     this.listingService.updateListingStatusUser(listing.listingUUID, listingStatusChangeRequest).subscribe(
       (data:Listing) => {
-        this.snackbarService.openSnackBar("✨Statusul anuntului a fost modificat cu secces!✨");
+        this.snackbarService.openSnackBar("✨Statusul anuntului a fost modificat cu succes!✨");
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/my-listings']);
       });
