@@ -10,10 +10,10 @@
   <mat-form-field appearance="fill" class="message-field">
     <mat-label>Mesaj</mat-label>
     <textarea matInput [(ngModel)]="feedbackMessage" required minlength="5"></textarea>
-    <mat-hint align="end">{{feedbackMessage.length || 0}} / 5</mat-hint>
+    <mat-hint align="end">{{feedbackMessage.length || 0}} / 120</mat-hint>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Anulează</button>
-  <button mat-button (click)="sendFeedback()" [disabled]="!feedbackMessage || feedbackMessage.length < 5 || !selectedRating">Trimite feedback</button>
+  <button mat-button (click)="sendFeedback()" [disabled]="!feedbackMessage || feedbackMessage.length < 5 || feedbackMessage.length>120 || !selectedRating">Trimite feedback</button>
 </div>

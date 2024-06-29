@@ -14,7 +14,6 @@ import {catchError, concatMap, forkJoin, of} from "rxjs";
   styleUrl: './add-listing.component.css'
 })
 
-// todo show errors on reactive input
 export class AddListingComponent implements OnInit {
   loading: boolean = false;
   previewPictures: string[] = [];
@@ -33,10 +32,6 @@ export class AddListingComponent implements OnInit {
   periodPopUpVisible: boolean = false;
 
 
-
-
-
-
   mapOptions: google.maps.MapOptions = {
     center: { lat: 44.4286545011596, lng: 26.101418742985853 }, // Coordonate inițiale
     zoom: 12
@@ -52,11 +47,11 @@ export class AddListingComponent implements OnInit {
               private router: Router) {
     this.listingForm = this.fb.group({
       pictures: [null, Validators.required],
-      title: ['', [Validators.required, Validators.maxLength(20)]],
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(40)]],
       startDate: ['', Validators.required],
       endDate: [''],
-      parkingSpotSlotNumber: [null, Validators.min(0)],
-      price: [null, Validators.min(0)],
+      parkingSpotSlotNumber: [null, Validators.min(0),Validators.max(100)],
+      price: [null, Validators.min(0), Validators.max(1000)],
       latitude: [ Validators.required],
       longitude: [ Validators.required],
       location: [ '', [Validators.required,  Validators.maxLength(50)]],
