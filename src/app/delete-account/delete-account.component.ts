@@ -47,7 +47,6 @@ export class DeleteAccountComponent {
             this.openSnackBar();
             // workaround to revoke current access token
             this.keycloakService.logout(`${this.websiteDomain}/register`).then(() => {
-              console.log("Logout successful");
             }).catch((error: any) => {
               console.error("Logout failed:", error);
             });

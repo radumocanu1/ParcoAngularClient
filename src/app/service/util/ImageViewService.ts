@@ -11,7 +11,6 @@ export class ImageViewService {
 
   constructor(private dialog: MatDialog) { }
   openPreviewModal(image: File) {
-    console.log("image", image);
     this.dialog.open(ImagePreviewComponent, {
       data: { image },
       width: '500px'
@@ -19,7 +18,6 @@ export class ImageViewService {
 
   }
   openFullImageModal(image: string) {
-    console.log("image", image);
     this.dialog.open(FullImageModalComponent, {
       data: { image },
       height: 'auto',

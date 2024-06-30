@@ -19,6 +19,8 @@ export class RentDialogComponent implements OnInit {
   minEndDate!: Date | null;
   maxEndDate!: Date | null;
   bookingForm: FormGroup
+  overlapping : boolean = false
+  tooLong : boolean = false;
   stripePromise = loadStripe('pk_test_51PJjZcLWWVz5JGxgQSeSt6L9AgbNUfduZkh4vXSiNVuXpXaJ2wXF2dlDBtXEcgbp4a74IboBchMGqdUQsJPFQNWD008ANiDKXo');
   unavailableDates: DateRange[] = [];
   today = new Date();
@@ -42,15 +44,14 @@ export class RentDialogComponent implements OnInit {
   ngOnInit(): void {
     this.listingService.getUnavailableDates(this.data.listing.listingUUID).subscribe(dates => {
       this.unavailableDates = dates;
-      this.updateEndDateMinMax(this.minStartDate());
+      this.maxEndDate = new Date (this.data.listing.endDate)
 
     });
 
     this.bookingForm.get('startDate')?.valueChanges.subscribe(date => {
-      if (this.bookingForm.get('duration')?.value !== 'Alegere manuala') {
+      this.minEndDate = this.bookingForm.get('startDate')?.value
+      if (this.bookingForm.get('duration')?.value === 'Alegere manuala') {
         this.setEndDateAutomatically(date);
-      } else {
-        this.updateEndDateMinMax(date);
       }
       this.validateDates();
     });
@@ -61,6 +62,8 @@ export class RentDialogComponent implements OnInit {
         this.setEndDateAutomatically(startDate);
       }
     });
+
+
   }
 
   setEndDateAutomatically(startDate: Date) {
@@ -77,21 +80,26 @@ export class RentDialogComponent implements OnInit {
   validateDates() {
     const startDate = this.bookingForm.get('startDate')?.value;
     const endDate = this.bookingForm.get('endDate')?.value;
-    const overlapping = this.unavailableDates.some(dateRange => {
+     this.overlapping = this.unavailableDates.some(dateRange => {
       const start = new Date(dateRange.startDate);
       const end = new Date(dateRange.endDate);
       return (startDate >= start && startDate <= end) || (endDate >= start && endDate <= end) || (startDate <=start && endDate >= end);
     });
 
-    if (overlapping) {
+    if (this.overlapping) {
       this.bookingForm.get('endDate')?.setErrors({ 'overlapping': true });
-      this.openSnackBar()
+      this.openSnackBar('Datele selectate sunt invalide, aveti grija sa nu va intersectati cu o alta perioada inchiriata!')
     } else {
       this.bookingForm.get('endDate')?.setErrors(null);
     }
+    if (endDate > new Date(this.data.listing.endDate)) {
+      this.tooLong = true
+      this.openSnackBar('Perioada selectata depaseste data de final maxima a anuntului')
+    }else
+      this.tooLong = false
   }
-  openSnackBar() {
-    this.snackbarService.openSnackBar('Datele selectate sunt invalide, aveti grija sa nu va intersectati cu o alta perioada inchiriata!');
+  openSnackBar(message: string): void {
+    this.snackbarService.openSnackBar(message);
   }
 
   dateFilter = (d: Date | null): boolean => {
@@ -135,7 +143,7 @@ export class RentDialogComponent implements OnInit {
       this.maxEndDate.setDate(this.maxEndDate.getDate() - 1);
     } else {
       this.minEndDate = startDate;
-      this.maxEndDate = new Date(this.data.listing.endDate) // Assuming maximum one year
+      this.maxEndDate = new Date(this.data.listing.endDate)
     }
   }
 

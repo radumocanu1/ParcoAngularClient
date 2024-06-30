@@ -25,7 +25,6 @@ export class UserProfileComponent implements OnInit {
       this.userService.getUser(params.get('userId')).subscribe(
         (data: UserProfile) => {
           this.user = data;
-          console.log(this.user.profilePictureBytes);
           if (this.user.sameUser) {
             this.router.navigate(['/myProfile']);
           }

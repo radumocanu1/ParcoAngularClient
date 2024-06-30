@@ -60,8 +60,6 @@ export class ListingService {
   }
 
   deleteListing(listingId: string | null): Observable<string> {
-    console.log(listingId);
-    console.log(`${this.apiUrl}/${listingId}`);
     return this.http.delete<string>(`${this.apiUrl}/${listingId}`);
   }
   updateListingStatusUser(listingUUID:string, listingChangeStatusRequest: ListingStatusChangeRequest) :Observable<Listing> {
@@ -77,7 +75,6 @@ export class ListingService {
   }
   addMainPhotoToListing(listingUUID: string, file: File | null): Observable<string> {
     const formData: FormData = new FormData();
-    console.log(listingUUID);
     // @ts-ignore
     formData.append('file', file);
     return this.http.patch(`${this.apiUrl}/main-picture/${listingUUID}`, formData, {

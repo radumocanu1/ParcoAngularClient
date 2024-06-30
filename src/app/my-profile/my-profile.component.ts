@@ -120,7 +120,6 @@ export class MyProfileComponent implements OnInit {
       (profile: UserProfile) => {
         this.myProfile = profile;
         this.myProfileUpdateRequest = profile;
-        console.log(this.myProfile);
       }
     );
   }

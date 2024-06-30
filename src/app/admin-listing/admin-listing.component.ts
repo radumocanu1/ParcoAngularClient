@@ -28,11 +28,9 @@ export class AdminListingComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const listingId = params.get('listingUUID');
-      console.log(listingId);
       if (listingId) {
         this.listingService.getListing(listingId).subscribe(
           (data: Listing) => {
-            console.log(data)
             this.listing = data;
             this.addPicturesToModal(this.listing)
             this.initializeMap();

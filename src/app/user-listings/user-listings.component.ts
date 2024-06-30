@@ -46,7 +46,6 @@ export class UserListingsComponent implements OnInit {
     this.loading = true
     this.listingService.deleteListing(listingUUID).subscribe(
       (data: string) => {
-        console.log(data);
         this.loading = false
         this.openSnackBar()
         this.ngOnInit()

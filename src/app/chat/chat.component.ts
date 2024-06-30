@@ -40,7 +40,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.chatService.getChat(this.chatID).subscribe((chatResponse: ChatResponse) => {
             this.chatResponse = chatResponse;
-            console.log(this.chatResponse);
             this.startPollingChat();
             this.scrollToBottom();
           });

@@ -47,7 +47,6 @@ export class ListingComponent implements OnInit {
       if (listingId) {
         this.listingService.getListing(listingId).subscribe(
           (data: Listing) => {
-            console.log(data)
             this.listing = data;
             this.initializeMap();
             this.addPicturesToModal(this.listing)
@@ -56,7 +55,6 @@ export class ListingComponent implements OnInit {
         );
         this.feedbackService.getAllListingFeedbacks(listingId).subscribe(
           (data:FeedbackResponse[]) => {
-            console.log(data)
             this.feedbacks = data
             this.filteredFeedbacks = this.feedbacks
         }

@@ -59,7 +59,6 @@ export class ListingListComponent implements OnInit, OnDestroy {
         this.foundListings = this.dataSource.data.length > 0;
         this.paginateListings();
         this.loading = false;
-        console.log( this.advanceFilteringRequest.startDate.toString());
         this.filterForm.patchValue({sector: this.advanceFilteringRequest.sector,
           startDate: this.convertDateString(this.advanceFilteringRequest.startDate.toString()),
           endDate:this.convertDateString(this.advanceFilteringRequest.endDate.toString()),

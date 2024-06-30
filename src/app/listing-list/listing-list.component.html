@@ -29,7 +29,7 @@
             </mat-form-field>
           </div>
           <div class="form-field">
-            <label for="maxDailyPrice">Preț maxim (RON/oră)</label>
+            <label for="maxDailyPrice">Preț maxim (RON/zi)</label>
             <mat-form-field>
               <mat-select formControlName="maxDailyPrice" id="maxDailyPrice">
                 <mat-option *ngFor="let range of dailyPriceRange" [value]="range">{{ range }}</mat-option>
@@ -95,7 +95,7 @@
       <mat-card-title>{{element.title}}</mat-card-title>
       <mat-card-footer>
         <div class="listing-details">
-          <div class="price">{{element.price | currency}}</div>
+          <div class="price">{{element.price}} RON</div>
           <div class="sector-rating">
             <span>Sector {{element.sector}}</span>
             <span>Rating: {{element.rating || 'N/A'}}</span>
